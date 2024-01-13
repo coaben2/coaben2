@@ -10,9 +10,35 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/guildwars',
-      name: 'GuildWars',
-      component: () => import('../views/GuildWarsView.vue')
+      path: '/guildwars2',
+      children: [
+        {
+          path: 'lexique',
+          name: 'GuildWarsLexique',
+          component: () => import('../views/GuildWars/LexiqueView.vue'),
+        },
+        {
+          path: 'api',
+          component: () => import('../views/GuildWars/Api/HomeView.vue'),
+          children: [
+            {
+              path: '',
+              name: 'GuildWarsApiCharacters',
+              component: () => import('../views/GuildWars/Api/CharactersView.vue'),
+            },
+            {
+              path: 'banque',
+              name: 'GuildWarsApiBank',
+              component: () => import('../views/GuildWars/Api/BankView.vue'),
+            }
+          ]
+        },
+        {
+          path: 'vide-ton-sac',
+          name: 'GuildWarsInventoryManager',
+          component: () => import('../views/GuildWars/InventoryManagerView.vue'),
+        }
+      ]
     },
     {
       path: '/blog',
