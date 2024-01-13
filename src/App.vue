@@ -7,9 +7,9 @@ import AppFooter from './components/AppFooter.vue';
 
 <template>
   <AppNavigation />
-  <div class="flex-1">
+  <main class="flex-1">
     <RouterView />
-  </div>
+  </main>
   <AppFooter />
 </template>
 
