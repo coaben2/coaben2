@@ -21,7 +21,7 @@ import { RouterLink } from 'vue-router';
             Un lexique pour vous aider à comprendre les subtilités des langues utilisées dans
             <strong>Guild&nbsp;Wars&nbsp;2</strong>.
           </p>
-          <RouterLink :to="{ name: 'GuildWars' }" class="btn btn-sm btn-outline btn-primary">Découvrir le lexique
+          <RouterLink :to="{ name: 'GuildWarsLexique' }" class="btn btn-sm btn-outline btn-primary">Découvrir le lexique
           </RouterLink>
         </div>
         <div class="w-full flex flex-col items-center text-center gap-4">
