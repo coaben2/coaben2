@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    background: url('background.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 #app {
     @apply flex flex-col min-h-screen;
 }
