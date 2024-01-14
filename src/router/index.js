@@ -42,7 +42,7 @@ const router = createRouter({
     },
     {
       path: '/blog',
-      name: 'Blog',
+      name: 'blog',
       component: () => import('../views/BlogView.vue')
     },
     {
