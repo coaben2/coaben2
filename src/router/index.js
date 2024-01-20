@@ -40,6 +40,8 @@ const router = createRouter({
         },
       ]
     },
+    // [ ] Vérifier les URL des paths
+    // Attention à la casse !
     {
       path: '/Blog',
       name: 'Blog',

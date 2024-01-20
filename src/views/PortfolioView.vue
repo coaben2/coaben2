@@ -1,3 +1,8 @@
+<script setup>
+// [ ] Créer un tableau de données en json et boucler dans le code (créer un composant ?)
+// [ ] Corriger les URLs publiques
+</script>
+
 <template>
   <div class="h-96 carousel carousel-vertical rounded-box">
     <div class="carousel-item h-full">
