@@ -18,18 +18,6 @@ import { RouterLink } from 'vue-router'
                 </ul>
             </div>
             <RouterLink :to="{ name: 'Blog' }" class="btn">Blog</RouterLink>
-            <div class="dropdown">
-                <div tabindex="0" role="button" class="btn btn-primary">blog</div>
-                <ul
-                    class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto whitespace-nowrap min-w-52">
-                    <li>
-                        <RouterLink :to="{ name: 'BlogH1Hounoana' }">Hounoana</RouterLink>
-                        <RouterLink :to="{ name: 'BlogH2S2' }">Saison 2</RouterLink>
-                        <RouterLink :to="{ name: 'BlogKan' }">kan</RouterLink>
-                        <RouterLink :to="{ name: 'BlogLetR' }">La rose et le lierre</RouterLink>
-                    </li>
-                </ul>
-            </div>
             <RouterLink :to="{ name: 'Portfolio' }" class="btn">Portfolio</RouterLink>
             <RouterLink :to="{ name: 'Contact' }" class="btn">Contact</RouterLink>
             <RouterLink :to="{ name: 'Login' }" class="btn">Connexion</RouterLink>
