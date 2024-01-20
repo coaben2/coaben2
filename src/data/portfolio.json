@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "src": "I1-000.jpg",
+    "alt": "Portrait d'un personnage"
+  },
+  {
+    "id": 2,
+    "src": "I1-001.png",
+    "alt": ""
+  },
+  {
+    "id": 3,
+    "src": "I1-002.png",
+    "alt": ""
+  },
+  {
+    "id": 4,
+    "src": "I1-003.jpg",
+    "alt": ""
+  },
+  {
+    "id": 5,
+    "src": "I1-004.png",
+    "alt": ""
+  },
+  {
+    "id": 6,
+    "src": "I1-005.png",
+    "alt": ""
+  },
+  {
+    "id": 7,
+    "src": "I1-006.png",
+    "alt": ""
+  },
+  {
+    "id": 8,
+    "src": "I1-007.jpg",
+    "alt": ""
+  },
+  {
+    "id": 9,
+    "src": "I1-007.png",
+    "alt": ""
+  },
+  {
+    "id": 10,
+    "src": "I1-008.png",
+    "alt": ""
+  }
+]
