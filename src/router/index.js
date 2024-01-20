@@ -42,6 +42,7 @@ const router = createRouter({
     },
     {
       path: '/Blog',
+      name: 'Blog',
       children: [
         {
           path: 'Hounoana',

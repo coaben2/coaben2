@@ -23,10 +23,10 @@ import { RouterLink } from 'vue-router'
                 <ul
                     class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto whitespace-nowrap min-w-52">
                     <li>
-                        <RouterLink :to="{ name: 'blogH1Hounoana' }">Hounoana</RouterLink>
-                        <RouterLink :to="{ name: 'blogH2S2' }">Saison 2</RouterLink>
-                        <RouterLink :to="{ name: 'blogKan' }">kan</RouterLink>
-                        <RouterLink :to="{ name: 'blogLetR' }">La rose et le lierre</RouterLink>
+                        <RouterLink :to="{ name: 'BlogH1Hounoana' }">Hounoana</RouterLink>
+                        <RouterLink :to="{ name: 'BlogH2S2' }">Saison 2</RouterLink>
+                        <RouterLink :to="{ name: 'BlogKan' }">kan</RouterLink>
+                        <RouterLink :to="{ name: 'BlogLetR' }">La rose et le lierre</RouterLink>
                     </li>
                 </ul>
             </div>
