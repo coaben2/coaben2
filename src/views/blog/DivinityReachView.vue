@@ -1,23 +1,12 @@
 <script setup>
-import { markdownContent, attributes } from '@/data/posts/divinity-s-reach.md';
+import { html, attributes } from '@/data/posts/divinity-s-reach.md';
 </script>
-
 <template>
-    <div class="container max-w-2xl mx-auto bg-black bg-opacity-75 p-6 pb-2 md:rounded-lg md:my-6">
+    <div class="container max-w-full mx-auto bg-black bg-opacity-75 p-6 pb-2 md:rounded-lg md:my-6">
         <h1 class="mb-4">{{ attributes.title }}</h1>
-        <div class="post" v-html="markdownContent"></div>
+        <div class="post" v-html="html"></div>
     </div>
 </template>
-
-<script>
-export default {
-    data() {
-        return {
-            markdownContent: ``,
-        };
-    },
-};
-</script>
 
 <style scoped>
 .post {
