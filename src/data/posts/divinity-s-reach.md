@@ -1,10 +1,8 @@
 ---
-title: Divinity's reach
+Divinity's reach
 ---
 
-<section>
-
-## Partie 1
+## chapitre 1
 
 Le soleil se levait doucement sur la ville de Divinity's Reach, illuminant les rues pavées et
 les bâtiments majestueux. Hounoana se tenait au sommet d'une colline, les cheveux au vent et
@@ -20,10 +18,6 @@ Elle dégaina son épée et se prépara à combattre. "Guild Wars 2", murmura-t-
 elle-même, "je suis prête pour toi".
 
 ![](/img/I1-000.jpg)
-
-</section>
-
-## Partie 2
 
 elle n'etais que niv 1 et allais découvrir les attaques de sa classe "le revenant", une classe
 qui lui permettait de canaliser l'énergie des légendes passées pour obtenir des compétences
