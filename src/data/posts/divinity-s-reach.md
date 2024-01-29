@@ -541,4 +541,4 @@ Elle était prête à poursuivre son voyage, à repousser ses limites et à prot
 
 Ainsi, Hounoana se mit en route, quittant sa maison dans la capitale humaine avec un sourire déterminé.
 Heart of Thorns l'attendait,
-et elle était prête à embrasser cette nouvelle aventure avec tout son cœur et son esprit de héros.  
+et elle était prête à embrasser cette nouvelle aventure avec tout son cœur et son esprit de héros.
