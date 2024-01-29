@@ -55,6 +55,7 @@ const links = [
 
 const openModalMenu = () => {
   modalMenu.value.showModal();
+
 };
 </script>
 

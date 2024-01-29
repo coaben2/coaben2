@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 
+
 const posts = [
   {
     thumbnail: 'I1-000.jpg',

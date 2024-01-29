@@ -7,46 +7,305 @@
   {
     "id": 2,
     "src": "I1-001.png",
-    "alt": ""
+    "alt": "personnage en armure prenant de la puissance"
   },
   {
     "id": 3,
     "src": "I1-002.png",
-    "alt": ""
+
+    "alt": "raptor en peluche"
   },
   {
     "id": 4,
     "src": "I1-003.jpg",
-    "alt": ""
+    "alt": "esprit de la loutre sous forme d'eau"
   },
   {
     "id": 5,
     "src": "I1-004.png",
-    "alt": ""
+    "alt": "tortue de siege"
   },
   {
     "id": 6,
     "src": "I1-005.png",
-    "alt": ""
+    "alt": "marécage"
   },
   {
     "id": 7,
     "src": "I1-006.png",
-    "alt": ""
+
+    "alt": "marécage"
   },
   {
     "id": 8,
     "src": "I1-007.jpg",
-    "alt": ""
+
+    "alt": "béhémoth du marécage"
   },
   {
     "id": 9,
     "src": "I1-007.png",
-    "alt": ""
+
+    "alt": "marécage"
   },
   {
     "id": 10,
     "src": "I1-008.png",
-    "alt": ""
+    "alt": "Portrait d'un personnage avec le sourir"
+  },
+  {
+    "id": 11,
+    "src": "I1-009.png",
+    "alt": "Portrait d'un personnage avec les yeux rouges sang"
+  },
+  {
+    "id": 12,
+    "src": "I1-010.png",
+    "alt": "Portrait d'un personnage , elle ce rend compte de son pouvoir"
+  },
+  {
+    "id": 13,
+    "src": "I1-011.jpg",
+    "alt": "parchemin avec des écrit en rune dessus"
+  },
+  {
+    "id": 14,
+    "src": "I1-012.png",
+    "alt": "grande place de marchée ouverte"
+  },
+  {
+    "id": 15,
+    "src": "I1-013.jpg",
+    "alt": "intérieur d'une auberge"
+  },
+  {
+    "id": 16,
+    "src": "I1-014.jpg",
+    "alt": "intérieur d'une auberge"
+  },
+  {
+    "id": 17,
+    "src": "I1-015.png",
+    "alt": "deux personnages debout devant une table"
+  },
+  {
+    "id": 18,
+    "src": "I1-016.png",
+    "alt": "groupe de personnages assis a une table"
+  },
+  {
+    "id": 19,
+    "src": "I1-017.jpg",
+    "alt": "margorie delaqua en habit de pirates"
+  },
+  {
+    "id": 20,
+    "src": "I1-018.jpg",
+    "alt": "portrait de margory delaqua"
+  },
+  {
+    "id": 21,
+    "src": "I1-019.png",
+    "alt": "groupe de quatre garde armé"
+  },
+  {
+    "id": 22,
+    "src": "I1-020.png",
+    "alt": "portrait de la reine"
+  },
+  {
+    "id": 23,
+    "src": "I1-021.png",
+    "alt": "portrait de loghan"
+  },
+  {
+    "id": 24,
+    "src": "I1-022.png",
+    "alt": "la reine en robe violette s'avance vers les aventuriers"
+  },
+  {
+    "id": 25,
+    "src": "I1-023.jpg",
+    "alt": "vue en contre plongée de la capitale humaine"
+  },
+  {
+    "id": 26,
+    "src": "I1-024.png",
+    "alt": "tour perdue dans un grand champ de fleur"
+  },
+  {
+    "id": 27,
+    "src": "I1-025.png",
+    "alt": "intérieur d'une fleur , on vois le pistil"
+  },
+  {
+    "id": 28,
+    "src": "I1-026.jpg",
+    "alt": "mécatronique de plusieur metre de haut"
+  },
+  {
+    "id": 29,
+    "src": "I1-027.png",
+    "alt": "Wyka la druide légendaire femme/loutre au cheveux violet , habit de cuir"
+  },
+  {
+    "id": 30,
+    "src": "I1-028.png",
+    "alt": "Wyka la druide incante des sort de protections"
+  },
+  {
+    "id": 31,
+    "src": "I1-029.png",
+    "alt": "les avanturiers face au puissant boss"
+  },
+  {
+    "id": 32,
+    "src": "I1-030.png",
+    "alt": "portrais d'une silvary , cheveux roux , en habit de cuir rouge"
+  },
+  {
+    "id": 33,
+    "src": "I1-031.jpg",
+    "alt": "portrais d'un char , humanoïde chat , d'un grande force brute "
+  },
+  {
+    "id": 34,
+    "src": "I1-032.jpg",
+    "alt": "drone volant en formation"
+  },
+  {
+    "id": 35,
+    "src": "I1-033.jpg",
+    "alt": "vue plongeant sur un stade remplis de milier de personne"
+  },
+  {
+    "id": 36,
+    "src": "I1-034.jpg",
+    "alt": "les aventuriers ce prépare au combat"
+  },
+  {
+    "id": 37,
+    "src": "I1-035.jpg",
+    "alt": "marjory sortant des brumes pour tuer le boss"
+  },
+  {
+    "id": 38,
+    "src": "I1-036.jpg",
+    "alt": "vue du ciel des plaines verte de tyries"
+  },
+  {
+    "id": 39,
+    "src": "I1-037.jpg",
+    "alt": "vue du ciel des plaines verte de tyries"
+  },
+  {
+    "id": 40,
+    "src": "I1-038.jpg",
+    "alt": "un dragon vert sort de son someil dans les tréfond de la foret"
+  },
+  {
+    "id": 41,
+    "src": "I1-039.png",
+    "alt": "notre héro en armure de plaque fier de ce qu'elle vient d'acomplir"
+  },
+  {
+    "id": 42,
+    "src": "I1-040.png",
+    "alt": "écrans titre de la 2em saison de guild wars 2"
+  },
+  {
+    "id": 43,
+    "src": "I2-001.png",
+    "alt": "quatre personnage du jeux. marjory,Kasmeer,Braham et Rox's"
+  },
+  {
+    "id": 44,
+    "src": "I2-002.png",
+    "alt": "un cube téséracte"
+  },
+  {
+    "id": 45,
+    "src": "I2-003-1.png",
+    "alt": "portrait d'une humaine"
+  },
+  {
+    "id": 46,
+    "src": "I2-003-2.png",
+    "alt": "portrait d'une humaine"
+  },
+  {
+    "id": 47,
+    "src": "I2-003-3.png",
+    "alt": "portrait d'une humaine"
+  },
+  {
+    "id": 48,
+    "src": "I2-004.png",
+    "alt": "cube bleu en lévitation au dessus d'une plaine verte"
+  },
+  {
+    "id": 49,
+    "src": "I2-005.jpg",
+    "alt": "forme humanoïde dans le désert avec un soleil en fond"
+  },
+  {
+    "id": 50,
+    "src": "I2-006.png",
+    "alt": "foret dense"
+  },
+  {
+    "id": 51,
+    "src": "I2-007.jpg",
+    "alt": "femme humaine en habit traditionel"
+  },
+  {
+    "id": 52,
+    "src": "I2-008.jpg",
+    "alt": "Zeplin volant au dessin d'un fort de guerre"
+  },
+  {
+    "id": 53,
+    "src": "I2-009.jpg",
+    "alt": "logo d'une feuille de liere ,fond blanc. paint sur un mur"
+  },
+  {
+    "id": 54,
+    "src": "I2-010.png",
+    "alt": "vielle homme d'église avec un baton de pélerin"
+  },
+  {
+    "id": 55,
+    "src": "I2-011.png",
+    "alt": "citée dans la jungle"
+  },
+  {
+    "id": 56,
+    "src": "I2-012.jpg",
+    "alt": "homme au grand yeux vert,mystérieux"
+  },
+  {
+    "id": 57,
+    "src": "Kyrine.jpg",
+    "alt": "homme au orielle de loup,veste en cuir. un chien loup a coter de lui"
+  },
+  {
+    "id": 58,
+    "src": "Louv.png",
+    "alt": "femme au oreille de loup,jupe et parquat a capuche. dessin type manga"
+  },
+  {
+    "id": 59,
+    "src": "Murloc.jpg",
+    "alt": "un murloc"
+  },
+  {
+    "id": 60,
+    "src": "otter.png",
+    "alt": "une femme loutre , cheveux violet en robe de bal"
+  },
+  {
+    "id": 61,
+    "src": "perenoël-001.jpg",
+    "alt": "le pere noël , assis sur le trone de glace. tel le roi lich"
   }
 ]

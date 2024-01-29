@@ -1,5 +1,5 @@
 <script setup>
-import { html, attributes } from '@/data/posts/BlogH2S2.md';
+import { html, attributes } from '@/data/posts/divinity-s-reach.md';
 </script>
 <template>
     <div class="container max-w-full mx-auto bg-black bg-opacity-75 p-6 pb-2 md:rounded-lg md:my-6">
