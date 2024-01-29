@@ -1,169 +1,41 @@
+<script setup>
+import { ref } from 'vue';
+import portfolio from '@/data/portfolio.json';
+
+const gridSize = ref(4);
+const currentModalPicture = ref(null);
+const modalPicture = ref(null);
+
+const handleOpenModal = (src) => {
+  currentModalPicture.value = src;
+  modalPicture.value.showModal();
+};
+</script>
+
 <template>
-  <div class="h-96 carousel carousel-vertical rounded-box">
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-000.jpg" />
+  <div class="container mx-auto my-6">
+    <h1 class="mb-4">Portfolio</h1>
+    <div class="mb-4 hidden sm:block">
+      <input type="range" min="3" max="6" v-model="gridSize" class="range range-sm" />
     </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-002.png" />
+    <div class="grid gap-4 grid-cols-1" :class="[`sm:grid-cols-${gridSize}`]">
+      <div v-for="picture in portfolio" :key="picture.id" class="aspect-square w-full cursor-pointer shadow-lg"
+        @click="handleOpenModal(picture.src)">
+        <img :src="`/img/${picture.src}`" :alt="picture.alt || `Image ${picture.id}`"
+          class="w-full h-full object-cover rounded-lg" />
+      </div>
     </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-003.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-004.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-005.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-006.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-007.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-007.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-8.pg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I1-9.pg " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-010.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-011.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-012.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-013.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-014.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-015.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-016.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-017.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I1-8.jg " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I1-9.pg " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-020.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-021.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-022.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-023.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-024.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-025.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-026.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-027.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I1-8.pg " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I1-9.pg " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-030.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-031.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-032.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-033.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-034.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-035.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-036.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-037.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I1-8.jg " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I1-9.pg " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I1-040.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I2-001.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I2-002.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I20 - .png " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I20 - .png " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I20 - .png " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I2-004.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I2-005.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I2-006.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I2-007.jpg" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I2-8.jg " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src=" public/img/I2-9.jg " />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I2-010.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I2-011.png" />
-    </div>
-    <div class="carousel-item h-full">
-      <img src="public/img/I2-012.jpg" />
-    </div>
+
+    <dialog class="modal" ref="modalPicture">
+      <div class="modal-box p-0 overflow-hidden">
+        <form method="dialog">
+          <button for="picture" class="btn btn-sm btn-circle absolute right-2 top-2">✕</button>
+        </form>
+        <img :src="`/img/${currentModalPicture}`" />
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
   </div>
 </template>
