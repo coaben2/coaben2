@@ -48,6 +48,7 @@ const router = createRouter({
     {
       path: '/blog/divinity-s-reach',
       name: 'BlogPostDivinitysReach',
+
       component: () => import('../views/Blog/DivinityReachView.vue'),
     },
     {

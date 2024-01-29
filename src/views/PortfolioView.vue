@@ -19,10 +19,17 @@ const handleOpenModal = (src) => {
       <input type="range" min="3" max="6" v-model="gridSize" class="range range-sm" />
     </div>
     <div class="grid gap-4 grid-cols-1" :class="[`sm:grid-cols-${gridSize}`]">
-      <div v-for="picture in portfolio" :key="picture.id" class="aspect-square w-full cursor-pointer shadow-lg"
-        @click="handleOpenModal(picture.src)">
-        <img :src="`/img/${picture.src}`" :alt="picture.alt || `Image ${picture.id}`"
-          class="w-full h-full object-cover rounded-lg" />
+      <div
+        v-for="picture in portfolio"
+        :key="picture.id"
+        class="aspect-square w-full cursor-pointer shadow-lg"
+        @click="handleOpenModal(picture.src)"
+      >
+        <img
+          :src="`/img/${picture.src}`"
+          :alt="picture.alt || `Image ${picture.id}`"
+          class="w-full h-full object-cover rounded-lg"
+        />
       </div>
     </div>
 

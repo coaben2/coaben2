@@ -6,29 +6,15 @@ const posts = [
         thumbnail: 'I1-000.jpg',
         title: "Divinity's Reach",
         excerpt:
-            "Le soleil se levait doucement sur la ville de Divinity's Reach",
+            "Le soleil se levait doucement sur la ville de Divinity's Reach, illuminant les rues pavées et les bâtiments majestueux. Hounoana se tenait au sommet d'une colline, les cheveux au vent et les yeux brillants d'excitation. Elle avait créé son personnage...",
         link: 'BlogPostDivinitysReach',
     },
     {
         thumbnail: 'I2-001.png',
         title: "heart of stone",
         excerpt:
-            "De mystérieuses perturbations agitaient les Terres sauvages de Brisban",
+            "text test",
         link: 'BlogH2S2',
-    },
-    {
-        thumbnail: 'Louv.png',
-        title: "Kan la louve",
-        excerpt:
-            "Louv et Les Mystères de la Forêt",
-        link: 'BlogKan',
-    },
-    {
-        thumbnail: '',
-        title: "La Rose & le lière",
-        excerpt:
-            "une histoire d'amour d'une rose",
-        link: 'BlogLetR',
     },
 ];
 </script>
