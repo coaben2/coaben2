@@ -1,7 +1,3 @@
----
-title: BlogH2S2
----
-
 ## Heart of stone
 
 De mystérieuses perturbations agitaient les Terres sauvages de Brisban, dans le sud-ouest de Tyrie.
@@ -112,7 +108,7 @@ Ils savaient que leur nouvelle quête les conduirait vers des territoires inconn
 où ils devraient faire face à des défis encore plus grands.
 
 Les vrilles de la jungle continuaient de se propager, menaçant de perturber l'équilibre magique de la région.
- L'équipe d'intervention devait agir rapidement pour résoudre ce mystère, protéger la jungle de Maguuma
+L'équipe d'intervention devait agir rapidement pour résoudre ce mystère, protéger la jungle de Maguuma
 et percer le secret du personnage mystérieux surveillant depuis les hauteurs de la Cimesèche.
 
 Ils étaient prêts à affronter cette nouvelle aventure, sachant que leur courage,

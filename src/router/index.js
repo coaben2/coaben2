@@ -56,6 +56,16 @@ const router = createRouter({
       component: () => import('../views/Blog/BlogH2S2.vue'),
     },
     {
+      path: '/blog/BlogKan',
+      name: 'BlogKan',
+      component: () => import('../views/Blog/BlogKan.vue'),
+    },
+    {
+      path: '/blog/BlogLetR',
+      name: 'BlogLetR',
+      component: () => import('../views/Blog/BlogLetR.vue'),
+    },
+    {
       path: '/portfolio',
       name: 'Portfolio',
       component: () => import('../views/PortfolioView.vue'),
