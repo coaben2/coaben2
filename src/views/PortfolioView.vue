@@ -22,7 +22,7 @@ const handleOpenModal = (src) => {
       <div
         v-for="picture in portfolio"
         :key="picture.id"
-        class="aspect-square w-full cursor-pointer"
+        class="aspect-square w-full cursor-pointer shadow-lg"
         @click="handleOpenModal(picture.src)"
       >
         <img
