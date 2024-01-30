@@ -52,19 +52,19 @@ const router = createRouter({
       component: () => import('../views/Blog/DivinityReachView.vue'),
     },
     {
-      path: '/blog/BlogH2S2',
-      name: 'BlogH2S2',
-      component: () => import('../views/Blog/BlogH2S2.vue'),
+      path: '/blog/heart-of-stone',
+      name: 'BlogPostHeartOfStone',
+      component: () => import('../views/Blog/HeartOfStoneView.vue'),
     },
     {
-      path: '/blog/BlogKan',
-      name: 'BlogKan',
-      component: () => import('../views/Blog/BlogKan.vue'),
+      path: '/blog/louv-et-les-mysteres-de-la-foret',
+      name: 'BlogPostLouvEtLesMysteresDeLaForet',
+      component: () => import('../views/Blog/LouvEtLesMysteresDeLaForetView.vue'),
     },
     {
-      path: '/blog/BlogLetR',
-      name: 'BlogLetR',
-      component: () => import('../views/Blog/BlogLetR.vue'),
+      path: '/blog/le-lierre-et-la-rose',
+      name: 'BlogPostLeLierreEtLaRose',
+      component: () => import('../views/Blog/LeLierreEtLaRoseView.vue'),
     },
     {
       path: '/portfolio',

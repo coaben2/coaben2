@@ -1,5 +1,5 @@
 <script setup>
-import { html, attributes } from '@/data/posts/divinity-s-reach.md';
+import { html, attributes } from '@/data/posts/le-lievre-et-la-rose.md';
 </script>
 <template>
   <div class="container max-w-2xl mx-auto bg-black bg-opacity-75 p-6 pb-2 md:rounded-lg md:my-6">

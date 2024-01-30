@@ -53,7 +53,7 @@ Rolfben sourit, apparemment heureux que quelqu'un ait remarqué son compagnon in
 "Elle m'accompagne partout où je vais. Elle peut prendre différentes formes,
 mais je la préfère sous forme d'eau".
 
-![Alt text](../../../public/img/I1-002.png)
+![Alt text](/img/I1-002.png)
 
 Hounoana regarda la loutre avec admiration.
 Elle avait déjà vu beaucoup de choses étranges et merveilleuses dans Tyrie,
@@ -65,7 +65,7 @@ Rolfben expliqua qu'il avait accompli une quête spéciale pour invoquer l'espri
 et avait ensuite dû accomplir une série de tâches pour gagner sa confiance.
 Hounoana écoutait attentivement, prenant note des informations pour qu'elle aussi puisse avoir un jour un compagnon aussi spécial.
 
-![Alt text](../../../public/img/I1-003.jpg)
+![Alt text](/img/I1-003.jpg)
 
 Les deux joueurs discutèrent encore un moment, partageant des histoires de leurs aventures dans le jeu.
 Hounoana était heureuse de rencontrer un autre joueur sympathique,
@@ -79,7 +79,7 @@ Elle n'avait jamais affronté le Béhémoth des ombres,
 mais elle avait entendu dire que c'était un adversaire redoutable.
 Elle se tourna vers Rolfben, curieuse de voir sa monture de siège.
 
-![Alt text](../../../public/img/I1-004.png)
+![Alt text](/img/I1-004.png)
 
 "Une monture de siège ?" demanda-t-elle. "Je n'en ai jamais vu avant. C'est quoi exactement ?"
 
@@ -89,7 +89,7 @@ Rolfben rit joyeusement en entendant la question.
 expliqua-t-il. "Je pense que ma tortue de siège sera utile pour ce combat contre le Béhémoth.
 Viens, monte dessus avec moi et tu verras".
 
-![Alt text](../../../public/img/I1-005.png)
+![Alt text](/img/I1-005.png)
 
 Hounoana accepta avec enthousiasme l'invitation et grimpa sur la tortue de siège de Rolfben.
 Elle était émerveillée par le fonctionnement de l'engin.
@@ -101,7 +101,7 @@ et Hounoana pouvait sentir l'énergie maléfique émanant de sa silhouette sombr
 Mais elle était prête. Avec Rolfben et les autres joueurs à ses côtés,
 elle était déterminée à vaincre cet ennemi et à protéger Tyrie.
 
-![Alt text](../../../public/img/I1-006.png)![Alt text](../../../public/img/I1-007.png)
+![Alt text](/img/I1-006.png)![Alt text](/img/I1-007.png)
 "image du jeux"
 Le combat fut intense et long, mais finalement le groupe réussit à vaincre le Béhémoth des ombres.
 Hounoana était épuisée mais fière d'avoir participé à une telle bataille.
@@ -124,7 +124,7 @@ Elle était impatiente de continuer son aventure dans Tyrie et de découvrir ce 
 répondit-elle avec détermination.
 "Je suis prête à tout pour devenir plus forte et à poursuivre mon aventure".
 
-![Alt text](../../../public/img/I1-008.png)
+![Alt text](/img/I1-008.png)
 
 Rolfben sourit à nouveau, satisfait de la réponse de Hounoana.
 
@@ -137,7 +137,7 @@ Elle avait hâte de découvrir les événements qui se déroulaient dans la rég
 de relever de nouveaux défis pour devenir plus forte et plus compétente.
 Elle savait qu'elle avait encore beaucoup à apprendre, mais elle était prête à tout pour y arriver.
 
-![Alt text](../../../public/img/I1-009.png)![Alt text](../../../public/img/I1-010.png)
+![Alt text](/img/I1-009.png)![Alt text](/img/I1-010.png)
 
 Hounoana était ravie d'avoir atteint le niveau 15 après une semaine d'exploration et de combat dans Tyrie.
 Elle avait hâte de découvrir ce que Rolfben avait en réserve pour elle
@@ -153,7 +153,7 @@ Il lui donna un parchemin et lui dit :
 Mais attention, ce ne sera pas facile. Tu devras affronter des ennemis redoutables et résoudre des énigmes complexes."
 
 Hounoana prit le parchemin avec empressement et remercia Rolfben pour son aide.
-![Alt text](../../../public/img/I1-011.jpg)
+![Alt text](/img/I1-011.jpg)
 "Je suis prête pour cette quête.
 Montre-moi le chemin !" dit-elle, déterminée à relever ce nouveau défi.
 
@@ -166,11 +166,11 @@ Hounoana se mit en route pour la capitale, déterminée à accomplir sa nouvelle
 à découvrir les plans des rebelles.
 Elle arriva à Divinity's Reach, la capitale des humains,
 et se mit immédiatement à chercher des indices sur les rebelles.
-![Alt text](../../../public/img/I1-012.png)
+![Alt text](/img/I1-012.png)
 Elle écouta les conversations des passants,
 visita les endroits les plus fréquentés de la ville et s'approcha des gens qui semblaient suspects.
 Finalement, elle parvint à trouver un indice qui l'amena à une taverne cachée dans les rues sombres de la ville.
-![Alt text](../../../public/img/I1-013.jpg)![Alt text](../../../public/img/I1-014.jpg)
+![Alt text](/img/I1-013.jpg)![Alt text](/img/I1-014.jpg)
 En entrant dans la taverne, Hounoana fut accueillie par des regards méfiants.
 Elle se dirigea vers le bar et commanda une boisson.
 Elle s'assit et écouta les conversations autour d'elle,
@@ -179,12 +179,12 @@ espérant entendre quelque chose qui lui permettrait de découvrir les plans des
 Soudain, elle entendit un murmure provenant d'un coin sombre de la taverne.
 Elle se leva discrètement et se glissa derrière un rideau.
 Elle vit alors un groupe de rebelles, discutant de leurs plans pour renverser la reine.
-![Alt text](../../../public/img/I1-015.png)
+![Alt text](/img/I1-015.png)
 Hounoana écouta attentivement, prenant note de chaque détail.
 Elle se fraya un chemin hors de la taverne, satisfaite d'avoir obtenu des informations vitales pour sa quête.
 Mais elle savait que le plus dur était à venir.
 Elle devrait maintenant utiliser ces informations pour empêcher les rebelles de réussir leur coup.
-![Alt text](../../../public/img/I1-016.png)
+![Alt text](/img/I1-016.png)
 Elle retourna voir Rolfben, qui lui donna les instructions pour accomplir cette mission délicate.
 Elle prit une grande inspiration, se préparant pour le défi qui l'attendait.
 Elle avait désormais un nouveau but,
@@ -192,7 +192,7 @@ celui de protéger la reine et d'empêcher les rebelles de nuire à la ville et 
 Alors qu'Hounoana et Rolfben élaboraient leur plan pour contrer les rebelles,
 une voix familière se fit entendre derrière eux.
 C'était Marjory Delaqua, une détective renommée et une alliée précieuse dans de nombreuses aventures passées.
-![Alt text](../../../public/img/I1-017.jpg)
+![Alt text](/img/I1-017.jpg)
 "image du jeux"
 
 "Hounoana, Rolfben, je vous ai suivis discrètement jusqu'ici",
@@ -204,7 +204,7 @@ Elle savait que la détective avait une grande expérience dans la résolution d
 
 "Marjory, c'est génial que tu sois ici", s'exclama-t-elle.
 "Nous avons besoin de toute l'aide possible pour mettre fin à ce complot. Que proposes-tu ?"
-![Alt text](../../../public/img/I1-018.jpg)
+![Alt text](/img/I1-018.jpg)
 Marjory sortit un carnet de notes de sa poche et commença à expliquer sa théorie sur les intentions des rebelles et
 les personnes clés impliquées.
 
@@ -213,7 +213,7 @@ dit-elle. "Je crois qu'ils sont liés à une organisation secrète connue sous l
 Leur objectif est de renverser la reine et de semer le chaos dans le royaume."
 
 Hounoana et Rolfben écoutaient attentivement, impressionnés par les connaissances de Marjory.
-![Alt text](../../../public/img/I1-019.png)
+![Alt text](/img/I1-019.png)
 "Je propose que nous infiltrions leur repaire et que nous réunissions suffisamment de preuves pour les arrêter",
 continua Marjory.
 "Avec nos compétences combinées, nous devrions pouvoir les démasquer et mettre fin à leurs machinations."
@@ -227,7 +227,7 @@ Ils savaient que la tâche serait difficile, mais avec Marjory à leurs côtés,
 
 Le trio se mit immédiatement en route vers le repaire de L'Ombre Écarlate,
 déterminés à faire échouer leur complot et à préserver la paix dans le royaume.
-![Alt text](../../../public/img/I1-020.png)
+![Alt text](/img/I1-020.png)
 Dans le palais de la reine à Divinity's Reach, l'agitation régnait parmi les serviteurs et les gardes.
 La reine humaine, Jennah, était informée des rumeurs de complot visant à renverser le pouvoir légitime.
 Elle savait qu'elle devait prendre des mesures pour assurer la sécurité du royaume.
@@ -235,7 +235,7 @@ Elle savait qu'elle devait prendre des mesures pour assurer la sécurité du roy
 La reine convoqua Logan Thackeray, le commandant de la Garde du Lion, un homme loyal et dévoué.
 Elle lui confia la mission de renforcer la sécurité du palais et
 de découvrir les traîtres qui conspiraient contre elle.
-![Alt text](../../../public/img/I1-021.png)
+![Alt text](/img/I1-021.png)
 Logan Thackeray accepta avec détermination.
 Il rassembla une équipe de gardes d'élite et commença à fouiller les moindres recoins du palais,
 en quête d'indices et de toute activité suspecte. La sécurité de la reine était sa priorité absolue.
@@ -248,7 +248,7 @@ et elle devait se montrer vigilante.
 Elle décida de prendre des mesures supplémentaires pour renforcer la protection du palais et
 la sécurité de ses sujets. Elle envoya des messages urgents à ses alliés les plus fiables,
 sollicitant leur aide dans la préservation de la paix et de la stabilité du royaume.
-![Alt text](../../../public/img/I1-022.png)
+![Alt text](/img/I1-022.png)
 La reine savait que le danger était imminent, mais elle refusait de céder à la peur.
 Elle se préparait mentalement et physiquement à faire face à tous les défis qui se dressaient devant elle.
 Elle était déterminée à protéger son peuple et à défendre son trône contre ceux qui cherchaient à le renverser.
@@ -258,7 +258,7 @@ La reine Jennah, Logan Thackeray et leurs alliés étaient prêts à se battre
 pour la justice et à déjouer les plans des conspirateurs.
 Leur destin était intimement lié, et l'issue de cette bataille déciderait du sort de Divinity's Reach et
 de son peuple.
-![Alt text](../../../public/img/I1-023.jpg)
+![Alt text](/img/I1-023.jpg)
 Le trio composé de Hounoana, Rolfben et Marjory Delaqua arriva enfin au repaire d'Étherlame,
 le quartier général de L'Ombre Écarlate. Le bâtiment se dressait devant eux,
 une structure imposante aux allures mystérieuses et sinistres.
@@ -271,7 +271,7 @@ Ensemble, ils élaborèrent un plan d'infiltration minutieux.
 Marjory leur indiqua les chemins les moins surveillés,
 les gardes à éviter et les moyens de contourner les pièges dissimulés.
 Ils devaient agir avec discrétion et efficacité pour ne pas alerter les rebelles.
-![Alt text](../../../public/img/I1-024.png)
+![Alt text](/img/I1-024.png)
 Le trio se glissa furtivement à l'intérieur du repaire.
 Ils se déplaçaient silencieusement dans les couloirs sombres,
 évitant les patrouilles ennemies et se cachant dans les recoins lorsque nécessaire.
@@ -281,7 +281,7 @@ découvrir les plans de L'Ombre Écarlate et mettre fin à leur menace.
 
 Ils atteignirent enfin une salle où les membres de L'Ombre Écarlate se réunissaient secrètement.
 Par des fissures dans les murs, ils pouvaient voir et entendre les conversations des conspirateurs.
-![Alt text](../../../public/img/I1-025.png)
+![Alt text](/img/I1-025.png)
 Hounoana et Rolfben se tenaient prêts, leurs armes à la main,
 tandis que Marjory prenait des notes précieuses sur les intentions des rebelles.
 Ils recueillaient des preuves pour exposer leur complot et les traduire en justice.
@@ -302,7 +302,7 @@ Leurs compétences, leur détermination et leur alliance formaient un rempart so
 Le combat était sur le point de commencer.
 Le sort du royaume reposait maintenant entre leurs mains,
 et ils étaient prêts à risquer tout ce qu'ils avaient pour le protéger
-![Alt text](../../../public/img/I1-026.jpg)
+![Alt text](/img/I1-026.jpg)
 Alors que les héros se trouvaient au centre du palais, ils étaient confrontés à une redoutable invocation :
 un animatronique métallique d'une taille imposante.
 Les lames acérées de la créature scintillaient à la lueur des torches, prête à frapper.
@@ -311,7 +311,7 @@ Les lames acérées de la créature scintillaient à la lueur des torches, prêt
 Hounoana, Rolfben et Marjory luttaient pour tenir bon.
 C'est alors qu'une figure mystérieuse, vêtue de robes d'un vert éclatant, fit son entrée.
 Wyka, la druide heal légendaire, était arrivée.
-![Alt text](../../../public/img/I1-027.png)
+![Alt text](/img/I1-027.png)
 Wyka concentra son énergie et invoqua les forces curatives de la nature.
 Une aura de guérison enveloppa les trois héros, apaisant leurs douleurs et restaurant leur vitalité.
 Leurs forces se renouvelèrent, et leur détermination retrouvée
@@ -322,7 +322,7 @@ la ralentissant et la déséquilibrant.
 
 Hounoana, Rolfben et Marjory profitèrent de cette opportunité pour frapper avec une intensité renouvelée.
 Leurs attaques coordonnées firent voler des étincelles, martelant les défenses de l'animatronique métallique.
-![Alt text](../../../public/img/I1-028.png)
+![Alt text](/img/I1-028.png)
 La druide Wyka continua à soutenir le groupe avec ses pouvoirs de guérison.
 Elle canalisait l'énergie de la nature pour protéger ses alliés des attaques les plus féroces de la créature.
 Les blessures étaient rapidement guéries, et l'énergie vitale des héros était constamment renouvelée.
@@ -331,7 +331,7 @@ Le combat atteignit son apogée dans un tourbillon de fureur et de magie.
 Les attaques précises des héros et les soins prodigués par Wyka commencèrent à prendre le dessus
 sur l'animatronique métallique.
 Ses mouvements se firent moins assurés, et ses défenses commencèrent à céder.
-![Alt text](../../../public/img/I1-029.png)
+![Alt text](/img/I1-029.png)
 Finalement, avec un dernier effort collectif, Hounoana, Rolfben, Marjory et Wyka portèrent le coup final.
 L'animatronique métallique s'effondra avec un grondement métallique,
 révélant sa vulnérabilité face à la détermination et à la coopération des héros.
@@ -346,7 +346,7 @@ Ensemble, ils se préparaient à affronter les prochaines épreuves,
 prêts à défendre le royaume et à protéger ceux qui en avaient besoin.
 
 Leur combat contre l'animatronique métallique était terminé, mais leur aventure ne faisait que commencer.
-![Alt text](../../../public/img/I1-030.png)
+![Alt text](/img/I1-030.png)
 À peine remis de leur victoire contre l'animatronique métallique,
 les héros furent pris de court par la voix glaciale de Scarlet résonnant dans le palais.
 
@@ -360,7 +360,7 @@ Ils devaient agir rapidement pour contrer ses plans et protéger la population i
 Hounoana, Rolfben, Marjory et Wyka échangèrent un regard déterminé.
 Ils savaient qu'ils devaient se préparer à affronter cette nouvelle menace.
 Leurs compétences, leur alliance et leur résolution seraient mises à l'épreuve dans cette bataille cruciale.
-![Alt text](../../../public/img/I1-031.jpg)
+![Alt text](/img/I1-031.jpg)
 Hounoana et Rolfben, les deux héros se rendirent d'abord au territoire des Chars,
 une race féline et féroce.
 Ils étaient accueillis avec une méfiance naturelle,
@@ -377,7 +377,7 @@ tandis que Hounoana et Rolfben partageraient leur expertise en combat et en stra
 Après de longues discussions et délibérations,
 les Chars acceptèrent de se joindre à la cause pour protéger l'Arche du Lion.
 
-![Alt text](../../../public/img/I1-032.jpg)
+![Alt text](/img/I1-032.jpg)
 Arrivés près de l'Arche du Lion, les peuples découvrirent qu'il y avait trois points d'entrée.
 Soudain, un zeppelin imposant surgit dans le ciel, portant une gigantesque foreuse mécanique.
 Une musique rythmée s'échappait du zeppelin, annonçant l'arrivée imminente des forces de Scarlet.
@@ -408,7 +408,7 @@ Malgré leur détermination et leur force, les héros et
 les peuples étaient confrontés à des vagues incessantes de soldats de Scarlet.
 Les pertes étaient lourdes, mais ils continuaient de se battre avec courage et ténacité.
 Les sacrifices des uns alimentaient la détermination des autres.
-![Alt text](../../../public/img/I1-033.jpg)
+![Alt text](/img/I1-033.jpg)
 Hounoana, Rolfben, Scarlet et Wyka se trouvaient au cœur de la bataille,
 guidant leurs alliés et combattant aux côtés des peuples.
 Ils savaient que leur union et leur persévérance étaient essentielles pour vaincre Scarlet et
@@ -438,7 +438,7 @@ au sommet de la foreuse mécanique.
 Elle maîtrisait les hologrammes avec une habileté déconcertante,
 créant des illusions déroutantes pour désorienter ses adversaires.
 
-![Alt text](../../../public/img/I1-034.jpg)
+![Alt text](/img/I1-034.jpg)
 Le combat débuta dans une danse chaotique entre la réalité et les illusions.
 Les héros et Scarlet s'affrontèrent avec une détermination farouche,
 utilisant leurs compétences spéciales pour contrer les attaques et riposter avec force.
@@ -460,7 +460,7 @@ Les illusions des deux reines se mêlaient, créant une confusion intense.
 Hounoana, Rolfben et Wyka savaient qu'ils devaient continuer à se battre pour distraire Scarlet,
 laissant à Jennah l'opportunité de trouver l'ouverture dans ses défenses.
 Chaque attaque était minutieusement calculée, chaque esquive précise.
-![Alt text](../../../public/img/I1-035.jpg)
+![Alt text](/img/I1-035.jpg)
 Alors que le duel entre Jennah et Scarlet atteignait son paroxysme,
 Marjory Delaqua, la voleuse experte, choisit son moment.
 Utilisant sa compétence du Pas de l'Ombre, elle se rendit invisible pendant quelques instants,
@@ -476,7 +476,7 @@ Alors que Scarlet gisait au sol, gravement blessée,
 les héros et les peuples de Tyrie se préparaient à célébrer leur victoire.
 Cependant, la foreuse mécanique, au lieu de se briser, commença à émettre un grondement sinistre.
 Dans son dernier souffle, Scarlet avait enclenché un plan désespéré.
-![Alt text](../../../public/img/I1-036.jpg)![Alt text](../../../public/img/I1-037.jpg)
+![Alt text](/img/I1-036.jpg)![Alt text](/img/I1-037.jpg)
 Les quatre drones qui maintenaient la foreuse dans les airs la lâchèrent,
 et l'immense machine s'enfonça dans le sol. Elle creusa profondément,
 atteignant les entrailles de la terre.
@@ -492,7 +492,7 @@ Les héros et les peuples comprirent immédiatement la gravité de la situation.
 Le combat contre Scarlet n'était qu'une étape,
 une diversion pour permettre à cette nouvelle menace de prendre forme.
 Leur victoire n'était qu'un répit temporaire face à une menace bien plus grande.
-![Alt text](../../../public/img/I1-038.jpg)
+![Alt text](/img/I1-038.jpg)
 Les regards se remplirent de détermination
 alors que Hounoana, Rolfben, Scarlet et Wyka se préparaient à affronter ce nouveau défi.
 Ils savaient que la saison 2 de leur aventure venait de commencer,
@@ -512,7 +512,7 @@ Après les épreuves intenses qu'elle avait traversées,
 Hounoana décida de prendre un moment pour elle et de retourner dans sa maison située dans la capitale humaine.
 Elle avait besoin de temps pour se ressourcer, réfléchir
 et se remémorer tout ce qu'elle avait vécu depuis le début de son aventure.
-![Alt text](../../../public/img/I1-039.png)
+![Alt text](/img/I1-039.png)
 Alors qu'elle se promenait dans les rues familières,
 Hounoana se rappelait les nombreux combats qu'elle avait menés,
 les rencontres fascinantes qu'elle avait faites et les paysages magnifiques qu'elle avait explorés.
@@ -527,7 +527,7 @@ La lettre décrivait une menace grandissante dans les profondeurs de la jungle d
 une région inhospitalière et dangereuse.
 Hounoana savait qu'elle ne pouvait pas rester inactive face à cette nouvelle menace.
 Son devoir de héros l'appelait à nouveau.
-![Alt text](../../../public/img/I1-040.png)
+![Alt text](/img/I1-040.png)
 Dans son cœur, Hounoana sentit une détermination renouvelée,
 une flamme qui brûlait d'aventure et de courage.
 Elle savait que la saison 2 de son aventure commençait,

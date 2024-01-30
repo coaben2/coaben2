@@ -1,4 +1,4 @@
-## Le lierre et la rosse
+## Le lierre et la rose
 
 Il était une fois une magnifique rose, épanouie et fière dans un jardin enchanteur.
 Elle dégageait un parfum envoûtant et attirait l'attention de tous ceux qui la croisaient.
