@@ -1,9 +1,11 @@
 <template>
-  <div class="container max-w-2xl mx-auto bg-black bg-opacity-75 p-6 pb-2 md:rounded-lg md:my-6">
-    <h1>Lexique Guild wars 2</h1>
-    <p>merci a Kerhara pour ces informations</p>
-    <h2>Fractal/frac :</h2>
-    <p>instance pour groupe de 5 personnes. Sorte de donjon qui à une difficulté progressive</p>
+  <div
+    class="container max-w-2xl mx-auto bg-black bg-opacity-75 p-6 pb-2 md:rounded-lg md:my-6 content"
+  >
+    <h1 class="mb-4">Lexique Guild wars 2</h1>
+    <p><em>Merci a Kerhara pour ces informations.</em></p>
+    <h2>Fractal/frac</h2>
+    <p>Instance pour groupe de 5 personnes. Sorte de donjon qui a une difficulté progressive.</p>
     <h2>RA ou AR</h2>
     <p>
       Amélioration que l'on obtient en faisant des fractals et que l'on place sur des emplacement de
@@ -98,20 +100,30 @@
       les Kill Proof, <br />qui sont les morceaux de décorations que l'on obtient lorsque l'on tue
       un boss (entre 1 à 5 par boss).
     </p>
-    <h2>liste des rôles/classes recherchés.</h2>
+    <h2>Liste des rôles/classes recherchés</h2>
+    <h3>HFB</h3>
+    <p>pour Heal FireBrand...</p>
+    <ul>
+      <li>qfb (pour Quick FireBrand),</li>
+      <li>alac (n'importe quelle classe pouvant donner le boon alac en groupe),</li>
+      <li>heal (n'importe quelle classe pouvant heal),</li>
+      <li>dps (n'importe quelle classe pouvant dps power ou condi),</li>
+      <li>
+        tank (n'importe quelle classe pour tanker. Necessite soit de la robustesse soit connaitre la
+        mechanique),
+      </li>
+      <li>
+        bs (pour Banner Slave, les guerriers utilisant les bannieres donnent un buff sur 10
+        personnes ⚠️ vouer à disparaitres avec le rework des bannieres),
+      </li>
+      <li>quick (nimporte quelle classe pouvant apporter le boon quick en groupe),</li>
+    </ul>
     <p>
-      <br />- hfb (pour Heal FireBrand), <br />- qfb (pour Quick FireBrand), <br />- alac (n'importe
-      quelle classe pouvant donner le boon alac en groupe), <br />- heal (n'importe quelle classe
-      pouvant heal), <br />- dps (n'importe quelle classe pouvant dps power ou condi), <br />- tank
-      (n'importe quelle classe pour tanker. Necessite soit de la robustesse soit connaitre la
-      mechanique), <br />- bs (pour Banner Slave, les guerriers utilisant les bannieres donnent un
-      buff sur 10 personnes /!\ vouer à <br />disparaitres avec le rework des bannieres), <br />-
-      quick (nimporte quelle classe pouvant apporter le boon quick en groupe), <br />- dudu (pour
-      Druide), <br />- cdps (Condition dps, n'importe quelle classe pouvant dps condition), <br />-
-      hk (Rôle = Hand Kite, pour mechanique sur deimos), <br />- canon (Rôle, pour mechanique des
-      cannons sur sabetha par e xemple), <br />- kite (Rôle, mechanique qui consiste à courir/rester
-      éloigné du groupe), <br />- push (Rôle, mechanique qui consiste a pousser qlqchose), <br />-
-      tower (Rôle, mechanique de la w3 sur l'escorte), <br />ect...
+      - dudu (pour Druide), <br />- cdps (Condition dps, n'importe quelle classe pouvant dps
+      condition), <br />- hk (Rôle = Hand Kite, pour mechanique sur deimos), <br />- canon (Rôle,
+      pour mechanique des cannons sur sabetha par e xemple), <br />- kite (Rôle, mechanique qui
+      consiste à courir/rester éloigné du groupe), <br />- push (Rôle, mechanique qui consiste a
+      pousser qlqchose), <br />- tower (Rôle, mechanique de la w3 sur l'escorte), <br />ect...
 
       <br />- cDPS/pDPS : DPS c'est le diminutif de Damage Per Second (de l'anglais bien évidement).
       <br />Quand on parle de dps on parle donc des dégâts que le personnage est capable d'infliger.
@@ -130,16 +142,19 @@
     </p>
     <h2>Strike ou mission d'attaque</h2>
     <p>Instance PvE de 10 personnes</p>
-    <h2>liste des strike</h2>
+    <h2>Liste des missions d'attaque (strike)</h2>
+    <ol>
+      <li>Col des Cimefroides</li>
+      <li>Voix et Griffe légendaires des déchus</li>
+      <li>Fraenir de Jormag</li>
+      <li>Désosseur</li>
+      <li>Murmure de Jormag</li>
+      <li>Forge de l'acier</li>
+      <li>Guerre froide</li>
+    </ol>
     <p>
-      <br />IBS (IceBrood Saga)
-
-      <br />1-Col des Cimefroides <br />2-Voix et Griffe légendaires des déchus <br />3-Fraenir de
-      Jormag <br />4-Désosseur <br />5-Murmure de Jormag <br />6-Forge de l'acier <br />7-Guerre
-      froide
-
-      <br />dans le LFG il y auras souvant des groupe pour IBS3 pour ne faire que les 3 pmières
-      strikes <br />qui sont les plus simple
+      dans le LFG il y auras souvant des groupe pour IBS3 pour ne faire que les 3 pmières strikes
+      <br />qui sont les plus simple
     </p>
     <p>
       <br />EOD (end of dragon)
@@ -154,3 +169,31 @@
     </p>
   </div>
 </template>
+
+<style scoped>
+ul,
+ol {
+  @apply text-lg ml-6;
+}
+
+ul {
+  @apply list-disc;
+}
+
+ol {
+  @apply list-decimal;
+}
+
+p,
+h2,
+h3,
+h4,
+ol,
+ul {
+  @apply mb-4;
+}
+
+h2 {
+  @apply mt-8;
+}
+</style>
