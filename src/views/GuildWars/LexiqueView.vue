@@ -3,7 +3,9 @@
     <h1>Lexique Guild Wars 2</h1>
     <p>merci à Kerhara pour ces informations</p>
     <h2>Fractal/frac :</h2>
-    <p>instance pour groupe de 5 personnes. Sorte de donjon qui à une difficulté progressive</p>
+    <p>instance pour groupe de 5 personnes.
+      <br />Sorte de donjon qui à une difficulté progressive
+    </p>
     <h2>RA ou AR</h2>
     <p>
       Amélioration que l'on obtient en faisant des fractals et que l'on place sur des emplacements
@@ -13,7 +15,7 @@
       de mettre des +9 pour atteindre ce nombre.
 
       <br />18 emplacements * +9 = 162 de RA
-
+    <ul>
       <li>T1 : 1 à 25 </li>Niveau de difficulté 20+ = 25 AR
       <li>T2 : 26 à 50 </li>Difficulté 30+ palier = 40 AR <br />Difficulté 40+ palier = 55 AR <br />Difficulté 50+ palier
       =
@@ -21,6 +23,7 @@
       <li>T3 : 51 à 75 </li> Niveau de difficulté 60+ = 85 AR <br />Difficulté 70+ palier = 100 AR
       <li>T4 : 76 à 100 </li> Difficulté 80+ palier = 115 AR <br />Niveau de difficulté 90+ = 130
       AR <br />Niveau de difficulté 100 = 145 AR
+    </ul>
     </p>
     <h2>CM (Challenge Mode) :</h2>
     <p>
@@ -125,24 +128,27 @@
       <li>etc ...</li>
     </ul>
     <H2>cDPS/pDPS</H2>
-    <li>DPS c'est le diminutif de Damage Per Second</li>
-    Quand on parle de dps on parle donc des dégâts que le personnage est capable d'infliger.
-    <br />En général on cherche a avoir le plus de dégâts par seconde pour tuer les mobs/boss très
-    vite.
-    <li>Cdps pour : Condi DPS. En français ce sont les altérations.</li>
-    Dans d'autres mmo on appel souvent sa des DOTs (pour Damage Over Time). <br />Ce sont
-    donc les builds qui basent leur dps sur l'application de poison, brulure, confusion,
-    saignement, tourment.
-    <li>Pdps c'est pour : Power dps.</li>
-    Ce sont les builds basé sur les dégâts directe, <br />autrement dit chaque coup porté doit infliger le plus de dégâts
-    possible
-    et plus on tape vite.
-    <li>HAM pour Heal Alac Mechanist</li>
-    C'est la spécialisation orienté soin de la 3eme extension de la classe ingénieur.
+    <ul>
+      <li>DPS c'est le diminutif de Damage Per Second</li>
+      Quand on parle de dps on parle donc des dégâts que le personnage est capable d'infliger.
+      <br />En général on cherche a avoir le plus de dégâts par seconde pour tuer les mobs/boss très
+      vite.
+      <li>Cdps pour : Condi DPS. En français ce sont les altérations.</li>
+      Dans d'autres mmo on appel souvent sa des DOTs (pour Damage Over Time). <br />Ce sont
+      donc les builds qui basent leur dps sur l'application de poison, brulure, confusion,
+      saignement, tourment.
+      <li>Pdps c'est pour : Power dps.</li>
+      Ce sont les builds basé sur les dégâts directe, <br />autrement dit chaque coup porté doit infliger le plus de
+      dégâts
+      possible
+      et plus on tape vite.
+      <li>HAM pour Heal Alac Mechanist</li>
+      C'est la spécialisation orienté soin de la 3eme extension de la classe ingénieur.
 
-    <li>BU ou Back Up :Personne qui reprend le rôle ou les mécaniques.
-      <br /> si le tank principal meurt.
-    </li>
+      <li>BU ou Back Up :Personne qui reprend le rôle ou les mécaniques.
+        <br /> si le tank principal meurt.
+      </li>
+    </ul>
     <h2>Strike ou mission d'attaque</h2>
     <p>Instance PvE de 10 personnes</p>
     <h2>liste des missions d'attaque (strike)</h2>
