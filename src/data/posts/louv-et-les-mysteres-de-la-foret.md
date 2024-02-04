@@ -32,7 +32,7 @@ et les étoiles brillaient avec une intensité surnaturelle.
 Quels mystères l'attendaient à la Cour des Espèces Anciennes ?
 Et comment cela pourrait-il changer le destin de la louve Kan ?
 
-![Alt text](../../../public/img/Louv.png)
+![Alt text](/img/Louv.png)
 
 ## Chapitre 2 : Les Secrets de Coaben le Murloc
 
@@ -64,7 +64,7 @@ Cependant, à mesure qu'il se liait d'amitié avec Kan et d'autres,
 il commença à réaliser que chacun avait une histoire à raconter, un savoir à partager,
 et que l'âge était une richesse en soi.
 
-![Alt text](../../../public/img/coaben.png)
+![Alt text](/img/coaben.png)
 
 ## Chapitre 3 : Le Dilemme de Wyka la Loutre
 
@@ -104,7 +104,7 @@ menaçant de perturber cet équilibre.
 Wyka, avec ses compétences aquatiques et son lien profond avec la nature,
 était peut-être la clé pour résoudre ce mystère.
 
-![Alt text](../../../public/img/otter.png)
+![Alt text](/img/otter.png)
 
 ## Chapitre 4 : Les Aventures Maladroites de Kyrine le Chien-Loup
 
@@ -137,7 +137,7 @@ Les quatre compagnons comprirent alors que leur convocation à la Cour des Espè
 Une force sombre tentait de s'en emparer, mettant en péril non seulement la Cour,
 mais toute la nature environnante.
 
-![Alt text](../../../public/img/Kyrine.jpg)
+![Alt text](/img/Kyrine.jpg)
 
 ## Chapitre Final : La Confrontation
 
@@ -187,4 +187,4 @@ offrit aux aventuriers des cadeaux magiques en signe de reconnaissance.
 Kyrine, Kan, Coaben et Wyka savaient que leur amitié et leur bravoure avaient changé le destin de la forêt et
 des célébrations hivernales pour toujours.
 
-![Alt text](../../../public/img/pereno%C3%ABl-001.jpg)
+![Alt text](/img/perenoël-001.jpg)

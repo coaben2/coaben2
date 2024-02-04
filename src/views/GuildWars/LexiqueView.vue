@@ -32,7 +32,7 @@
     </p>
     <h2>MC ou Mytic Coin :</h2>
     <p>
-      C'est les pièces mystique
+      Ce sont les pièces mystique
       <br />Item qui sert a crafter toute sorte de légendaire. <br />avec SOTO on peut en obtenir
       dans la tour du sorcier
     </p>
