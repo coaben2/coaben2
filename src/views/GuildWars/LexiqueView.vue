@@ -1,23 +1,29 @@
 <template>
   <div class="container max-w-2xl mx-auto bg-black bg-opacity-75 p-6 pb-2 md:rounded-lg md:my-6">
-    <h1>Lexique Guild wars 2</h1>
-    <p>merci a Kerhara pour ces informations</p>
+    <h1>Lexique Guild Wars 2</h1>
+    <p>merci à Kerhara pour ces informations</p>
     <h2>Fractal/frac :</h2>
-    <p>instance pour groupe de 5 personnes. Sorte de donjon qui à une difficulté progressive</p>
+    <p>instance pour groupe de 5 personnes.
+      <br />Sorte de donjon qui à une difficulté progressive
+    </p>
     <h2>RA ou AR</h2>
     <p>
-      Amélioration que l'on obtient en faisant des fractals et que l'on place sur des emplacement de
-      l'équipement élevé.
+      Amélioration que l'on obtient en faisant des fractals et que l'on place sur des emplacements
+      de l'équipement élevé.
+
       <br />150 de RA sont nécéssaire pour faire la fractal niveaux 100. <br />On conseil en général
       de mettre des +9 pour atteindre ce nombre.
 
-      <br />18 emplacement * +9 = 162 de RA
-
-      <br />T1 : 1 à 25 <br />Niveau de difficulté 20+ = 25 AR <br />T2 : 26 à 50 <br />Difficulté
-      30+ palier = 40 AR <br />Difficulté 40+ palier = 55 AR <br />Difficulté 50+ palier = 70 AR
-      <br />T3 : 51 à 75 <br />Niveau de difficulté 60+ = 85 AR <br />Difficulté 70+ palier = 100 AR
-      <br />T4 : 76 à 100 <br />Difficulté 80+ palier = 115 AR <br />Niveau de difficulté 90+ = 130
+      <br />18 emplacements * +9 = 162 de RA
+    <ul>
+      <li>T1 : 1 à 25 </li>Niveau de difficulté 20+ = 25 AR
+      <li>T2 : 26 à 50 </li>Difficulté 30+ palier = 40 AR <br />Difficulté 40+ palier = 55 AR <br />Difficulté 50+ palier
+      =
+      70 AR
+      <li>T3 : 51 à 75 </li> Niveau de difficulté 60+ = 85 AR <br />Difficulté 70+ palier = 100 AR
+      <li>T4 : 76 à 100 </li> Difficulté 80+ palier = 115 AR <br />Niveau de difficulté 90+ = 130
       AR <br />Niveau de difficulté 100 = 145 AR
+    </ul>
     </p>
     <h2>CM (Challenge Mode) :</h2>
     <p>
@@ -99,58 +105,103 @@
       un boss (entre 1 à 5 par boss).
     </p>
     <h2>liste des rôles/classes recherchés.</h2>
-    <p>
-      <br />- hfb (pour Heal FireBrand), <br />- qfb (pour Quick FireBrand), <br />- alac (n'importe
-      quelle classe pouvant donner le boon alac en groupe), <br />- heal (n'importe quelle classe
-      pouvant heal), <br />- dps (n'importe quelle classe pouvant dps power ou condi), <br />- tank
-      (n'importe quelle classe pour tanker. Necessite soit de la robustesse soit connaitre la
-      mechanique), <br />- bs (pour Banner Slave, les guerriers utilisant les bannieres donnent un
-      buff sur 10 personnes /!\ vouer à <br />disparaitres avec le rework des bannieres), <br />-
-      quick (nimporte quelle classe pouvant apporter le boon quick en groupe), <br />- dudu (pour
-      Druide), <br />- cdps (Condition dps, n'importe quelle classe pouvant dps condition), <br />-
-      hk (Rôle = Hand Kite, pour mechanique sur deimos), <br />- canon (Rôle, pour mechanique des
-      cannons sur sabetha par e xemple), <br />- kite (Rôle, mechanique qui consiste à courir/rester
-      éloigné du groupe), <br />- push (Rôle, mechanique qui consiste a pousser qlqchose), <br />-
-      tower (Rôle, mechanique de la w3 sur l'escorte), <br />ect...
 
-      <br />- cDPS/pDPS : DPS c'est le diminutif de Damage Per Second (de l'anglais bien évidement).
-      <br />Quand on parle de dps on parle donc des dégâts que le personnage est capable d'infliger.
+    <ul>
+      <li>hfb (pour Heal FireBrand)</li>
+      <li>qfb (pour Quick FireBrand)</li>
+      <li>alac (n'importe
+        quelle classe pouvant donner le boon alac en groupe)</li>
+      <li>heal (n'importe quelle classe
+        pouvant heal)</li>
+      <li>dps (n'importe quelle classe pouvant dps power ou condi)</li>
+      <li>tank
+        (n'importe quelle classe pour tanker.<br /> Necessite soit de la robustesse soit connaitre la
+        mechanique)</li>
+      <li>bs (pour Banner Slave)</li>
+      <li>quick (nimporte quelle classe pouvant apporter le boon quick en groupe)</li>
+      <li>dudu (pour Druide)</li>
+      <li>cdps (Condition dps, n'importe quelle classe pouvant dps condition)</li>
+      <li>hk (Rôle = Hand Kite, pour mechanique sur deimos)</li>
+      <li>kite (Rôle, mechanique qui consiste à courir/rester
+        éloigné du groupe)</li>
+      <li>Push (Rôle, mechanique qui consiste a pousser quelque chose)</li>
+      <li>etc ...</li>
+    </ul>
+    <H2>cDPS/pDPS</H2>
+    <ul>
+      <li>DPS c'est le diminutif de Damage Per Second</li>
+      Quand on parle de dps on parle donc des dégâts que le personnage est capable d'infliger.
       <br />En général on cherche a avoir le plus de dégâts par seconde pour tuer les mobs/boss très
-      vite. <br />- Cdps est la précision pour : Condi DPS. En français ce sont les altérations.
-      <br />Dans d'autres mmo on appel souvent ca des DOTs (pour Damage Over Time). <br />Ce sont
+      vite.
+      <li>Cdps pour : Condi DPS. En français ce sont les altérations.</li>
+      Dans d'autres mmo on appel souvent sa des DOTs (pour Damage Over Time). <br />Ce sont
       donc les builds qui basent leur dps sur l'application de poison, brulure, confusion,
-      saignement, tourment. <br />- Pdps c'est pour : Power dps. Ce sont les builds basé sur les
-      dégâts directe, <br />autrement dit chaque coup porté doit infliger le plus de dégâts possible
+      saignement, tourment.
+      <li>Pdps c'est pour : Power dps.</li>
+      Ce sont les builds basé sur les dégâts directe, <br />autrement dit chaque coup porté doit infliger le plus de
+      dégâts
+      possible
       et plus on tape vite.
+      <li>HAM pour Heal Alac Mechanist</li>
+      C'est la spécialisation orienté soin de la 3eme extension de la classe ingénieur.
 
-      <br />- HAM pour Heal Alac Mechanist (ou jambon pour le jeu de mot en Français) : <br />C'est
-      la spécialisation orienté soin de la 3eme extension de la classe ingénieur.
-
-      <br />- BU ou Back Up :Personne qui repnd le rôle/mécanique si le principal concerné meurt.
-    </p>
+      <li>BU ou Back Up :Personne qui reprend le rôle ou les mécaniques.
+        <br /> si le tank principal meurt.
+      </li>
+    </ul>
     <h2>Strike ou mission d'attaque</h2>
     <p>Instance PvE de 10 personnes</p>
-    <h2>liste des strike</h2>
+    <h2>liste des missions d'attaque (strike)</h2>
+    <p>IBS (Icebrood Saga) </p>
+
+    <ol>
+      <li>Col des Cimefroides</li>
+      <li>Voix et Griffe légendaires des déchus</li>
+      <li>Fraenir de Jormag</li>
+      <li>Désosseur</li>
+      <li>Murmure de Jormag</li>
+      <li>Forge de l'acier</li>
+      <li>Guerre froide</li>
+    </ol>
     <p>
-      <br />IBS (IceBrood Saga)
-
-      <br />1-Col des Cimefroides <br />2-Voix et Griffe légendaires des déchus <br />3-Fraenir de
-      Jormag <br />4-Désosseur <br />5-Murmure de Jormag <br />6-Forge de l'acier <br />7-Guerre
-      froide
-
-      <br />dans le LFG il y auras souvant des groupe pour IBS3 pour ne faire que les 3 pmières
-      strikes <br />qui sont les plus simple
+      dans le LFG il y auras souvant des groupe pour IBS3 pour ne faire que les 3 premières
+      strikes qui sont les plus simple.
     </p>
-    <p>
-      <br />EOD (end of dragon)
-
-      <br />1-Antre étherlame <br />2-Décharge de Xunlai Jade <br />3-Belvédère de Kaineng
-      <br />4-Temple des moissons <br />5-Cour du vieux Lion
-    </p>
-    <p>
-      <br />SOTO (Secrets of the Obscure)
-
-      <br />1-Observatoire cosmique <br />2-Temple de Febe
-    </p>
+    <p>EOD (end of dragon)</p>
+    <ol>
+      <li>Antre étherlame</li>
+      <li>Décharge de Xunlai Jade</li>
+      <li>Belvédère de Kaineng</li>
+      <li>Temple des moissons</li>
+      <li>Cour du vieux Lion</li>
+    </ol>
+    <p>SOTO (Secrets of the Obscure)</p>
+    <ol>
+      <li>Observatoire cosmique</li>
+      <li>Temple de Febe</li>
+    </ol>
   </div>
 </template>
+<style scoped>
+ul,
+ol {
+  @apply text-lg ml-6;
+}
+
+ul {
+  @apply list-disc;
+}
+
+ol {
+  @apply list-decimal;
+}
+
+p,
+h2,
+h3,
+h4,
+ol,
+ul {
+  @apply mb-4
+}
+</style>
