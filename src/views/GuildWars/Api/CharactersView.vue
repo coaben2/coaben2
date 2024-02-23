@@ -71,6 +71,65 @@ const {
                 </tbody>
             </table>
         </div>
+        <div class="home-container" v-if="characterData && characterData.equipment">
+            <div class="home-container1">
+                <div class="column-container">
+                    <!-- tête-->
+                    <!-- épaule-->
+                    <!-- gants-->
+                    <!-- torse-->
+                    <!-- pantalon-->
+                    <!-- botes-->
+                </div>
+            </div>
+            <div class="home-container2">
+                <div class="column-container">
+                    <!-- arme1-->
+                    <!-- arme2-->
+                    <!-- arme3-->
+                    <!-- arme4-->
+                </div>
+            </div>
+            <div class="home-container3">
+                <div class="column-container">
+                    <!-- do-->
+                    <!-- accesoire1-->
+                    <!-- accesoire2-->
+                </div>
+            </div>
+            <div class="home-container4">
+                <div class="column-container">
+                    <!-- amulette-->
+                    <!-- ring1-->
+                    <!-- ring2-->
+                </div>
+            </div>
+            <img alt="image" src="" class="" />
+            <div class="home-container5">
+                <div class="column-container">
+                    <!-- casque aqua-->
+                    <!-- arme aqua1-->
+                    <!-- arme aqua1-->
+                </div>
+            </div>
+            <!-- relique-->
+            <img alt="image" src="" class="" />
+        </div>
+        <div class="home-container6">
+            <div class="column-container">
+                <!--item du récolte-->
+            </div>
+        </div>
+        <div class="home-container7">
+            <div class="column-container">
+                <!--item du drone-->
+            </div>
+        </div>
+        <div class="home-container8">
+            <div class="column-container">
+                <!--items de pêche-->
+            </div>
+        </div>
         <div class="flex-container">
             <div class="flex-equipement" v-if="characterData && characterData.equipment">
                 <div class="column-container">
@@ -83,13 +142,8 @@ const {
                 </div>
             </div>
         </div>
-        <!-- modif visuel voir si on peut faire comme dans le jeux les 6 pieces de stuf / les 4 armes-->
-        <!-- le do les 2 accessoires-->
-        <!-- amulette les 2 anneaux-->
-        <!-- la relique-->
-        <!--item de récoltes-->
-        <!--item du drone-->
-        <!--items de pêche-->
+
+
         <div class="flex-item" v-if="characterData && characterData.bags">
             <h2>sac :</h2>
             <div v-for="bags in characterData.bags" :key="bags.id">
@@ -159,5 +213,124 @@ const {
 
 img {
     max-width: 100%;
+}
+
+.home-container {
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    min-height: 100vh;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.home-container1 {
+    top: 286px;
+    left: 261px;
+    width: 76px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 313px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.home-container2 {
+    top: 615px;
+    left: 262px;
+    width: 75px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 160px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.home-container3 {
+    top: 613px;
+    left: 592px;
+    width: 228px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 47px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+}
+
+.home-container4 {
+    top: 665px;
+    left: 589px;
+    width: 234px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 48px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+}
+
+.home-image {
+    top: 286px;
+    left: 363px;
+    width: 200px;
+    height: 487px;
+    position: absolute;
+    object-fit: cover;
+}
+
+.home-container5 {
+    top: 722px;
+    left: 589px;
+    width: 233px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 50px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+}
+
+.home-image1 {
+    top: 730px;
+    left: 831px;
+    width: 36px;
+    height: 32px;
+    position: absolute;
+    object-fit: cover;
+}
+
+.home-container6 {
+    top: 615px;
+    left: 52px;
+    width: 200px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 40px;
+    display: flex;
+    position: absolute;
+    align-self: stretch;
+    align-items: flex-start;
+}
+
+.home-container7 {
+    top: 660px;
+    left: 49px;
+    width: 200px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 40px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+}
+
+.home-container8 {
+    top: 705px;
+    left: 47px;
+    width: 200px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 40px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
 }
 </style>
