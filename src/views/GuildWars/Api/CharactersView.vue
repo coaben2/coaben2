@@ -39,41 +39,22 @@ const {
 } = useMutation({
     mutationFn: () => getCharacter(),
 });
-</script>
-<script>
-import { ref } from 'vue';
-export default {
-    data() {
-        return {
-            loading: true,
-            characterData: null,
-            showInfo: false,
-            itemInfo: null
-        };
-    },
-    methods: {
-        showItemInfo(item) {
-            this.showInfo = true;
-            this.itemInfo = `ID: ${item.id}, Name: ${item.name}, Description: ${item.description}`;
-        },
-        hideItemInfo() {
-            this.showInfo = false;
-            this.itemInfo = null;
-        }
+const getProfessionImage = (profession) => {
+    if (profession.indexOf(['Elementalist', 'Engineer', 'Guardian', 'Mesmer', 'Necromancer', 'Ranger', 'Revenant', 'Thief', 'Warrior']) >= 0) {
+        return `/img/${profession}.png`;
+    } else {
+        return '/img/default.png';
     }
 };
 </script>
-
-
-
 <template>
     <div class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center"
         v-if="isCharactersLoading || isCharacterPending">
         <span class="loading loading-spinner text-primary"></span>
         <span>{{ loadingMessage }}</span>
     </div>
-    <div class="flex-container">
-        <div class="flex-item" v-if="charactersData">
+    <div class="home-container">
+        <div class="home-container01" v-if="charactersData">
             <select v-model="currentCharacter" @change="handleGetCharacter" class="select select-bordered">
                 <option v-for="character in charactersData" :key="character" :value="character">
                     {{ character }}
@@ -101,7 +82,22 @@ export default {
                 </tbody>
             </table>
         </div>
-        <div class="home-container1" v-if="characterData && characterData.equipment">
+        <div class="home-container02">
+            <div class="column-container">
+                <!--item du récolte-->
+            </div>
+        </div>
+        <div class="home-container03">
+            <div class="column-container">
+                <!--item du drone-->
+            </div>
+        </div>
+        <div class="home-container04">
+            <div class="column-container">
+                <!--items de pêche-->
+            </div>
+        </div>
+        <div class="home-container05">
             <div class="column-container">
                 <!-- tête-->
                 <!-- épaule-->
@@ -111,7 +107,7 @@ export default {
                 <!-- bottes-->
             </div>
         </div>
-        <div class="home-container2">
+        <div class="home-container06">
             <div class="column-container">
                 <!-- arme1-->
                 <!-- arme2-->
@@ -119,60 +115,51 @@ export default {
                 <!-- arme4-->
             </div>
         </div>
-        <div class="home-container3">
+        <div class="home-container07">
+            <div class="column-container">
+                <!-- stat-->
+            </div>
+        </div>
+        <div class="home-container08">
             <div class="column-container">
                 <!-- do-->
                 <!-- accesoire1-->
                 <!-- accesoire2-->
             </div>
         </div>
-        <div class="home-container4">
+        <div class="home-container09">
             <div class="column-container">
                 <!-- amulette-->
                 <!-- ring1-->
                 <!-- ring2-->
             </div>
         </div>
-        <!--visuel de la classe jouée-->
-        <!--<img alt="home-image" src="" class="" />-->
-        <div class="home-container5">
+        <div class="home-container10">
             <div class="column-container">
                 <!-- casque aqua-->
                 <!-- arme aqua1-->
                 <!-- arme aqua1-->
             </div>
         </div>
+        <div class="home-container11">
+            <div>
+                <!-- relique-->
+            </div>
+        </div>
+        <!--visuel de la classe jouée-->
         <div>
-            <!-- relique-->
-            <!--<img alt="home-image1" src="" class="" />-->
+            <img :src="getProfessionImage(characterData.profession)" alt="Profession Image" class="home-image" />
         </div>
     </div>
-    <div class="home-container6">
-        <div class="column-container">
-            <!--item du récolte-->
-        </div>
-    </div>
-    <div class="home-container7">
-        <div class="column-container">
-            <!--item du drone-->
-        </div>
-    </div>
-    <div class="home-container8">
-        <div class="column-container">
-            <!--items de pêche-->
-        </div>
-    </div>
+
     <!-- code fonctionne pour les item-->
     <div class="flex-container">
         <div class="flex-equipement" v-if="characterData && characterData.equipment">
             <div class="column-container">
                 <div v-for="equipmentItem in characterData.equipment" :key="equipmentItem.slot" class="column">
-                    <div class="item-container" @mouseover="showItemInfo(equipmentItem)" @mouseout="hideItemInfo">
+                    <div class="item-container">
                         <img :src="'https://v2.lebusmagique.fr/img/api/items/' + equipmentItem.id + '.png'"
                             :alt="equipmentItem.id" />
-                        <div v-if="showInfo" class="item-info">
-                            {{ itemInfo }}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -238,98 +225,31 @@ export default {
     padding: 5px;
 }
 
-img {
-    max-width: 100%;
-}
-
 .home-container {
     width: 100%;
     display: flex;
     overflow: auto;
     min-height: 100vh;
-    align-items: flex-end;
+    align-items: flex-start;
     flex-direction: column;
     justify-content: center;
 }
 
-.home-container1 {
-    top: 286px;
-    left: 261px;
-    width: 76px;
+.home-container01 {
+    top: 200px;
+    left: 20px;
+    width: auto;
     border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 313px;
+    height: auto;
     display: flex;
     position: absolute;
     align-items: flex-start;
     flex-direction: column;
 }
 
-.home-container2 {
-    top: 615px;
-    left: 262px;
-    width: 75px;
-    border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 160px;
-    display: flex;
-    position: absolute;
-    align-items: flex-start;
-    flex-direction: column;
-}
-
-.home-container3 {
-    top: 613px;
-    left: 592px;
-    width: 228px;
-    border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 47px;
-    display: flex;
-    position: absolute;
-    align-items: flex-start;
-}
-
-.home-container4 {
-    top: 665px;
-    left: 589px;
-    width: 234px;
-    border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 48px;
-    display: flex;
-    position: absolute;
-    align-items: flex-start;
-}
-
-.home-image {
-    top: 286px;
-    left: 363px;
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    object-fit: cover;
-}
-
-.home-container5 {
-    top: 722px;
-    left: 589px;
-    width: 233px;
-    border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 50px;
-    display: flex;
-    position: absolute;
-    align-items: flex-start;
-}
-
-.home-image1 {
-    top: 730px;
-    left: 831px;
-    width: 36px;
-    height: 32px;
-    position: absolute;
-    object-fit: cover;
-}
-
-.home-container6 {
-    top: 615px;
-    left: 52px;
+.home-container02 {
+    top: 200px;
+    left: 350px;
     width: 200px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
     height: 40px;
@@ -339,9 +259,9 @@ img {
     align-items: flex-start;
 }
 
-.home-container7 {
-    top: 660px;
-    left: 49px;
+.home-container03 {
+    top: calc(200px + 45px);
+    left: 350px;
     width: 200px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
     height: 40px;
@@ -350,15 +270,104 @@ img {
     align-items: flex-start;
 }
 
-.home-container8 {
-    top: 705px;
-    left: 47px;
+.home-container04 {
+    top: calc(200px + 90px);
+    left: 350px;
     width: 200px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 40px;
+    height: 41px;
     display: flex;
     position: absolute;
     align-items: flex-start;
+}
+
+.home-container05 {
+    top: 200px;
+    left: 265px;
+    width: 75px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 300px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.home-container06 {
+    top: 505px;
+    left: 265px;
+    width: 75px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 160px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.home-container07 {
+    top: 200px;
+    left: 560px;
+    width: 250px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 300px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.home-container08 {
+    top: 500px;
+    left: 560px;
+    width: 250px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 47px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+}
+
+.home-container09 {
+    top: calc(500px + 40px);
+    left: 560px;
+    width: 250px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 48px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+}
+
+.home-container10 {
+    top: calc(500px + 90px);
+    left: 560px;
+    width: 250px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 50px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+}
+
+.home-container11 {
+    top: 200px;
+    left: 820px;
+    width: 50px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 50px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+}
+
+.home-image {
+    top: calc(200px + 140px);
+    left: 350px;
+    width: 200px;
+    height: 300px;
+    position: absolute;
+    object-fit: cover;
 }
 
 .item-info {
