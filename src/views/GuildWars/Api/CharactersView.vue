@@ -40,8 +40,38 @@ const {
     mutationFn: () => getCharacter(),
 });
 </script>
+<script>
+import { ref } from 'vue';
+export default {
+    data() {
+        return {
+            loading: true,
+            characterData: null,
+            showInfo: false,
+            itemInfo: null
+        };
+    },
+    methods: {
+        showItemInfo(item) {
+            this.showInfo = true;
+            this.itemInfo = `ID: ${item.id}, Name: ${item.name}, Description: ${item.description}`;
+        },
+        hideItemInfo() {
+            this.showInfo = false;
+            this.itemInfo = null;
+        }
+    }
+};
+</script>
+
+
 
 <template>
+    <div class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center"
+        v-if="isCharactersLoading || isCharacterPending">
+        <span class="loading loading-spinner text-primary"></span>
+        <span>{{ loadingMessage }}</span>
+    </div>
     <div class="flex-container">
         <div class="flex-item" v-if="charactersData">
             <select v-model="currentCharacter" @change="handleGetCharacter" class="select select-bordered">
@@ -71,102 +101,99 @@ const {
                 </tbody>
             </table>
         </div>
-        <div class="home-container" v-if="characterData && characterData.equipment">
-            <div class="home-container1">
-                <div class="column-container">
-                    <!-- tête-->
-                    <!-- épaule-->
-                    <!-- gants-->
-                    <!-- torse-->
-                    <!-- pantalon-->
-                    <!-- botes-->
-                </div>
+        <div class="home-container1" v-if="characterData && characterData.equipment">
+            <div class="column-container">
+                <!-- tête-->
+                <!-- épaule-->
+                <!-- gants-->
+                <!-- torse-->
+                <!-- pantalon-->
+                <!-- bottes-->
             </div>
-            <div class="home-container2">
-                <div class="column-container">
-                    <!-- arme1-->
-                    <!-- arme2-->
-                    <!-- arme3-->
-                    <!-- arme4-->
-                </div>
+        </div>
+        <div class="home-container2">
+            <div class="column-container">
+                <!-- arme1-->
+                <!-- arme2-->
+                <!-- arme3-->
+                <!-- arme4-->
             </div>
-            <div class="home-container3">
-                <div class="column-container">
-                    <!-- do-->
-                    <!-- accesoire1-->
-                    <!-- accesoire2-->
-                </div>
+        </div>
+        <div class="home-container3">
+            <div class="column-container">
+                <!-- do-->
+                <!-- accesoire1-->
+                <!-- accesoire2-->
             </div>
-            <div class="home-container4">
-                <div class="column-container">
-                    <!-- amulette-->
-                    <!-- ring1-->
-                    <!-- ring2-->
-                </div>
+        </div>
+        <div class="home-container4">
+            <div class="column-container">
+                <!-- amulette-->
+                <!-- ring1-->
+                <!-- ring2-->
             </div>
-            <img alt="image" src="" class="" />
-            <div class="home-container5">
-                <div class="column-container">
-                    <!-- casque aqua-->
-                    <!-- arme aqua1-->
-                    <!-- arme aqua1-->
-                </div>
+        </div>
+        <!--visuel de la classe jouée-->
+        <!--<img alt="home-image" src="" class="" />-->
+        <div class="home-container5">
+            <div class="column-container">
+                <!-- casque aqua-->
+                <!-- arme aqua1-->
+                <!-- arme aqua1-->
             </div>
+        </div>
+        <div>
             <!-- relique-->
-            <img alt="image" src="" class="" />
+            <!--<img alt="home-image1" src="" class="" />-->
         </div>
-        <div class="home-container6">
+    </div>
+    <div class="home-container6">
+        <div class="column-container">
+            <!--item du récolte-->
+        </div>
+    </div>
+    <div class="home-container7">
+        <div class="column-container">
+            <!--item du drone-->
+        </div>
+    </div>
+    <div class="home-container8">
+        <div class="column-container">
+            <!--items de pêche-->
+        </div>
+    </div>
+    <!-- code fonctionne pour les item-->
+    <div class="flex-container">
+        <div class="flex-equipement" v-if="characterData && characterData.equipment">
             <div class="column-container">
-                <!--item du récolte-->
-            </div>
-        </div>
-        <div class="home-container7">
-            <div class="column-container">
-                <!--item du drone-->
-            </div>
-        </div>
-        <div class="home-container8">
-            <div class="column-container">
-                <!--items de pêche-->
-            </div>
-        </div>
-        <div class="flex-container">
-            <div class="flex-equipement" v-if="characterData && characterData.equipment">
-                <div class="column-container">
-                    <div v-for="equipmentItem in characterData.equipment" :key="equipmentItem.slot" class="column">
-                        <div>
-                            <img :src="'https://v2.lebusmagique.fr/img/api/items/' + equipmentItem.id + '.png'"
-                                :alt="equipmentItem.id" />
+                <div v-for="equipmentItem in characterData.equipment" :key="equipmentItem.slot" class="column">
+                    <div class="item-container" @mouseover="showItemInfo(equipmentItem)" @mouseout="hideItemInfo">
+                        <img :src="'https://v2.lebusmagique.fr/img/api/items/' + equipmentItem.id + '.png'"
+                            :alt="equipmentItem.id" />
+                        <div v-if="showInfo" class="item-info">
+                            {{ itemInfo }}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <div class="flex-item" v-if="characterData && characterData.bags">
-            <h2>sac :</h2>
-            <div v-for="bags in characterData.bags" :key="bags.id">
-                <h3>{{ bags.slot }}</h3>
-                <ul>
-                    <li>{{ bags.id }}</li>
-                    <li>
-                        <ul>
-                            <li v-for="item in bags.contents" :key="item.id">
-                                {{ item.id }}
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
     </div>
 
-
-    <div class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center"
-        v-if="isCharactersLoading || isCharacterPending">
-        <span class="loading loading-spinner text-primary"></span>
-        <span>{{ loadingMessage }}</span>
+    <div class="flex-item" v-if="characterData && characterData.bags">
+        <h2>sac :</h2>
+        <div v-for="bags in characterData.bags" :key="bags.id">
+            <h3>{{ bags.slot }}</h3>
+            <ul>
+                <li>{{ bags.id }}</li>
+                <li>
+                    <ul>
+                        <li v-for="item in bags.contents" :key="item.id">
+                            {{ item.id }}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <pre v-if="characterData">{{ characterData }}</pre>
@@ -189,7 +216,7 @@ const {
 
 .bordered-table {
     border-collapse: collapse;
-    width: 100%;
+    width: 200px;
 }
 
 .bordered-table th,
@@ -274,8 +301,8 @@ img {
 .home-image {
     top: 286px;
     left: 363px;
-    width: 200px;
-    height: 487px;
+    width: 50px;
+    height: 50px;
     position: absolute;
     object-fit: cover;
 }
@@ -332,5 +359,16 @@ img {
     display: flex;
     position: absolute;
     align-items: flex-start;
+}
+
+.item-info {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid black;
+    padding: 5px;
+    z-index: 999;
+
 }
 </style>
