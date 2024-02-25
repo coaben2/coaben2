@@ -21,9 +21,9 @@ const getCharacters = async () => {
     return characters;
 };
 
-const getCharacter = () => {
+const getCharacterNames = () => {
     loadingMessage.value = `Chargement du personnage : ${currentCharacter.value}`;
-    return user.getCharacter(currentCharacter.value);
+    return user.getCharacterNames(currentCharacter.value);
 };
 
 const { isLoading: isCharactersLoading, data: charactersData } = useQuery({
@@ -37,15 +37,20 @@ const {
     data: characterData,
     mutate: handleGetCharacter,
 } = useMutation({
-    mutationFn: () => getCharacter(),
+    mutationFn: () => getCharacterNames(),
 });
-const getProfessionImage = (profession) => {
-    if (profession.indexOf(['Elementalist', 'Engineer', 'Guardian', 'Mesmer', 'Necromancer', 'Ranger', 'Revenant', 'Thief', 'Warrior']) >= 0) {
+/* const getProfessionImage = (profession) => {
+    if (!profession) return '/img/default.png';
+
+    const professions = ['Elementalist', 'Engineer', 'Guardian', 'Mesmer', 'Necromancer', 'Ranger', 'Revenant', 'Thief', 'Warrior'];
+
+    if (professions.includes(profession)) {
         return `/img/${profession}.png`;
     } else {
         return '/img/default.png';
     }
-};
+}; */
+
 </script>
 <template>
     <div class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center"
@@ -85,71 +90,88 @@ const getProfessionImage = (profession) => {
         <div class="home-container02">
             <div class="column-container">
                 <!--item du récolte-->
+                <!--Sickle-->
+                <!--Axe-->
+                <!--Pick-->
             </div>
         </div>
         <div class="home-container03">
             <div class="column-container">
                 <!--item du drone-->
+                <!--PowerCore-->
+                <!--SensoryArray-->
+                <!--ServiceChip-->
             </div>
         </div>
         <div class="home-container04">
             <div class="column-container">
                 <!--items de pêche-->
+                <!--FishingRod-->
+                <!--FishingLure-->
             </div>
         </div>
         <div class="home-container05">
             <div class="column-container">
-                <!-- tête-->
-                <!-- épaule-->
-                <!-- gants-->
-                <!-- torse-->
-                <!-- pantalon-->
-                <!-- bottes-->
+                <!-- tête Helm-->
+                <!-- épaule Shoulders-->
+                <!-- gants Gloves-->
+                <!-- torse Coat-->
+                <!-- pantalon Leggings-->
+                <!-- bottes Boots-->
             </div>
         </div>
         <div class="home-container06">
             <div class="column-container">
-                <!-- arme1-->
-                <!-- arme2-->
-                <!-- arme3-->
-                <!-- arme4-->
+                <!-- arme1 WeaponA1-->
+                <!-- arme2 WeaponA2-->
+                <!-- arme3 WeaponB1-->
+                <!-- arme4 WeaponB2-->
             </div>
         </div>
         <div class="home-container07">
             <div class="column-container">
                 <!-- stat-->
+                <!--Power-->
+                <!--Precision-->
+                <!--Toughness-->
+                <!--Vitality-->
+                <!--Condition Damage-->
+                <!--Condition Duration-->
+                <!--Healing-->
+                <!--BoonDuration-->
             </div>
         </div>
         <div class="home-container08">
             <div class="column-container">
-                <!-- do-->
-                <!-- accesoire1-->
-                <!-- accesoire2-->
+                <!-- do Backpack-->
+                <!-- accesoire1 Accessory1-->
+                <!-- accesoire2 Accessory2-->
             </div>
         </div>
         <div class="home-container09">
             <div class="column-container">
-                <!-- amulette-->
-                <!-- ring1-->
-                <!-- ring2-->
+                <!-- amulette Amulet-->
+                <!-- anneau1 Ring1-->
+                <!-- anneau2 Ring2-->
             </div>
         </div>
         <div class="home-container10">
             <div class="column-container">
-                <!-- casque aqua-->
-                <!-- arme aqua1-->
-                <!-- arme aqua1-->
+                <!-- casque aqua HelmAquatic-->
+                <!-- arme aqua1 WeaponAquaticA-->
+                <!-- arme aqua1 WeaponAquaticB-->
             </div>
         </div>
         <div class="home-container11">
             <div>
                 <!-- relique-->
+                <!--Relic-->
             </div>
         </div>
         <!--visuel de la classe jouée-->
-        <div>
-            <img :src="getProfessionImage(characterData.profession)" alt="Profession Image" class="home-image" />
-        </div>
+
+        <!--<img :src="getProfessionImage(characterData.profession)" alt="Profession Image" class="home-image" />-->
+
     </div>
 
     <!-- code fonctionne pour les item-->
@@ -378,6 +400,5 @@ const getProfessionImage = (profession) => {
     border: 1px solid black;
     padding: 5px;
     z-index: 999;
-
 }
 </style>

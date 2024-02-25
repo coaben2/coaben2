@@ -57,7 +57,7 @@ export const useUserStore = defineStore('user', () => {
         return fetch(`${APIURL}/characters?access_token=${apiKey.value}&`).then((res) => res.json());
     };
 
-    const getCharacter = (name) => {
+    const getCharacterNames = (name) => {
         return fetch(`${APIURL}/characters/${name}?access_token=${apiKey.value}`).then((res) =>
             res.json(),
         );
@@ -105,5 +105,5 @@ export const useUserStore = defineStore('user', () => {
 
     initApiKey();
 
-    return { setApiKey, haveApiKey, error, getApiKey, getCharacters, getCharacter };
+    return { setApiKey, haveApiKey, error, getApiKey, getCharacters, getCharacterNames, getBank, getMatérials, getItems, getItemsDetails, getRecipes, getSkins, getColors };
 });
