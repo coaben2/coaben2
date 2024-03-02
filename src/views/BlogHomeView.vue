@@ -30,6 +30,13 @@ const posts = [
       "Il était une fois une magnifique rose, épanouie et fière dans un jardin enchanteur. Elle dégageait un parfum envoûtant et attirait l'attention de tous ceux qui la croisaient. Au fil du temps, une liane de lierre s'était enroulée autour d'elle, tombant amoureusement sous son charme.",
     link: 'BlogPostLeLierreEtLaRose',
   },
+  {
+    thumbnail: 'I3-028.png',
+    title: 'La capitaines pirates',
+    excerpt:
+      "LA capitaine pirate à l'avant du navire a gracieusement coupé les vagues, ses cheveux gris volant au vent tandis que ses oreilles de loup trahissaient sa nature sauvage et impitoyable.",
+    link: 'BlogPostLouvpirates',
+  },
 ];
 </script>
 
@@ -40,11 +47,7 @@ const posts = [
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       <div class="card bg-base-100 shadow-lg" v-for="(post, k) in posts" :key="k">
         <figure v-if="post.thumbnail">
-          <img
-            :src="`/img/${post.thumbnail}`"
-            :alt="post.title"
-            class="w-full h-full aspect-video object-cover"
-          />
+          <img :src="`/img/${post.thumbnail}`" :alt="post.title" class="w-full h-full aspect-video object-cover" />
         </figure>
         <div class="card-body">
           <h2 class="card-title font-bold text-xl">{{ post.title }}</h2>

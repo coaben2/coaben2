@@ -67,6 +67,11 @@ const router = createRouter({
       component: () => import('../views/Blog/LeLierreEtLaRoseView.vue'),
     },
     {
+      path: '/blog/Louvpirates',
+      name: 'BlogPostLouvpirates',
+      component: () => import('../views/Blog/Louvpirates.vue'),
+    },
+    {
       path: '/portfolio',
       name: 'Portfolio',
       component: () => import('../views/PortfolioView.vue'),
