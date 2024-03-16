@@ -39,7 +39,7 @@ const {
 } = useMutation({
     mutationFn: () => getCharacterNames(),
 });
-/* const getProfessionImage = (profession) => {
+const getProfessionImage = (profession) => {
     if (!profession) return '/img/default.png';
 
     const professions = ['Elementalist', 'Engineer', 'Guardian', 'Mesmer', 'Necromancer', 'Ranger', 'Revenant', 'Thief', 'Warrior'];
@@ -49,8 +49,20 @@ const {
     } else {
         return '/img/default.png';
     }
-}; */
-
+};
+const getItemsDetails = async (itemId) => {
+    try {
+        const response = await fetch(`https://api.guildwars2.com/v2/items?lang=fr&ids=${itemId}`);
+        const data = await response.json();
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+/*url du busmagic*/
+const getIconUrl = (itemId) => {
+    const baseUrl = 'https://v2.lebusmagique.fr/img/api/items/';
+    return baseUrl + itemId + '.png';
+};
 </script>
 <template>
     <div class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center"
@@ -89,43 +101,62 @@ const {
         </div>
         <div class="home-container02">
             <div class="column-container">
-                <!--item du récolte-->
-                <!--Sickle-->
-                <!--Axe-->
-                <!--Pick-->
+                <ul class="horizontal-list">
+                    <li v-for="slot in ['Sickle', 'Axe', 'Pick']" :key="slot">
+                        <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
+                            :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
+                            :alt="characterData.equipment.find(item => item.slot === slot).id"
+                            @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
+                    </li>
+                </ul>>
             </div>
         </div>
         <div class="home-container03">
             <div class="column-container">
-                <!--item du drone-->
-                <!--PowerCore-->
-                <!--SensoryArray-->
-                <!--ServiceChip-->
+                <ul class="horizontal-list">
+                    <li v-for="slot in ['PowerCore', 'SensoryArray', 'ServiceChip']" :key="slot">
+                        <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
+                            :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
+                            :alt="characterData.equipment.find(item => item.slot === slot).id"
+                            @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="home-container04">
             <div class="column-container">
-                <!--items de pêche-->
-                <!--FishingRod-->
-                <!--FishingLure-->
+                <ul class="horizontal-list">
+                    <li v-for="slot in ['FishingRod', 'FishingLure']" :key="slot">
+                        <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
+                            :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
+                            :alt="characterData.equipment.find(item => item.slot === slot).id"
+                            @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="home-container05">
             <div class="column-container">
-                <!-- tête Helm-->
-                <!-- épaule Shoulders-->
-                <!-- gants Gloves-->
-                <!-- torse Coat-->
-                <!-- pantalon Leggings-->
-                <!-- bottes Boots-->
+                <ul>
+                    <li v-for="slot in ['Helm', 'Shoulders', 'Gloves', 'Coat', 'Leggings', 'Boots']" :key="slot">
+                        <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
+                            :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
+                            :alt="characterData.equipment.find(item => item.slot === slot).id"
+                            @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="home-container06">
             <div class="column-container">
-                <!-- arme1 WeaponA1-->
-                <!-- arme2 WeaponA2-->
-                <!-- arme3 WeaponB1-->
-                <!-- arme4 WeaponB2-->
+                <ul>
+                    <li v-for="slot in ['WeaponA1', 'WeaponA2', 'WeaponB1', 'WeaponB2']" :key="slot">
+                        <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
+                            :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
+                            :alt="characterData.equipment.find(item => item.slot === slot).id"
+                            @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="home-container07">
@@ -143,69 +174,74 @@ const {
         </div>
         <div class="home-container08">
             <div class="column-container">
-                <!-- do Backpack-->
-                <!-- accesoire1 Accessory1-->
-                <!-- accesoire2 Accessory2-->
+                <ul class="horizontal-list">
+                    <li v-for="slot in ['Backpack', 'Accessory1', 'Accessory2']" :key="slot">
+                        <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
+                            :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
+                            :alt="characterData.equipment.find(item => item.slot === slot).id"
+                            @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="home-container09">
             <div class="column-container">
-                <!-- amulette Amulet-->
-                <!-- anneau1 Ring1-->
-                <!-- anneau2 Ring2-->
+                <ul class="horizontal-list">
+                    <li v-for="slot in ['Amulet', 'Ring1', 'Ring2']" :key="slot">
+                        <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
+                            :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
+                            :alt="characterData.equipment.find(item => item.slot === slot).id"
+                            @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="home-container10">
             <div class="column-container">
-                <!-- casque aqua HelmAquatic-->
-                <!-- arme aqua1 WeaponAquaticA-->
-                <!-- arme aqua1 WeaponAquaticB-->
+                <ul class="horizontal-list">
+                    <li v-for="slot in ['HelmAquatic', 'WeaponAquaticA', 'WeaponAquaticB']" :key="slot">
+                        <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
+                            :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
+                            :alt="characterData.equipment.find(item => item.slot === slot).id"
+                            @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="home-container11">
             <div>
-                <!-- relique-->
-                <!--Relic-->
+                <ul>
+                    <li v-for="slot in ['Relic']" :key="slot">
+                        <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
+                            :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
+                            :alt="characterData.equipment.find(item => item.slot === slot).id"
+                            @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
+                    </li>
+                </ul>
             </div>
         </div>
-        <!--visuel de la classe jouée-->
-
-        <!--<img :src="getProfessionImage(characterData.profession)" alt="Profession Image" class="home-image" />-->
+        <img :src="getProfessionImage(characterData.profession)" alt="Profession Image" class="home-image" />
 
     </div>
-
-    <!-- code fonctionne pour les item-->
-    <div class="flex-container">
-        <div class="flex-equipement" v-if="characterData && characterData.equipment">
-            <div class="column-container">
-                <div v-for="equipmentItem in characterData.equipment" :key="equipmentItem.slot" class="column">
-                    <div class="item-container">
-                        <img :src="'https://v2.lebusmagique.fr/img/api/items/' + equipmentItem.id + '.png'"
-                            :alt="equipmentItem.id" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="flex-item" v-if="characterData && characterData.bags">
-        <h2>sac :</h2>
-        <div v-for="bags in characterData.bags" :key="bags.id">
-            <h3>{{ bags.slot }}</h3>
+    <div class="home-container12" v-if="characterData && characterData.bags">
+        <div class="flex-container">
             <ul>
-                <li>{{ bags.id }}</li>
-                <li>
-                    <ul>
-                        <li v-for="item in bags.contents" :key="item.id">
-                            {{ item.id }}
-                        </li>
-                    </ul>
+                <li v-for="bags in characterData.bags" :key="bags.id">
+                    <div class="bag-container">
+                        <img class="bag-icon" :src="getIconUrl(bags.id)" :alt="bags.id" />
+                        <ul>
+                            <li v-for="item in bags.contents" :key="item.id">
+                                <div class="item-container">
+                                    <img class="item-icon" :src="getIconUrl(item.id)" :alt="item.id" />
+                                    <span>{{ item.id }}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>
     </div>
-
-    <pre v-if="characterData">{{ characterData }}</pre>
 </template>
 
 <style scoped>
@@ -247,6 +283,16 @@ const {
     padding: 5px;
 }
 
+.horizontal-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.horizontal-list li {
+    margin-right: 1px;
+}
+
 .home-container {
     width: 100%;
     display: flex;
@@ -274,7 +320,7 @@ const {
     left: 350px;
     width: 200px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 40px;
+    height: 70px;
     display: flex;
     position: absolute;
     align-self: stretch;
@@ -282,22 +328,22 @@ const {
 }
 
 .home-container03 {
-    top: calc(200px + 45px);
+    top: calc(200px + 70px);
     left: 350px;
     width: 200px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 40px;
+    height: 70px;
     display: flex;
     position: absolute;
     align-items: flex-start;
 }
 
 .home-container04 {
-    top: calc(200px + 90px);
+    top: calc(200px + 140px);
     left: 350px;
     width: 200px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 41px;
+    height: 70px;
     display: flex;
     position: absolute;
     align-items: flex-start;
@@ -306,9 +352,9 @@ const {
 .home-container05 {
     top: 200px;
     left: 265px;
-    width: 75px;
+    width: 70px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 300px;
+    height: 390px;
     display: flex;
     position: absolute;
     align-items: flex-start;
@@ -316,11 +362,11 @@ const {
 }
 
 .home-container06 {
-    top: 505px;
+    top: 600px;
     left: 265px;
-    width: 75px;
+    width: 70px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 160px;
+    height: 270px;
     display: flex;
     position: absolute;
     align-items: flex-start;
@@ -344,29 +390,29 @@ const {
     left: 560px;
     width: 250px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 47px;
+    height: 70px;
     display: flex;
     position: absolute;
     align-items: flex-start;
 }
 
 .home-container09 {
-    top: calc(500px + 40px);
+    top: calc(500px + 70px);
     left: 560px;
     width: 250px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 48px;
+    height: 70px;
     display: flex;
     position: absolute;
     align-items: flex-start;
 }
 
 .home-container10 {
-    top: calc(500px + 90px);
+    top: calc(500px + 140px);
     left: 560px;
     width: 250px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 50px;
+    height: 70px;
     display: flex;
     position: absolute;
     align-items: flex-start;
@@ -375,18 +421,30 @@ const {
 .home-container11 {
     top: 200px;
     left: 820px;
-    width: 50px;
+    width: 70px;
     border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 50px;
+    height: 70px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+}
+
+.home-container12 {
+    top: 900px;
+    left: 20px;
+    width: 70px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    height: 70px;
     display: flex;
     position: absolute;
     align-items: flex-start;
 }
 
 .home-image {
-    top: calc(200px + 140px);
+    top: calc(200px + 200px);
     left: 350px;
     width: 200px;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
     height: 300px;
     position: absolute;
     object-fit: cover;

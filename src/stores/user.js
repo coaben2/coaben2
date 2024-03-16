@@ -75,15 +75,26 @@ export const useUserStore = defineStore('user', () => {
         return fetch(`${APIURL}/items?`).then((res) => res.json());
     };
 
-    const getItemsDetails = function (t) {
-        var i = t.toString();
-        fetch("https://api.guildwars2.com/v2/items?lang=fr&ids=" + i)
+    const getItemsDetails = function (itemIds) {
+        const baseUrl = 'https://api.guildwars2.com/v2/items?lang=fr&ids=';
+        const itemLinks = $("#itemLinks").val();
+        fetch(baseUrl + itemIds.toString())
             .then(response => response.json())
             .then(data => {
                 data.forEach(item => {
-                    const itemLink = $("#itemLinks").val();
-                    $(`tr[data-itemid='${item.id}'] .icon img`).attr("data-src", item.icon);
-                    $(`tr[data-itemid='${item.id}'] .item-name`).addClass(item.rarity).html(`<a href="${itemLink}${item.id}" target="_blank">${item.name}</a>`);
+                    const element = document.querySelector(`tr[data-itemid='${item.id}']`);
+                    if (element) {
+                        const img = element.querySelector('.icon img');
+                        if (img) {
+                            img.setAttribute('data-src', item.icon);
+                        }
+
+                        const itemName = element.querySelector('.item-name');
+                        if (itemName) {
+                            itemName.classList.add(item.rarity);
+                            itemName.innerHTML = `<a href="${itemLinks}${item.id}" target="_blank">${item.name}</a>`;
+                        }
+                    }
                 });
             })
             .catch(error => {
