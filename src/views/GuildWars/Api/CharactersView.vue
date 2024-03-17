@@ -39,7 +39,7 @@ const {
 } = useMutation({
     mutationFn: () => getCharacterNames(),
 });
-const getProfessionImage = (profession) => {
+/*const getProfessionImage = (profession) => {
     if (!profession) return '/img/default.png';
 
     const professions = ['Elementalist', 'Engineer', 'Guardian', 'Mesmer', 'Necromancer', 'Ranger', 'Revenant', 'Thief', 'Warrior'];
@@ -49,20 +49,25 @@ const getProfessionImage = (profession) => {
     } else {
         return '/img/default.png';
     }
-};
-const getItemsDetails = async (itemId) => {
+};*/
+/*const getItemsDetails = async (itemId) => {
     try {
         const response = await fetch(`https://api.guildwars2.com/v2/items?lang=fr&ids=${itemId}`);
         const data = await response.json();
     } catch (error) {
         console.error('Error:', error);
     }
-};
+};*/
 /*url du busmagic*/
 const getIconUrl = (itemId) => {
     const baseUrl = 'https://v2.lebusmagique.fr/img/api/items/';
     return baseUrl + itemId + '.png';
 };
+/*le lien guildwars renvois une erreur*/
+/*const getItemUrl = (itemId) => {
+    const itemUrl = `https://api.guildwars2.com/v2/items/${itemId}`;
+    return itemUrl;
+};*/
 </script>
 <template>
     <div class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center"
@@ -77,7 +82,7 @@ const getIconUrl = (itemId) => {
                     {{ character }}
                 </option>
             </select>
-            <p>Race: {{ characterData.race }}</p>
+            <p>Race : {{ characterData.race }}</p>
             <p>genre: {{ characterData.gender }}</p>
             <p>Profession: {{ characterData.profession }}</p>
             <p>niveau: {{ characterData.level }}</p>
@@ -220,24 +225,14 @@ const getIconUrl = (itemId) => {
                 </ul>
             </div>
         </div>
-        <img :src="getProfessionImage(characterData.profession)" alt="Profession Image" class="home-image" />
-
+        <!--<img :src="getProfessionImage(characterData.profession)" alt="Profession Image" class="home-image" />
+-->
     </div>
-    <div class="home-container12" v-if="characterData && characterData.bags">
+    <div class="home-container12" v-if="characterData">
         <div class="flex-container">
-            <ul>
-                <li v-for="bags in characterData.bags" :key="bags.id">
-                    <div class="bag-container">
-                        <img class="bag-icon" :src="getIconUrl(bags.id)" :alt="bags.id" />
-                        <ul>
-                            <li v-for="item in bags.contents" :key="item.id">
-                                <div class="item-container">
-                                    <img class="item-icon" :src="getIconUrl(item.id)" :alt="item.id" />
-                                    <span>{{ item.id }}</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+            <ul class="item-grid">
+                <li v-for="(item, index) in characterData" :key="index">
+                    <img class="item-icon" :src="getIconUrl(item.id)" :alt="item.id" />
                 </li>
             </ul>
         </div>
@@ -432,9 +427,6 @@ const getIconUrl = (itemId) => {
 .home-container12 {
     top: 900px;
     left: 20px;
-    width: 70px;
-    border: 2px dashed rgba(120, 120, 120, 0.4);
-    height: 70px;
     display: flex;
     position: absolute;
     align-items: flex-start;
@@ -458,5 +450,23 @@ const getIconUrl = (itemId) => {
     border: 1px solid black;
     padding: 5px;
     z-index: 999;
+}
+
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    grid-gap: 10px;
+    list-style: none;
+}
+
+.item-grid li {
+    display: flex;
+    justify-content: center;
+}
+
+.item-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
 </style>
