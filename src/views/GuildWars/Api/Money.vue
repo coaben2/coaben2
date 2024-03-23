@@ -1,5 +1,5 @@
 <template>
     <div>
-        <h3>Banque</h3>
+        <h3>liste des monnais du jeux</h3>
     </div>
 </template>
