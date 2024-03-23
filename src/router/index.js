@@ -31,6 +31,21 @@ const router = createRouter({
               name: 'GuildWarsApiBank',
               component: () => import('../views/GuildWars/Api/BankView.vue'),
             },
+            {
+              path: 'Collectibles',
+              name: 'GuildWarsApiCollectibles',
+              component: () => import('../views/GuildWars/Api/Collectibles.vue'),
+            },
+            {
+              path: 'monnais',
+              name: 'GuildWarsApiMoney',
+              component: () => import('../views/GuildWars/Api/Money.vue'),
+            },
+            {
+              path: 'Débloqué',
+              name: 'GuildWarsApiUnlocks',
+              component: () => import('../views/GuildWars/Api/Unlocks.vue'),
+            },
           ],
         },
         {

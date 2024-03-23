@@ -12,6 +12,15 @@ import { RouterView } from 'vue-router';
             <li>
                 <RouterLink :to="{ name: 'GuildWarsApiBank' }">Banque</RouterLink>
             </li>
+            <li>
+                <RouterLink :to="{ name: 'GuildWarsApiCollectibles' }">collectibles</RouterLink>
+            </li>
+            <li>
+                <RouterLink :to="{ name: 'GuildWarsApiMoney' }">monnais</RouterLink>
+            </li>
+            <li>
+                <RouterLink :to="{ name: 'GuildWarsApiUnlocks' }">Débloqué</RouterLink>
+            </li>
         </ul>
         <RouterView />
     </div>
