@@ -56,7 +56,7 @@ const getIconUrl = (itemId) => {
     return baseUrl + itemId + '.png';
 };
 /*le lien guildwars renvois une erreur*/
-const getItemUrl = (itemId) => {
+const getItemsDetails = (itemId) => {
     const itemUrl = `https://api.guildwars2.com/v2/items/${itemId}`;
     return itemUrl;
 };
@@ -78,7 +78,7 @@ const getItemUrl = (itemId) => {
             <p>genre: {{ characterData.gender }}</p>
             <p>Profession: {{ characterData.profession }}</p>
             <p>niveau: {{ characterData.level }}</p>
-            <H3 class="mb-6">métiers :</H3>
+            <h3 class="mb-6">métiers :</h3>
             <table class="bordered-table">
                 <thead>
                     <tr>
@@ -225,7 +225,7 @@ const getItemUrl = (itemId) => {
             <div class="bag-container" v-for="(bag, bagIndex) in characterData.bags" :key="bagIndex">
                 <h3>sac : {{ bagIndex + 1 }}</h3>
                 <ul class="item-grid">
-                    <li v-for="(item, itemIndex) in bag.inventory" :key="itemIndex">
+                    <li class="item-icon" v-for="(item, itemIndex) in bag.inventory" :key="itemIndex">
                         <img v-if="item" :src="getIconUrl(item.id)" :alt="item.id"
                             @mouseover="getItemsDetails(item.id)" />
                     </li>
@@ -290,7 +290,7 @@ const getItemUrl = (itemId) => {
     width: 100%;
     display: flex;
     overflow: auto;
-    height: 300vh;
+    height: 200vh;
     align-items: flex-start;
     flex-direction: column;
     justify-content: center;
@@ -463,8 +463,8 @@ const getItemUrl = (itemId) => {
 }
 
 .item-icon {
-    width: 40px;
-    height: 40px;
+    width: 70px;
+    height: 70px;
     object-fit: contain;
 }
 
