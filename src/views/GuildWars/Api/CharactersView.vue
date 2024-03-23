@@ -50,24 +50,16 @@ const {
         return '/img/default.png';
     }
 };*/
-/*const getItemsDetails = async (itemId) => {
-    try {
-        const response = await fetch(`https://api.guildwars2.com/v2/items?lang=fr&ids=${itemId}`);
-        const data = await response.json();
-    } catch (error) {
-        console.error('Error:', error);
-    }
-};*/
 /*url du busmagic*/
 const getIconUrl = (itemId) => {
     const baseUrl = 'https://v2.lebusmagique.fr/img/api/items/';
     return baseUrl + itemId + '.png';
 };
 /*le lien guildwars renvois une erreur*/
-/*const getItemUrl = (itemId) => {
+const getItemUrl = (itemId) => {
     const itemUrl = `https://api.guildwars2.com/v2/items/${itemId}`;
     return itemUrl;
-};*/
+};
 </script>
 <template>
     <div class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center"
@@ -229,14 +221,20 @@ const getIconUrl = (itemId) => {
 -->
     </div>
     <div class="home-container12" v-if="characterData">
-        <div class="flex-container">
-            <ul class="item-grid">
-                <li v-for="(item, index) in characterData" :key="index">
-                    <img class="item-icon" :src="getIconUrl(item.id)" :alt="item.id" />
-                </li>
-            </ul>
+        <div>
+            <div class="bag-container" v-for="(bag, bagIndex) in characterData.bags" :key="bagIndex">
+                <h3>sac : {{ bagIndex + 1 }}</h3>
+                <ul class="item-grid">
+                    <li v-for="(item, itemIndex) in bag.inventory" :key="itemIndex">
+                        <img v-if="item" :src="getIconUrl(item.id)" :alt="item.id"
+                            @mouseover="getItemsDetails(item.id)" />
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+
+    <!--<pre v-if="characterData">{{ characterData }}</pre>-->
 </template>
 
 <style scoped>
@@ -292,7 +290,7 @@ const getIconUrl = (itemId) => {
     width: 100%;
     display: flex;
     overflow: auto;
-    min-height: 100vh;
+    height: 300vh;
     align-items: flex-start;
     flex-direction: column;
     justify-content: center;
@@ -468,5 +466,11 @@ const getIconUrl = (itemId) => {
     width: 40px;
     height: 40px;
     object-fit: contain;
+}
+
+.bag-container {
+    display: block;
+    border: 2px dashed rgba(120, 120, 120, 0.4);
+    margin-bottom: 20px;
 }
 </style>
