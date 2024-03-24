@@ -50,15 +50,20 @@ const {
         return '/img/default.png';
     }
 };*/
-/*url du busmagic*/
 const getIconUrl = (itemId) => {
     const baseUrl = 'https://v2.lebusmagique.fr/img/api/items/';
     return baseUrl + itemId + '.png';
 };
 /*le lien guildwars renvois une erreur*/
-const getItemsDetails = (itemId) => {
-    const itemUrl = `https://api.guildwars2.com/v2/items/${itemId}`;
-    return itemUrl;
+const getItemsDetails = async (itemId) => {
+    try {
+        const response = await fetch(`https://api.guildwars2.com/v2/items/${itemId}`);
+        const data = await response.json();
+        return data.icon;
+    } catch (error) {
+        console.error('Une erreur est survenue lors de la récupération de l\'icône de l\'objet:', error);
+        return null;
+    }
 };
 </script>
 <template>
@@ -105,7 +110,7 @@ const getItemsDetails = (itemId) => {
                             :alt="characterData.equipment.find(item => item.slot === slot).id"
                             @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
                     </li>
-                </ul>>
+                </ul>
             </div>
         </div>
         <div class="home-container03">
@@ -233,8 +238,6 @@ const getItemsDetails = (itemId) => {
             </div>
         </div>
     </div>
-
-    <!--<pre v-if="characterData">{{ characterData }}</pre>-->
 </template>
 
 <style scoped>
@@ -366,7 +369,7 @@ const getItemsDetails = (itemId) => {
     flex-direction: column;
 }
 
-.home-container07 {
+/*.home-container07 {
     top: 200px;
     left: 560px;
     width: 250px;
@@ -376,7 +379,7 @@ const getItemsDetails = (itemId) => {
     position: absolute;
     align-items: flex-start;
     flex-direction: column;
-}
+}*/
 
 .home-container08 {
     top: 500px;
@@ -472,5 +475,36 @@ const getItemsDetails = (itemId) => {
     display: block;
     border: 2px dashed rgba(120, 120, 120, 0.4);
     margin-bottom: 20px;
+}
+
+/* Media Query */
+@media (max-width: 250px) {
+    .home-container {
+        height: auto;
+    }
+
+    .home-container01,
+    .home-container02,
+    .home-container03,
+    .home-container04,
+    .home-container05,
+    .home-container06,
+    .home-container07,
+    .home-container08,
+    .home-container09,
+    .home-container10,
+    .home-container11,
+    .home-container12 {
+        position: static;
+        width: 100%;
+        margin: 0;
+        border: none;
+        height: auto;
+    }
+
+    .item-icon {
+        width: 50px;
+        height: 50px;
+    }
 }
 </style>

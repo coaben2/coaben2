@@ -17,7 +17,8 @@
       <br />18 emplacements * +9 = 162 de RA
     <ul>
       <li>T1 : 1 à 25 </li>Niveau de difficulté 20+ = 25 AR
-      <li>T2 : 26 à 50 </li>Difficulté 30+ palier = 40 AR <br />Difficulté 40+ palier = 55 AR <br />Difficulté 50+ palier
+      <li>T2 : 26 à 50 </li>Difficulté 30+ palier = 40 AR <br />Difficulté 40+ palier = 55 AR <br />Difficulté 50+
+      palier
       =
       70 AR
       <li>T3 : 51 à 75 </li> Niveau de difficulté 60+ = 85 AR <br />Difficulté 70+ palier = 100 AR
@@ -127,7 +128,7 @@
       <li>Push (Rôle, mechanique qui consiste a pousser quelque chose)</li>
       <li>etc ...</li>
     </ul>
-    <H2>cDPS/pDPS</H2>
+    <h2>cDPS/pDPS</h2>
     <ul>
       <li>DPS c'est le diminutif de Damage Per Second</li>
       Quand on parle de dps on parle donc des dégâts que le personnage est capable d'infliger.

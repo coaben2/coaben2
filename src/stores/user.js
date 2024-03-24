@@ -77,7 +77,7 @@ export const useUserStore = defineStore('user', () => {
 
     const getItemsDetails = function (itemIds) {
         const baseUrl = 'https://api.guildwars2.com/v2/items?lang=fr&ids=';
-        const itemLinks = $("#itemLinks").val();
+        const itemLinks = ("#itemLinks").val();
         fetch(baseUrl + itemIds.toString())
             .then(response => response.json())
             .then(data => {

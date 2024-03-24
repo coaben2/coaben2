@@ -1,5 +1,5 @@
 <template>
     <div>
-        <h3>Banque</h3>
+        <h3>Votre banque :</h3>
     </div>
 </template>

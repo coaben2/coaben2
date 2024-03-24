@@ -5,6 +5,7 @@ import { RouterView } from 'vue-router';
 <template>
     <div>
         <h1>API Guild Wars 2</h1>
+
         <ul class="flex gap-2">
             <li>
                 <RouterLink :to="{ name: 'GuildWarsApiCharacters' }">Personnages</RouterLink>
@@ -25,3 +26,14 @@ import { RouterView } from 'vue-router';
         <RouterView />
     </div>
 </template>
+<style scoped>
+li {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: #3b82f680;
+
+}
+</style>
