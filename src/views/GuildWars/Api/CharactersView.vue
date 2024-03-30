@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useQuery, useMutation } from '@tanstack/vue-query';
 
+
 const user = useUserStore();
 
 const haveApiKey = computed(() => !!user.haveApiKey);
@@ -50,15 +51,63 @@ const {
         return '/img/default.png';
     }
 };*/
-/*url du busmagic*/
-const getIconUrl = (itemId) => {
-    const baseUrl = 'https://v2.lebusmagique.fr/img/api/items/';
-    return baseUrl + itemId + '.png';
+const getIconUrl = async (itemId) => {
+
+    const response = await fetch(`https://api.guildwars2.com/v2/items/${itemId}`);
+    const data = await response.json();
+
+    return data.icon;
+
 };
-/*le lien guildwars renvois une erreur*/
-const getItemsDetails = (itemId) => {
-    const itemUrl = `https://api.guildwars2.com/v2/items/${itemId}`;
-    return itemUrl;
+const hideItemDetails = () => {
+    const itemDetailsDiv = document.getElementById('item-details');
+    if (itemDetailsDiv) {
+        itemDetailsDiv.remove();
+    }
+};
+const getItemsDetails = async (itemId, event) => {
+    try {
+
+        const response = await fetch(`https://api.guildwars2.com/v2/items/${itemId}`);
+        const data = await response.json();
+
+
+        const itemDetailsDiv = document.createElement('div');
+        itemDetailsDiv.id = 'item-details';
+        itemDetailsDiv.style.position = 'fixed';
+        itemDetailsDiv.style.top = '50%';
+        itemDetailsDiv.style.left = '50%';
+        itemDetailsDiv.style.transform = 'translate(-50%, -50%)';
+        itemDetailsDiv.style.zIndex = '9999';
+        itemDetailsDiv.style.background = 'white';
+        itemDetailsDiv.style.padding = '20px';
+
+        const keysToDisplay = ['name', 'icon', 'rarity', 'id'];
+
+        keysToDisplay.sort();
+
+        const ul = document.createElement('ul');
+        ul.style.listStyleType = 'none';
+        ul.style.padding = '0';
+
+        for (const key of keysToDisplay) {
+            const li = document.createElement('li');
+            li.textContent = `${key}: ${data[key]}`;
+            ul.appendChild(li);
+        }
+
+        itemDetailsDiv.appendChild(ul);
+
+        document.body.appendChild(itemDetailsDiv);
+
+        itemDetailsDiv.addEventListener('mouseout', hideItemDetails);
+
+        itemDetailsDiv.addEventListener('mouseover', (event) => {
+            event.stopPropagation();
+        });
+    } catch (error) {
+        console.error('Une erreur est survenue lors de la récupération des détails de l\'objet:', error);
+    }
 };
 </script>
 <template>
@@ -105,7 +154,7 @@ const getItemsDetails = (itemId) => {
                             :alt="characterData.equipment.find(item => item.slot === slot).id"
                             @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
                     </li>
-                </ul>>
+                </ul>
             </div>
         </div>
         <div class="home-container03">
@@ -233,8 +282,6 @@ const getItemsDetails = (itemId) => {
             </div>
         </div>
     </div>
-
-    <!--<pre v-if="characterData">{{ characterData }}</pre>-->
 </template>
 
 <style scoped>
@@ -472,5 +519,36 @@ const getItemsDetails = (itemId) => {
     display: block;
     border: 2px dashed rgba(120, 120, 120, 0.4);
     margin-bottom: 20px;
+}
+
+/* Media Query */
+@media (max-width: 250px) {
+    .home-container {
+        height: auto;
+    }
+
+    .home-container01,
+    .home-container02,
+    .home-container03,
+    .home-container04,
+    .home-container05,
+    .home-container06,
+    .home-container07,
+    .home-container08,
+    .home-container09,
+    .home-container10,
+    .home-container11,
+    .home-container12 {
+        position: static;
+        width: 100%;
+        margin: 0;
+        border: none;
+        height: auto;
+    }
+
+    .item-icon {
+        width: 50px;
+        height: 50px;
+    }
 }
 </style>
