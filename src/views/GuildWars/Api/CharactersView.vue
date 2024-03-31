@@ -16,7 +16,6 @@ const getCharacters = async () => {
 
     const characters = await user.getCharacters();
     if (!characters) return false;
-
     currentCharacter.value = characters[0];
     handleGetCharacter();
     return characters;
@@ -51,66 +50,14 @@ const {
         return '/img/default.png';
     }
 };*/
-const getIconUrl = async (itemId) => {
 
-    const response = await fetch(`https://api.guildwars2.com/v2/items/${itemId}`);
-    const data = await response.json();
-
-    return data.icon;
-
-};
-const hideItemDetails = () => {
-    const itemDetailsDiv = document.getElementById('item-details');
-    if (itemDetailsDiv) {
-        itemDetailsDiv.remove();
-    }
-};
-const getItemsDetails = async (itemId, event) => {
-    try {
-
-        const response = await fetch(`https://api.guildwars2.com/v2/items/${itemId}`);
-        const data = await response.json();
-
-
-        const itemDetailsDiv = document.createElement('div');
-        itemDetailsDiv.id = 'item-details';
-        itemDetailsDiv.style.position = 'fixed';
-        itemDetailsDiv.style.top = '50%';
-        itemDetailsDiv.style.left = '50%';
-        itemDetailsDiv.style.transform = 'translate(-50%, -50%)';
-        itemDetailsDiv.style.zIndex = '9999';
-        itemDetailsDiv.style.background = 'white';
-        itemDetailsDiv.style.padding = '20px';
-
-        const keysToDisplay = ['name', 'icon', 'rarity', 'id'];
-
-        keysToDisplay.sort();
-
-        const ul = document.createElement('ul');
-        ul.style.listStyleType = 'none';
-        ul.style.padding = '0';
-
-        for (const key of keysToDisplay) {
-            const li = document.createElement('li');
-            li.textContent = `${key}: ${data[key]}`;
-            ul.appendChild(li);
-        }
-
-        itemDetailsDiv.appendChild(ul);
-
-        document.body.appendChild(itemDetailsDiv);
-
-        itemDetailsDiv.addEventListener('mouseout', hideItemDetails);
-
-        itemDetailsDiv.addEventListener('mouseover', (event) => {
-            event.stopPropagation();
-        });
-    } catch (error) {
-        console.error('Une erreur est survenue lors de la récupération des détails de l\'objet:', error);
-    }
+const getIconUrl = (itemID) => {
+    const URLDATA = 'https://data.gw2.fr/db-icons/'
+    return URLDATA + itemID + '.png';
 };
 </script>
 <template>
+
     <div class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center"
         v-if="isCharactersLoading || isCharacterPending">
         <span class="loading loading-spinner text-primary"></span>
@@ -150,7 +97,7 @@ const getItemsDetails = async (itemId, event) => {
                 <ul class="horizontal-list">
                     <li v-for="slot in ['Sickle', 'Axe', 'Pick']" :key="slot">
                         <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
-                            :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
+                            :src="characterData.equipment.find(item => item.slot === slot).icon"
                             :alt="characterData.equipment.find(item => item.slot === slot).id"
                             @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id)" />
                     </li>
@@ -266,6 +213,14 @@ const getItemsDetails = async (itemId, event) => {
                 </ul>
             </div>
         </div>
+        <div class="home-container13">
+            <div>
+                <ul>
+                    <li v-for="slot in ['attributes']" :key="slot" class="attribute-item">
+                    </li>
+                </ul>
+            </div>
+        </div>
         <!--<img :src="getProfessionImage(characterData.profession)" alt="Profession Image" class="home-image" />
 -->
     </div>
@@ -282,6 +237,7 @@ const getItemsDetails = async (itemId, event) => {
             </div>
         </div>
     </div>
+    <pre v-if="characterData">{{ characterData }}</pre>
 </template>
 
 <style scoped>
