@@ -63,6 +63,7 @@ const getIconUrl = (itemID) => {
         <span class="loading loading-spinner text-primary"></span>
         <span>{{ loadingMessage }}</span>
     </div>
+    <p>{{ user.displayApiKey() }}</p>
     <div class="home-container">
         <div class="home-container01" v-if="charactersData">
             <select v-model="currentCharacter" @change="handleGetCharacter" class="select select-bordered">
