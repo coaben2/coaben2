@@ -1,33 +1,67 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
+import axios from 'axios';
 
 const APIURL = 'https://api.guildwars2.com/v2';
 
 export const getAPI = defineStore('user', () => {
     const apiKey = ref(null);
 
-    const getBank = () => {
-        return fetch(`${APIURL}/bank?access_token=${apiKey.value}&`).then((res) => res.json());
+
+
+    const getMaterials = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/account/materials`, {
+                params: {
+                    access_token: apiKey.value
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching materials data:', error);
+            return null;
+        }
     };
 
-    const getMatérials = () => {
-        return fetch(`${APIURL}/account/materials?access_token=${apiKey.value}&`).then((res) => res.json());
+    const getItems = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/items`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching items data:', error);
+            return null;
+        }
     };
 
-    const getItems = () => {
-        return fetch(`${APIURL}/items?`).then((res) => res.json());
+    const getRecipes = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/recipes`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching recipes data:', error);
+            return null;
+        }
     };
 
-    const getRecipes = () => {
-        return fetch(`${APIURL}/recipes?`).then((res) => res.json());
+    const getSkins = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/skins`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching skins data:', error);
+            return null;
+        }
     };
 
-    const getSkins = () => {
-        return fetch(`${APIURL}/skins?`).then((res) => res.json());
+    const getColors = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/colors`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching colors data:', error);
+            return null;
+        }
     };
 
-    const getColors = () => {
-        return fetch(`${APIURL}/colors?`).then((res) => res.json());
-    };
-    return { getBank, getMatérials, getItems, getRecipes, getSkins, getColors };
+    return { apiKey, getBank, getMaterials, getItems, getRecipes, getSkins, getColors };
 });

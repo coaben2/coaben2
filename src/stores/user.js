@@ -72,6 +72,9 @@ export const useUserStore = defineStore('user', () => {
             throw new Error(`Erreur lors de la récupération du personnage ${name}: ${error}`);
         }
     };
-
-    return { getStoredApiKey, initApiKey, setApiKey, haveApiKey, error, getApiKey, getCharacters, getCharacterNames };
+    const getIconUrl = (itemID) => {
+        const URLDATA = 'https://data.gw2.fr/db-icons/'
+        return URLDATA + itemID + '.png';
+    };
+    return { getIconUrl, getStoredApiKey, initApiKey, setApiKey, haveApiKey, error, getApiKey, getCharacters, getCharacterNames };
 });
