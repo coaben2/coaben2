@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
+import axios from 'axios';
 
 const APIURL = 'https://api.guildwars2.com/v2';
 
@@ -9,17 +10,18 @@ export const useUserStore = defineStore('user', () => {
     const haveApiKey = ref(false);
     const error = ref(null);
 
+    const getStoredApiKey = () => {
+        return apiKey.value;
+    }
+
     const checkApiKey = async () => {
         error.value = null;
-        if (!newApiKey.value.length) return;
+        if (!newApiKey.value) return false;
         try {
-            const req = await fetch(`${APIURL}/account?access_token=${newApiKey.value}`);
-            const res = await req.json();
-            if (!req.ok) {
-                if (res.text) {
-                    throw new Error(res.text);
-                }
-                throw new Error(`GW2 API error ${req.status}`);
+            const response = await axios.get(`${APIURL}/account?access_token=${newApiKey.value}`);
+
+            if (!response.ok || response.data.text) {
+                throw new Error('Clé API non valide');
             }
             return true;
         } catch (err) {
@@ -53,68 +55,26 @@ export const useUserStore = defineStore('user', () => {
         return apiKey.value;
     };
 
-    const getCharacters = () => {
-        return fetch(`${APIURL}/characters?access_token=${apiKey.value}&`).then((res) => res.json());
+    const getCharacters = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/characters?access_token=${apiKey.value}&`);
+            return response.data;
+        } catch (error) {
+            throw new Error(`Erreur lors de la récupération des personnages: ${error}`);
+        }
     };
 
-    const getCharacterNames = (name) => {
-        return fetch(`${APIURL}/characters/${name}?access_token=${apiKey.value}`).then((res) =>
-            res.json(),
-        );
+    const getCharacterNames = async (name) => {
+        try {
+            const response = await axios.get(`${APIURL}/characters/${name}?access_token=${apiKey.value}`);
+            return response.data;
+        } catch (error) {
+            throw new Error(`Erreur lors de la récupération du personnage ${name}: ${error}`);
+        }
     };
-
-    const getBank = () => {
-        return fetch(`${APIURL}/bank?access_token=${apiKey.value}&`).then((res) => res.json());
+    const getIconUrl = (itemID) => {
+        const URLDATA = 'https://data.gw2.fr/db-icons/'
+        return URLDATA + itemID + '.png';
     };
-
-    const getMatérials = () => {
-        return fetch(`${APIURL}/account/materials?access_token=${apiKey.value}&`).then((res) => res.json());
-    };
-
-    const getItems = () => {
-        return fetch(`${APIURL}/items?`).then((res) => res.json());
-    };
-
-    const getItemsDetails = function (itemIds) {
-        const baseUrl = 'https://api.guildwars2.com/v2/items?lang=fr&ids=';
-        const itemLinks = $("#itemLinks").val();
-        fetch(baseUrl + itemIds.toString())
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(item => {
-                    const element = document.querySelector(`tr[data-itemid='${item.id}']`);
-                    if (element) {
-                        const img = element.querySelector('.icon img');
-                        if (img) {
-                            img.setAttribute('data-src', item.icon);
-                        }
-
-                        const itemName = element.querySelector('.item-name');
-                        if (itemName) {
-                            itemName.classList.add(item.rarity);
-                            itemName.innerHTML = `<a href="${itemLinks}${item.id}" target="_blank">${item.name}</a>`;
-                        }
-                    }
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    };
-
-    const getRecipes = () => {
-        return fetch(`${APIURL}/recipes?`).then((res) => res.json());
-    };
-
-    const getSkins = () => {
-        return fetch(`${APIURL}/skins?`).then((res) => res.json());
-    };
-
-    const getColors = () => {
-        return fetch(`${APIURL}/colors?`).then((res) => res.json());
-    };
-
-    initApiKey();
-
-    return { setApiKey, haveApiKey, error, getApiKey, getCharacters, getCharacterNames, getBank, getMatérials, getItems, getItemsDetails, getRecipes, getSkins, getColors };
+    return { getIconUrl, getStoredApiKey, initApiKey, setApiKey, haveApiKey, error, getApiKey, getCharacters, getCharacterNames };
 });
