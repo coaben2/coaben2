@@ -1,5 +1,5 @@
 <script>
-import { ref } from 'vue';
+/*import { ref } from 'vue';
 import { getAPI } from '@/stores/getAPI';
 
 export default {
@@ -18,7 +18,7 @@ export default {
             bankData
         };
     }
-};
+};*/
 </script>
 <template>
     <div>
