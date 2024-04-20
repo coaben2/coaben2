@@ -7,8 +7,6 @@ const APIURL = 'https://api.guildwars2.com/v2';
 export const getAPI = defineStore('user', () => {
     const apiKey = ref(null);
 
-
-
     const getMaterials = async () => {
         try {
             const response = await axios.get(`${APIURL}/account/materials`, {
@@ -25,7 +23,11 @@ export const getAPI = defineStore('user', () => {
 
     const getItems = async () => {
         try {
-            const response = await axios.get(`${APIURL}/items`);
+            const response = await axios.get(`${APIURL}/items`, {
+                params: {
+                    access_token: apiKey.value
+                }
+            });
             return response.data;
         } catch (error) {
             console.error('Error fetching items data:', error);
@@ -35,7 +37,11 @@ export const getAPI = defineStore('user', () => {
 
     const getRecipes = async () => {
         try {
-            const response = await axios.get(`${APIURL}/recipes`);
+            const response = await axios.get(`${APIURL}/recipes`, {
+                params: {
+                    access_token: apiKey.value
+                }
+            });
             return response.data;
         } catch (error) {
             console.error('Error fetching recipes data:', error);
@@ -45,7 +51,11 @@ export const getAPI = defineStore('user', () => {
 
     const getSkins = async () => {
         try {
-            const response = await axios.get(`${APIURL}/skins`);
+            const response = await axios.get(`${APIURL}/skins`, {
+                params: {
+                    access_token: apiKey.value
+                }
+            });
             return response.data;
         } catch (error) {
             console.error('Error fetching skins data:', error);
@@ -55,10 +65,28 @@ export const getAPI = defineStore('user', () => {
 
     const getColors = async () => {
         try {
-            const response = await axios.get(`${APIURL}/colors`);
+            const response = await axios.get(`${APIURL}/colors`, {
+                params: {
+                    access_token: apiKey.value
+                }
+            });
             return response.data;
         } catch (error) {
             console.error('Error fetching colors data:', error);
+            return null;
+        }
+    };
+
+    const getBank = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/account/bank`, {
+                params: {
+                    access_token: apiKey.value
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching bank data:', error);
             return null;
         }
     };

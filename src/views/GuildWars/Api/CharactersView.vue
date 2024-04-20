@@ -39,7 +39,7 @@ const {
 } = useMutation({
     mutationFn: () => getCharacterNames(),
 });
-/*const getProfessionImage = (profession) => {
+const getProfessionImage = (profession) => {
     if (!profession) return '/img/default.png';
 
     const professions = ['Elementalist', 'Engineer', 'Guardian', 'Mesmer', 'Necromancer', 'Ranger', 'Revenant', 'Thief', 'Warrior'];
@@ -49,7 +49,7 @@ const {
     } else {
         return '/img/default.png';
     }
-};*/
+};
 
 const getIconUrl = (itemID) => {
     const URLDATA = 'https://data.gw2.fr/db-icons/'
@@ -70,7 +70,7 @@ const getIconUrl = (itemID) => {
                         {{ character }}
                     </option>
                 </select>
-                <p>Race : {{ characterData.race }}</p>
+                <p>Races : {{ characterData.race }}</p>
                 <p>genre: {{ characterData.gender }}</p>
                 <p>Profession: {{ characterData.profession }}</p>
                 <p>niveau: {{ characterData.level }}</p>
@@ -213,7 +213,9 @@ const getIconUrl = (itemID) => {
                     </ul>
                 </div>
             </div>
-            <!--<img :src="getProfessionImage(characterData.profession)" alt="Profession Image" class="home-image" />-->
+            <div class="home-container13">
+                <img :src="getProfessionImage(characterData.profession)" alt="Profession Image" />
+            </div>
         </div>
         <div class="home-container12" v-if="characterData">
             <div>
@@ -357,10 +359,9 @@ const getIconUrl = (itemID) => {
     grid-area: sac;
 }
 
-.home-image {
+.home-container13 {
     grid-area: douze;
-    position: absolute;
-    object-fit: cover;
+    display: flex;
 }
 
 .item-info {
