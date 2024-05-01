@@ -4,16 +4,15 @@ import axios from 'axios';
 
 const APIURL = 'https://api.guildwars2.com/v2';
 
-export const getAPI = defineStore('user', () => {
+export const getALL = defineStore('user', () => {
     const apiKey = ref(null);
 
+    const getStoredApiKey = () => {
+        return apiKey.value;
+    }
     const getMaterials = async () => {
         try {
-            const response = await axios.get(`${APIURL}/account/materials`, {
-                params: {
-                    access_token: apiKey.value
-                }
-            });
+            const response = await axios.get(`${APIURL}/account/materials?acces_token=${apiKey.value}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching materials data:', error);
@@ -23,11 +22,7 @@ export const getAPI = defineStore('user', () => {
 
     const getItems = async () => {
         try {
-            const response = await axios.get(`${APIURL}/items`, {
-                params: {
-                    access_token: apiKey.value
-                }
-            });
+            const response = await axios.get(`${APIURL}/items?acces_token=${apiKey.value}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching items data:', error);
@@ -37,11 +32,7 @@ export const getAPI = defineStore('user', () => {
 
     const getRecipes = async () => {
         try {
-            const response = await axios.get(`${APIURL}/recipes`, {
-                params: {
-                    access_token: apiKey.value
-                }
-            });
+            const response = await axios.get(`${APIURL}/recipes?acces_token=${apiKey.value}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching recipes data:', error);
@@ -51,11 +42,7 @@ export const getAPI = defineStore('user', () => {
 
     const getSkins = async () => {
         try {
-            const response = await axios.get(`${APIURL}/skins`, {
-                params: {
-                    access_token: apiKey.value
-                }
-            });
+            const response = await axios.get(`${APIURL}/skins?acces_token=${apiKey.value}`);;
             return response.data;
         } catch (error) {
             console.error('Error fetching skins data:', error);
@@ -65,11 +52,7 @@ export const getAPI = defineStore('user', () => {
 
     const getColors = async () => {
         try {
-            const response = await axios.get(`${APIURL}/colors`, {
-                params: {
-                    access_token: apiKey.value
-                }
-            });
+            const response = await axios.get(`${APIURL}/colors?acces_token=${apiKey.value}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching colors data:', error);
@@ -79,11 +62,7 @@ export const getAPI = defineStore('user', () => {
 
     const getBank = async () => {
         try {
-            const response = await axios.get(`${APIURL}/account/bank`, {
-                params: {
-                    access_token: apiKey.value
-                }
-            });
+            const response = await axios.get(`${APIURL}/account/bank?acces_token=${apiKey.value}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching bank data:', error);
@@ -91,5 +70,5 @@ export const getAPI = defineStore('user', () => {
         }
     };
 
-    return { apiKey, getBank, getMaterials, getItems, getRecipes, getSkins, getColors };
+    return { getBank, getMaterials, getItems, getRecipes, getSkins, getColors, getStoredApiKey };
 });
