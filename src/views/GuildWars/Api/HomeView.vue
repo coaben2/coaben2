@@ -64,7 +64,7 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 3px;
-    width: 50%;
+    width: 60%;
 }
 
 .submit-button {

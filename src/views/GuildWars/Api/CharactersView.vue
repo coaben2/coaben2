@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useUserStore } from '@/stores/user';
+/*import { itemDatabase } from '@/stores/databaseItems';*/
 import { useQuery, useMutation } from '@tanstack/vue-query';
 
 
@@ -54,7 +55,19 @@ const {
 const getIconUrl = (itemID) => {
     const URLDATA = 'https://data.gw2.fr/db-icons/'
     return URLDATA + itemID + '.png';
-};
+}
+/*const getIconUrl = (itemID) => {
+    if (itemID in itemDatabase) {
+        const item = itemDatabase[itemID];
+        if (item && item.icon) {
+            return item.icon;
+        } else {
+            return 'URL par défaut de l\'icône ou gérer l\'erreur ici';
+        }
+    } else {
+        return 'URL par défaut de l\'icône ou gérer l\'erreur ici';
+    }
+};*/
 </script>
 <template>
     <div>
