@@ -43,7 +43,7 @@ const links = [
   },
   {
     to: 'Contact',
-    title: 'Contact',
+    title: 'instagram',
     children: [],
   },
   {
@@ -68,9 +68,7 @@ const openModalMenu = () => {
         </RouterLink>
         <div class="dropdown" v-else>
           <div tabindex="0" role="button" class="btn btn-primary">{{ link.title }}</div>
-          <ul
-            class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto whitespace-nowrap min-w-52"
-          >
+          <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto whitespace-nowrap min-w-52">
             <li v-for="(child, i) in link.children" :key="i">
               <RouterLink :to="{ name: child.to }">{{ child.title }}</RouterLink>
             </li>
@@ -79,17 +77,10 @@ const openModalMenu = () => {
       </div>
     </nav>
     <button class="btn btn-ghost m-4 block md:hidden" @click="openModalMenu">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        class="w-6 h-6"
-      >
-        <path
-          fill-rule="evenodd"
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+        <path fill-rule="evenodd"
           d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
-          clip-rule="evenodd"
-        />
+          clip-rule="evenodd" />
       </svg>
     </button>
 
@@ -100,11 +91,7 @@ const openModalMenu = () => {
         </form>
         <ul class="menu menu-lg mt-2">
           <li v-for="(link, k) in links" :key="k">
-            <RouterLink
-              v-if="!link.children.length"
-              :to="{ name: link.to }"
-              @click="modalMenu.close()"
-            >
+            <RouterLink v-if="!link.children.length" :to="{ name: link.to }" @click="modalMenu.close()">
               {{ link.title }}
             </RouterLink>
             <h2 v-if="link.children.length" class="menu-title text-lg">{{ link.title }}</h2>
@@ -126,11 +113,11 @@ const openModalMenu = () => {
 </template>
 
 <style scoped>
-header > nav > div > a:not(.router-link-active) {
+header>nav>div>a:not(.router-link-active) {
   @apply btn-primary;
 }
 
-header > nav > div > a.router-link-active {
+header>nav>div>a.router-link-active {
   @apply btn-secondary;
 }
 </style>
