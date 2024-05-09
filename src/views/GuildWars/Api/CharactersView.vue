@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useUserStore } from '@/stores/user';
-/*import { itemDatabase } from '@/stores/databaseItems';*/
+/*import itemData from '@/stores/itemData.json';*/
 import { useQuery, useMutation } from '@tanstack/vue-query';
 
 
@@ -56,18 +56,69 @@ const getIconUrl = (itemID) => {
     const URLDATA = 'https://data.gw2.fr/db-icons/'
     return URLDATA + itemID + '.png';
 }
-/*const getIconUrl = (itemID) => {
-    if (itemID in itemDatabase) {
-        const item = itemDatabase[itemID];
-        if (item && item.icon) {
-            return item.icon;
-        } else {
-            return 'URL par défaut de l\'icône ou gérer l\'erreur ici';
-        }
-    } else {
+/*const getIconUrl = async (itemID) => {
+    try {
+        const response = await fetch(`http://api.guildwars2.com/v2/items/${itemID}`);
+        const data = await response.json();
+        return data.icon;
+    } catch (error) {
+        console.error("Une erreur est survenue lors de la récupération de l'URL de l'icône :", error);
+        // Vous pouvez gérer l'erreur ici, par exemple en retournant une URL par défaut
         return 'URL par défaut de l\'icône ou gérer l\'erreur ici';
     }
 };*/
+const getItemsDetails = async (itemId, event) => {
+    try {
+        const response = await fetch(`http://api.guildwars2.com/v2/items/${itemId}`);
+        const data = await response.json();
+
+        const itemDetailsDiv = document.createElement('div');
+        itemDetailsDiv.id = 'item-details';
+        itemDetailsDiv.style.position = 'fixed';
+        itemDetailsDiv.style.top = '50%';
+        itemDetailsDiv.style.left = '50%';
+        itemDetailsDiv.style.transform = 'translate(-50%, -50%)';
+        itemDetailsDiv.style.zIndex = '9999';
+        itemDetailsDiv.style.background = 'white';
+        itemDetailsDiv.style.padding = '20px';
+
+        const keysToDisplay = ['name', 'icon', 'rarity', 'id'];
+
+        keysToDisplay.sort();
+
+        const ul = document.createElement('ul');
+        ul.style.listStyleType = 'none';
+        ul.style.padding = '0';
+
+        for (const key of keysToDisplay) {
+            const li = document.createElement('li');
+            li.textContent = `${key}: ${data[key]}`;
+            ul.appendChild(li);
+        }
+
+        itemDetailsDiv.appendChild(ul);
+
+        document.body.appendChild(itemDetailsDiv);
+
+        itemDetailsDiv.addEventListener('mouseout', hideItemDetails);
+
+        itemDetailsDiv.addEventListener('mouseover', (event) => {
+            event.stopPropagation();
+        });
+
+        itemDetailsDiv.style.top = `${event.clientY}px`;
+        itemDetailsDiv.style.left = `${event.clientX}px`;
+
+    } catch (error) {
+        console.error("Une erreur est survenue lors de la récupération des détails de l'objet: ", error);
+    }
+};
+const hideItemDetails = () => {
+    const itemDetailsDiv = document.getElementById('item-details');
+    if (itemDetailsDiv) {
+        itemDetailsDiv.remove();
+    }
+};
 </script>
 <template>
     <div>
@@ -111,7 +162,9 @@ const getIconUrl = (itemID) => {
                         <li v-for="slot in ['Sickle', 'Axe', 'Pick']" :key="slot">
                             <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
                                 :src="characterData.equipment.find(item => item.slot === slot).icon"
-                                :alt="characterData.equipment.find(item => item.slot === slot).id" />
+                                :alt="characterData.equipment.find(item => item.slot === slot).id"
+                                @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id, $event)"
+                                @mouseout="hideItemDetails" />
                         </li>
                     </ul>
                 </div>
@@ -122,7 +175,9 @@ const getIconUrl = (itemID) => {
                         <li v-for="slot in ['PowerCore', 'SensoryArray', 'ServiceChip']" :key="slot">
                             <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
                                 :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
-                                :alt="characterData.equipment.find(item => item.slot === slot).id" />
+                                :alt="characterData.equipment.find(item => item.slot === slot).id"
+                                @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id, $event)"
+                                @mouseout="hideItemDetails" />
                         </li>
                     </ul>
                 </div>
@@ -133,7 +188,9 @@ const getIconUrl = (itemID) => {
                         <li v-for="slot in ['FishingRod', 'FishingLure']" :key="slot">
                             <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
                                 :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
-                                :alt="characterData.equipment.find(item => item.slot === slot).id" />
+                                :alt="characterData.equipment.find(item => item.slot === slot).id"
+                                @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id, $event)"
+                                @mouseout="hideItemDetails" />
                         </li>
                     </ul>
                 </div>
@@ -144,7 +201,9 @@ const getIconUrl = (itemID) => {
                         <li v-for="slot in ['Helm', 'Shoulders', 'Gloves', 'Coat', 'Leggings', 'Boots']" :key="slot">
                             <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
                                 :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
-                                :alt="characterData.equipment.find(item => item.slot === slot).id" />
+                                :alt="characterData.equipment.find(item => item.slot === slot).id"
+                                @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id, $event)"
+                                @mouseout="hideItemDetails" />
                         </li>
                     </ul>
                 </div>
@@ -155,7 +214,9 @@ const getIconUrl = (itemID) => {
                         <li v-for="slot in ['WeaponA1', 'WeaponA2', 'WeaponB1', 'WeaponB2']" :key="slot">
                             <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
                                 :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
-                                :alt="characterData.equipment.find(item => item.slot === slot).id" />
+                                :alt="characterData.equipment.find(item => item.slot === slot).id"
+                                @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id, $event)"
+                                @mouseout="hideItemDetails" />
                         </li>
                     </ul>
                 </div>
@@ -179,7 +240,9 @@ const getIconUrl = (itemID) => {
                         <li v-for="slot in ['Backpack', 'Accessory1', 'Accessory2']" :key="slot">
                             <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
                                 :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
-                                :alt="characterData.equipment.find(item => item.slot === slot).id" />
+                                :alt="characterData.equipment.find(item => item.slot === slot).id"
+                                @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id, $event)"
+                                @mouseout="hideItemDetails" />
                         </li>
                     </ul>
                 </div>
@@ -190,7 +253,9 @@ const getIconUrl = (itemID) => {
                         <li v-for="slot in ['Amulet', 'Ring1', 'Ring2']" :key="slot">
                             <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
                                 :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
-                                :alt="characterData.equipment.find(item => item.slot === slot).id" />
+                                :alt="characterData.equipment.find(item => item.slot === slot).id"
+                                @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id, $event)"
+                                @mouseout="hideItemDetails" />
                         </li>
                     </ul>
                 </div>
@@ -201,7 +266,9 @@ const getIconUrl = (itemID) => {
                         <li v-for="slot in ['HelmAquatic', 'WeaponAquaticA', 'WeaponAquaticB']" :key="slot">
                             <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
                                 :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
-                                :alt="characterData.equipment.find(item => item.slot === slot).id" />
+                                :alt="characterData.equipment.find(item => item.slot === slot).id"
+                                @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id, $event)"
+                                @mouseout="hideItemDetails" />
                         </li>
                     </ul>
                 </div>
@@ -212,7 +279,9 @@ const getIconUrl = (itemID) => {
                         <li v-for="slot in ['Relic']" :key="slot">
                             <img v-if="characterData && characterData.equipment.find(item => item.slot === slot)"
                                 :src="getIconUrl(characterData.equipment.find(item => item.slot === slot).id)"
-                                :alt="characterData.equipment.find(item => item.slot === slot).id" />
+                                :alt="characterData.equipment.find(item => item.slot === slot).id"
+                                @mouseover="getItemsDetails(characterData.equipment.find(item => item.slot === slot).id, $event)"
+                                @mouseout="hideItemDetails" />
                         </li>
                     </ul>
                 </div>
@@ -227,7 +296,9 @@ const getIconUrl = (itemID) => {
                     <h3>sac : {{ bagIndex + 1 }}</h3>
                     <ul class="item-grid">
                         <li class="item-icon" v-for="(item, itemIndex) in bag.inventory" :key="itemIndex">
-                            <img v-if="item" :src="getIconUrl(item.id)" :alt="item.id" />
+                            <img v-if="item" :src="getIconUrl(item.id)" :alt="item.id"
+                                @mouseover="getItemsDetails(characterData.equipment.find(item.id), $event)"
+                                @mouseout="hideItemDetails" />
                         </li>
                     </ul>
                 </div>
