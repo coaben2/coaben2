@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios';
+/*import axios from 'axios';
 import { getApiKey } from '@/stores/user';
 
 const apiKey = getApiKey
@@ -26,7 +26,7 @@ export default {
             this.loading = false;
         }
     }
-};
+};*/
 </script>
 <template>
     <div>
