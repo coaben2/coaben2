@@ -92,7 +92,7 @@ const router = createRouter({
       component: () => import('../views/PortfolioView.vue'),
     },
     {
-      path: '/contact',
+      path: '/instagram',
       name: 'Contact',
       component: () => import('../views/ContactView.vue'),
     },
