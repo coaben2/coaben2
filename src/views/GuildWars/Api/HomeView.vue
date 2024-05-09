@@ -23,7 +23,7 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
             <label for="api-key" class="label">clé API:</label>
             <input id="apiKey" name="api-key" type="text" class="input" :placeholder="placeholderText"
                 v-model="newApiKey">
-            <button @click="setAndSaveApiKey" id="keySubmit" class="submit-button">
+            <button @click="setAndSaveApiKey" id="keySubmit" class="submit-button" title="Afficher le menu">
                 <i class="material-icons">envoyer</i>
             </button>
         </div>
