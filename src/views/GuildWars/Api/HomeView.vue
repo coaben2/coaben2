@@ -4,15 +4,15 @@ import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
 
 const newApiKey = ref('');
-const userStore = useUserStore();
+const user = useUserStore();
 
 const setAndSaveApiKey = async () => {
-    await userStore.setApiKey(newApiKey.value);
+    await user.setApiKey(newApiKey.value);
     alert('Clé API sauvegardée avec succès!');
 };
 
 onMounted(() => {
-    userStore.initApiKey();
+    user.initApiKey();
 });
 const placeholderText = 'Entrez une clé API avec toutes les permissions';
 </script>
@@ -44,6 +44,9 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
                 </li>
                 <li>
                     <RouterLink :to="{ name: 'GuildWarsApiUnlocks' }">Débloqué</RouterLink>
+                </li>
+                <li>
+                    <RouterLink :to="{ name: 'GuildWarsInventoryManager' }">rangement du sac</RouterLink>
                 </li>
             </ul>
             <RouterView />

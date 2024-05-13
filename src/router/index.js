@@ -46,12 +46,13 @@ const router = createRouter({
               name: 'GuildWarsApiUnlocks',
               component: () => import('../views/GuildWars/Api/Unlocks.vue'),
             },
+            // Déplacer GuildWarsInventoryManager ici
+            {
+              path: 'vide-ton-sac',
+              name: 'GuildWarsInventoryManager',
+              component: () => import('../views/GuildWars/Api/InventoryManagerView.vue'),
+            },
           ],
-        },
-        {
-          path: 'vide-ton-sac',
-          name: 'GuildWarsInventoryManager',
-          component: () => import('../views/GuildWars/InventoryManagerView.vue'),
         },
       ],
     },
@@ -63,7 +64,6 @@ const router = createRouter({
     {
       path: '/blog/divinity-s-reach',
       name: 'BlogPostDivinitysReach',
-
       component: () => import('../views/Blog/DivinityReachView.vue'),
     },
     {

@@ -47,7 +47,7 @@ const posts = [
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       <div class="card bg-base-100 shadow-lg" v-for="(post, k) in posts" :key="k">
         <figure v-if="post.thumbnail">
-          <img :src="`/img/${post.thumbnail}`" :alt="post.title" class="w-full h-full aspect-video object-cover" />
+          <img :src="`/img/${post.thumbnail}`" :alt="post.title" class="w-full h-full object-contain-cover" />
         </figure>
         <div class="card-body">
           <h2 class="card-title font-bold text-xl">{{ post.title }}</h2>
