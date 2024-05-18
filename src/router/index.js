@@ -104,7 +104,7 @@ const router = createRouter({
     {
       path: '/:catchAll(.*)',
       name: 'NotFound',
-      component: () => import('@/components/NotFoundComponent.vue'),
+      component: () => import('@/components/404.vue'),
     },
   ],
 });

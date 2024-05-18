@@ -56,17 +56,12 @@ const getIconUrl = (itemID) => {
     const URLDATA = 'https://data.gw2.fr/db-icons/'
     return URLDATA + itemID + '.png';
 }
-/*const getIconUrl = async (itemID) => {
-    try {
-        const response = await fetch(`http://api.guildwars2.com/v2/items/${itemID}`);
-        const data = await response.json();
-        return data.icon;
-    } catch (error) {
-        console.error("Une erreur est survenue lors de la récupération de l'URL de l'icône :", error);
-        // Vous pouvez gérer l'erreur ici, par exemple en retournant une URL par défaut
-        return 'URL par défaut de l\'icône ou gérer l\'erreur ici';
+/*const getIconUrl = (itemID) => {
+    if (itemData[itemID]) {
+        const iconURL = itemData[itemID].icon;
+        return iconURL;
     }
-};*/
+}*/
 const getItemsDetails = async (itemId, event) => {
     try {
         const response = await fetch(`http://api.guildwars2.com/v2/items/${itemId}`);
