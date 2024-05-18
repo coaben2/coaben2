@@ -1,7 +1,6 @@
 import $ from 'jquery';
-import { getApiKey } from '@/stores/user';
+import axios from 'axios';
 
-set apikey.value = getApiKey()
 const partialStacks = {};
 const itemPlacements = {};
 const itemCounts = {};
@@ -10,7 +9,8 @@ const canner = false; //67176
 const bandit = false; //67518
 const itemsToCheckRarePrices = {};
 
-const organize = (apiKey) => {
+const organize = () => {
+
   $('#items tbody').empty();
   $('#items tbody').html('<tr><td class="cost">en construction...</td></tr>');
   $('#items').show();
@@ -37,64 +37,68 @@ const getBankListings = (apiKey) => {
       }
       getInventoryListings(apiKey);
     })
-    .catch(error => {
-      message("Failed to access bank.");
-    });
 };
 
 const getMaterials = (apiKey) => {
-  const materialsURL = 'https://api.guildwars2.com/v2/account/materials?access_token=' + apiKey;
-  $.getJSON(materialsURL, function (json) {
-    for (let i = 0; i < json.length; i++) {
-      const item = json[i];
-      addItem(item, 'Material storage');
-      if (item.count > collections) {
-        collections = item.count;
+  const materialsURL = `https://api.guildwars2.com/v2/account/materials?access_token=${apiKey}`;
+
+  axios.get(materialsURL)
+    .then(response => {
+      const json = response.data;
+      for (let i = 0; i < json.length; i++) {
+        const item = json[i];
+        addItem(item, 'Material storage');
+        if (item.count > collections) {
+          collections = item.count;
+        }
       }
-    };
 
-    collections = Math.ceil(collections / 250) * 250;
-    if (collections === 0) {
-      collections = 250;
-    }
+      collections = Math.ceil(collections / 250) * 250;
+      if (collections === 0) {
+        collections = 250;
+      }
 
-    getBankListings(apiKey);
-
-  });
-}
+      getBankListings(apiKey);
+    })
+};
 const getInventoryListings = (apiKey) => {
-  const characterListURL = 'https://api.guildwars2.com/v2/characters?access_token=' + apiKey;
-  $.getJSON(characterListURL, function (json) {
-    recurseCharacter(json, apiKey);
-  });
-}
+  const characterListURL = `https://api.guildwars2.com/v2/characters?access_token=${apiKey}`;
+
+  axios.get(characterListURL)
+    .then(response => {
+      const json = response.data;
+      recurseCharacter(json, apiKey);
+    })
+};
 const recurseCharacter = (characterList, apiKey) => {
   if (characterList.length > 0) {
     const character = characterList.splice(0, 1);
-    const characterURL = 'https://api.guildwars2.com/v2/characters/' + encodeURIComponent(character) + '?access_token=' + apiKey;
-    $.getJSON(characterURL, function (json) {
-      for (let i = 0; i < json.bags.length; i++) {
-        const bag = json.bags[i];
-        if (bag) {
-          if (bag.id == 67176) {
-            canner = true;
-          }
-          if (bag.id == 67518) {
-            bandit = true;
-          }
-          for (let j = 0; j < bag.inventory.length; j++) {
-            const item = bag.inventory[j];
-            addItem(item, character);
-          };
-        }
-      };
-      recurseCharacter(characterList, apiKey);
-    });
+    const characterURL = `https://api.guildwars2.com/v2/characters/${encodeURIComponent(character)}?access_token=${apiKey}`;
 
+    axios.get(characterURL)
+      .then(response => {
+        const json = response.data;
+        for (let i = 0; i < json.bags.length; i++) {
+          const bag = json.bags[i];
+          if (bag) {
+            if (bag.id == 67176) {
+              canner = true;
+            }
+            if (bag.id == 67518) {
+              bandit = true;
+            }
+            for (let j = 0; j < bag.inventory.length; j++) {
+              const item = bag.inventory[j];
+              addItem(item, character);
+            }
+          }
+        }
+        recurseCharacter(characterList, apiKey);
+      })
   } else {
     processItems();
   }
-}
+};
 const addItem = (item, source) => {
   if (item) {
     if (itemCounts[item.id]) {
@@ -475,153 +479,175 @@ const processItems = () => {
   $('#tips').show();
 }
 const recipeItemInfo = (r, keys, recipes, itemIds) => {
-  const itemURL = 'https://api.guildwars2.com/v2/items?ids=' + itemIds.join(',');
-  $.getJSON(itemURL, function (json) {
-    for (let i = 0; i < json.length; i++) {
-      r.push('<tr><td class="icon"><img src="');
-      r.push(json[i].icon);
-      r.push('" /><td class="name">');
-      r.push(json[i].name);
-      r.push('</td></tr>');
-    };
-    recurseRecipeList(r, keys, recipes);
-  });
-}
+  const itemURL = `https://api.guildwars2.com/v2/items?ids=${itemIds.join(',')}`;
+
+  axios.get(itemURL)
+    .then(response => {
+      const json = response.data;
+      for (let i = 0; i < json.length; i++) {
+        r.push('<tr><td class="icon"><img src="');
+        r.push(json[i].icon);
+        r.push('" /><td class="name">');
+        r.push(json[i].name);
+        r.push('</td></tr>');
+      }
+      recurseRecipeList(r, keys, recipes);
+    })
+};
 const recurseRecipeList = (r, keys, recipes) => {
   if (recipes.length > 0) {
     const recipeIds = recipes.splice(0, 199);
-    const recipeURL = 'https://api.guildwars2.com/v2/recipes?ids=' + recipeIds.join(',');
-    $.getJSON(recipeURL, function (json) {
-      const itemIds = [];
-      for (let i = 0; i < json.length; i++) {
-        if (json[i].ingredients.length < 2) {
-          itemIds.push(json[i].output_item_id);
+    const recipeURL = `https://api.guildwars2.com/v2/recipes?ids=${recipeIds.join(',')}`;
+
+    axios.get(recipeURL)
+      .then(response => {
+        const json = response.data;
+        const itemIds = [];
+        for (let i = 0; i < json.length; i++) {
+          if (json[i].ingredients.length < 2) {
+            itemIds.push(json[i].output_item_id);
+          }
         }
-      };
-      if (itemIds.length > 0) {
-        recipeItemInfo(r, keys, recipes, itemIds);
-      } else {
-        recurseRecipeList(r, keys, recipes);
-      }
-    });
+        if (itemIds.length > 0) {
+          recipeItemInfo(r, keys, recipes, itemIds);
+        } else {
+          recurseRecipeList(r, keys, recipes);
+        }
+      })
   } else {
     recurseBuildCraftingEntry(r, keys);
   }
-}
+};
 const recurseBuildCraftingEntry = (r, keys) => {
   if (keys.length > 0) {
     const itemId = keys.splice(0, 1);
     if (itemCounts[itemId] > collections) {
-      const recipeURL = 'https://api.guildwars2.com/v2/recipes/search?input=' + itemId;
-      $.getJSON(recipeURL, function (json) {
-        if (json.length > 0) {
-          recurseRecipeList(r, keys, json);
-        } else {
-          recurseBuildCraftingEntry(r, keys);
-        }
-      });
+      const recipeURL = `https://api.guildwars2.com/v2/recipes/search?input=${itemId}`;
+      axios.get(recipeURL)
+        .then(response => {
+          const json = response.data;
+          if (json.length > 0) {
+            recurseRecipeList(r, keys, json);
+          } else {
+            recurseBuildCraftingEntry(r, keys);
+          }
+        })
     } else {
       recurseBuildCraftingEntry(r, keys);
     }
   } else {
-    $('#crafts tbody').html(r.join(""));
-    $('#crafts').show();
+    const craftsTableBody = document.getElementById('crafts').getElementsByTagName('tbody')[0];
+    craftsTableBody.innerHTML = r.join('');
+    document.getElementById('crafts').style.display = 'block';
   }
-}
+};
 const recurseBuildItemEntry = (c, keys) => {
   if (keys.length > 0) {
     const itemIds = keys.splice(0, 199); // 200 items limit per api call
     const itemURL = 'https://api.guildwars2.com/v2/items?ids=' + itemIds.join(",");
-    $.getJSON(itemURL, function (json) {
-      for (let i = 0; i < json.length; i++) {
-        const itemId = json[i].id;
-        const itemSource = partialStacks[itemId];
-        if (itemSource.length > 1) {
-          if (!['Armor', 'Back', 'Gathering', 'Tool', 'Trinket', 'Weapon', 'Bag'].includes(json[i].type)) {
-            if ($('#consumables').is(':checked') && ['Consumable'].includes(json[i].type) && ['Food', 'Utility'].includes(json[i].details.type)) {
-              continue;
-            }
-            let total = 0;
-            for (let index = 0; index < itemSource.length; ++index) {
-              total += itemSource[index].count;
-            }
-            c.push('<tr><td class="icon" rowspan="' + itemSource.length + '"><img src="');
-            c.push(json[i].icon);
-            c.push('" /><td class="name" rowspan="' + itemSource.length + '">');
-            c.push(total + ' ' + json[i].name);
-            c.push('</td>');
-            for (let index = 0; index < itemSource.length; ++index) {
-              if (index > 0) {
-                c.push('<tr>');
+    axios.get(itemURL)
+      .then(response => {
+        const json = response.data;
+        for (let i = 0; i < json.length; i++) {
+          const itemId = json[i].id;
+          const itemSource = partialStacks[itemId];
+          if (itemSource.length > 1) {
+            if (!['Armor', 'Back', 'Gathering', 'Tool', 'Trinket', 'Weapon', 'Bag'].includes(json[i].type)) {
+              if (document.getElementById('consumables').checked && ['Consumable'].includes(json[i].type) && ['Food', 'Utility'].includes(json[i].details.type)) {
+                continue;
               }
-              c.push('<td class="cost">');
-              c.push(itemSource[index].count);
+              let total = 0;
+              for (let index = 0; index < itemSource.length; ++index) {
+                total += itemSource[index].count;
+              }
+              c.push('<tr><td class="icon" rowspan="' + itemSource.length + '"><img src="');
+              c.push(json[i].icon);
+              c.push('" /><td class="name" rowspan="' + itemSource.length + '">');
+              c.push(total + ' ' + json[i].name);
               c.push('</td>');
-              c.push('<td class="cost">');
-              c.push(itemSource[index].source);
-              c.push('</td>');
-              c.push('</tr>');
+              for (let index = 0; index < itemSource.length; ++index) {
+                if (index > 0) {
+                  c.push('<tr>');
+                }
+                c.push('<td class="cost">');
+                c.push(itemSource[index].count);
+                c.push('</td>');
+                c.push('<td class="cost">');
+                c.push(itemSource[index].source);
+                c.push('</td>');
+                c.push('</tr>');
+              }
             }
           }
         }
-      }
-      recurseBuildItemEntry(c, keys);
-    });
+        recurseBuildItemEntry(c, keys);
+      })
   } else {
-    $('#items tbody').html(c.join(""));
-    $('#items').show();
+    const itemsTableBody = document.getElementById('items').getElementsByTagName('tbody')[0];
+    itemsTableBody.innerHTML = c.join("");
+    document.getElementById('items').style.display = 'block';
   }
-}
+};
 const getEctoCalc = () => {
-  let c = []
   let ectoPrice = 0;
 
-  $.getJSON("https://api.guildwars2.com/v2/commerce/prices/19721", function (data) {
-    const salvage_price = 0.10496;
-    const ecto_chance = 0.875;
-    const tp_tax = 0.85;
+  axios.get("https://api.guildwars2.com/v2/commerce/prices/19721")
+    .then(response => {
+      const data = response.data;
+      const salvage_price = 0.10496;
+      const ecto_chance = 0.875;
+      const tp_tax = 0.85;
 
-    ectoPrice = (data.sells.unit_price * tp_tax * ecto_chance - salvage_price) / tp_tax;
+      ectoPrice = (data.sells.unit_price * tp_tax * ecto_chance - salvage_price) / tp_tax;
 
-    const gold = Math.floor(ectoPrice / 10000);
-    const silver = Math.floor((ectoPrice - 10000 * gold) / 100);
-    const copper = Math.floor(ectoPrice - 10000 * gold - 100 * silver);
+      const gold = Math.floor(ectoPrice / 10000);
+      const silver = Math.floor((ectoPrice - 10000 * gold) / 100);
+      const copper = Math.floor(ectoPrice - 10000 * gold - 100 * silver);
 
-    $("#price .gold").text(gold);
-    $("#price .silver").text(silver);
-    $("#price .copper").text(copper);
+      document.getElementById("price").getElementsByClassName("gold")[0].textContent = gold;
+      document.getElementById("price").getElementsByClassName("silver")[0].textContent = silver;
+      document.getElementById("price").getElementsByClassName("copper")[0].textContent = copper;
 
-    recurseBuildRareItemEntry([], itemPlacements);
-  });
-}
+      recurseBuildRareItemEntry([], itemPlacements);
+    })
+    .catch(error => {
+      console.error('Failed to fetch ecto price:', error);
+    });
+};
 const recurseBuildRareItemEntry = (c, itemSources) => {
   if (itemSources.length > 0) {
     const itemSourceSlice = itemSources.splice(0, 199); // 200 items limit per api call
     const itemIds = itemSourceSlice.map(item => item.itemId);
     const itemURL = 'https://api.guildwars2.com/v2/items?ids=' + itemIds.join(",");
 
-    $.getJSON(itemURL, function (json) {
-      for (let j = 0; j < itemSourceSlice.length; j++) {
-        for (let i = 0; i < json.length; i++) {
-          if (json[i].id == itemSourceSlice[j].itemId) {
-            if (['Armor', 'Back', 'Trinket', 'Weapon'].includes(json[i].type) && json[i].rarity == 'Rare' && json[i].level > 77 && !json[i].flags.includes('NoSalvage')) {
-              c.push('<tr><td class="icon"><img src="');
-              c.push(json[i].icon);
-              c.push('" /><td class="name">');
-              c.push(json[i].name);
-              c.push('</td>');
-              c.push('<td class="cost">');
-              c.push(itemSourceSlice[j].source);
-              c.push('</td>');
-              c.push('<td class="name ' + itemSourceSlice[j].itemId + '" class="cost">?</td>');
-              addItemSource(itemPlacements[itemSourceSlice[j].itemId], c);
-              itemsToCheckRarePrices.push(itemSourceSlice[j].itemId);
+    axios.get(itemURL)
+      .then(response => {
+        const json = response.data;
+        for (let j = 0; j < itemSourceSlice.length; j++) {
+          for (let i = 0; i < json.length; i++) {
+            if (json[i].id == itemSourceSlice[j].itemId) {
+              if (['Armor', 'Back', 'Trinket', 'Weapon'].includes(json[i].type) && json[i].rarity == 'Rare' && json[i].level > 77 && !json[i].flags.includes('NoSalvage')) {
+                c.push('<tr><td class="icon"><img src="');
+                c.push(json[i].icon);
+                c.push('" /><td class="name">');
+                c.push(json[i].name);
+                c.push('</td>');
+                c.push('<td class="cost">');
+                c.push(itemSourceSlice[j].source);
+                c.push('</td>');
+                c.push('<td class="name ' + itemSourceSlice[j].itemId + '" class="cost">?</td>');
+                addItemSource(itemPlacements[itemSourceSlice[j].itemId], c);
+                itemsToCheckRarePrices.push(itemSourceSlice[j].itemId);
+              }
             }
           }
         }
-      };
-      recurseBuildRareItemEntry(c, itemSources);
-    });
+        recurseBuildRareItemEntry(c, itemSources);
+      })
+      .catch(error => {
+        console.error('Failed to fetch item details:', error);
+        recurseBuildRareItemEntry(c, itemSources);
+      });
   } else {
     if (c.length == 0) {
       $('#raresalvage tbody').html('<tr><td class="cost">Nothing</td></tr>');
@@ -637,30 +663,35 @@ const fetchItemPricesRarePrices = (items) => {
   if (items.length > 0) {
     const itemSlice = items.splice(0, 199);
     const itemURL = 'https://api.guildwars2.com/v2/commerce/prices?ids=' + itemSlice.join(",");
-    $.getJSON(itemURL, function (json) {
-      for (let j = 0; j < json.length; j++) {
-        $("." + json[j].id).each(function () {
-          const gold = Math.floor(json[j].sells.unit_price / 10000);
-          const silver = Math.floor((json[j].sells.unit_price - 10000 * gold) / 100);
-          const copper = Math.floor(json[j].sells.unit_price - 10000 * gold - 100 * silver);
 
-          let todo = '';
+    axios.get(itemURL)
+      .then(response => {
+        const json = response.data;
+        for (let j = 0; j < json.length; j++) {
+          $("." + json[j].id).each(function () {
+            const gold = Math.floor(json[j].sells.unit_price / 10000);
+            const silver = Math.floor((json[j].sells.unit_price - 10000 * gold) / 100);
+            const copper = Math.floor(json[j].sells.unit_price - 10000 * gold - 100 * silver);
 
-          if (ectoPrice > json[j].sells.unit_price) {
-            todo = 'Salvage!'
-          } else {
-            todo = 'Sell!'
-          }
+            let todo = '';
 
-          $(this).html(
-            todo + ' <span class="gold">' + gold + '</span> <img src="../common/gold.png" /> <span class="silver">' + silver + '</span> <img src="../common/silver.png" /> <span class="copper">' + copper + '</span> <img src="../common/copper.png" />'
-          );
-        });
-      };
-      fetchItemPricesRarePrices(items);
-    });
+            if (ectoPrice > json[j].sells.unit_price) {
+              todo = 'Salvage!'
+            } else {
+              todo = 'Sell!'
+            }
+
+            $(this).html(
+              todo + ' <span class="gold">' + gold + '</span> <img src="../common/gold.png" /> <span class="silver">' + silver + '</span> <img src="../common/silver.png" /> <span class="copper">' + copper + '</span> <img src="../common/copper.png" />'
+            );
+          });
+        };
+        fetchItemPricesRarePrices(items);
+      })
+      .catch(error => {
+        console.error('Failed to fetch item prices:', error);
+        fetchItemPricesRarePrices(items);
+      });
   }
 }
-export default {
-  // Votre code Vue.js
-}
+export default { organize }

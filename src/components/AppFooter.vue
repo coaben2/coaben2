@@ -2,12 +2,18 @@
 import InstagramIcon from '@/components/icons/InstagramIcon.vue';
 import TwitchIcon from '@/components/icons/TwitchIcon.vue';
 import YoutubeIcon from '@/components/icons/YoutubeIcon.vue';
+import GitHubIcon from '@/components/icons/GitHubIcon.vue';
 </script>
 
 <template>
     <footer class="p-4 bg-base-100 flex gap-4 justify-between items-center">
         <div class="text-sm">&copy; Coaben</div>
         <ul class="social">
+            <li>
+                <a href="https://github.com/coaben2" target="_blank" rel="nofollow">
+                    <GitHubIcon />
+                </a>
+            </li>
             <li>
                 <a href="https://www.youtube.com/@coaben" target="_blank" rel="nofollow">
                     <YoutubeIcon />

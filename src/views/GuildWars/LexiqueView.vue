@@ -99,8 +99,8 @@
       parties d'armure légendaire, <br />car elles en nécessite l'utilisation), <br />- un code KPme
       (le site KillProofMe est un site sur lequel on peut enregistrer sa clef API gw2, <br />et on
       peut ainsi y voir un résumé de ce que l'on a déjà tombé en raid et/ou fractal), <br />- enfin
-      peut aussi annoncer que l'on possède le "title" (lorsque l'on a terminer les succès des raids,
-      <br />on obtient un titre qui fait office de puve de nos compétences en raid). <br />Il peut
+      peut aussi annoncer que l'on possède le "titre" (lorsque l'on a terminer les succès des raids,
+      <br />on obtient un titre qui fait office de preuve de nos compétences en raid). <br />Il peut
       aussi être demandé des KP par exemple "50kp". <br />Même principe que pour des LI mais avec
       les Kill Proof, <br />qui sont les morceaux de décorations que l'on obtient lorsque l'on tue
       un boss (entre 1 à 5 par boss).
@@ -140,9 +140,7 @@
       saignement, tourment.
       <li>Pdps c'est pour : Power dps.</li>
       Ce sont les builds basé sur les dégâts directe, <br />autrement dit chaque coup porté doit infliger le plus de
-      dégâts
-      possible
-      et plus on tape vite.
+      dégâts possible.
       <li>HAM pour Heal Alac Mechanist</li>
       C'est la spécialisation orienté soin de la 3eme extension de la classe ingénieur.
 
