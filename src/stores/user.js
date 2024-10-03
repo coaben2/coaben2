@@ -76,5 +76,5 @@ export const useUserStore = defineStore('user', () => {
         const URLDATA = 'https://data.gw2.fr/db-icons/'
         return URLDATA + itemID + '.png';
     };
-    return { getIconUrl, getStoredApiKey, initApiKey, setApiKey, haveApiKey, error, getApiKey, getCharacters, getCharacterNames };
+    return { getIconUrl, getStoredApiKey, initApiKey, setApiKey, getApiKey, getCharacters, getCharacterNames };
 });

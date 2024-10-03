@@ -46,11 +46,15 @@ const router = createRouter({
               name: 'GuildWarsApiUnlocks',
               component: () => import('../views/GuildWars/Api/Unlocks.vue'),
             },
-            // Déplacer GuildWarsInventoryManager ici
             {
               path: 'vide-ton-sac',
               name: 'GuildWarsInventoryManager',
               component: () => import('../views/GuildWars/Api/InventoryManagerView.vue'),
+            },
+            {
+              path: 'craft légendaire',
+              name: 'GuildWarsDON',
+              component: () => import('../views/GuildWars/Api/Don.vue'),
             },
           ],
         },
