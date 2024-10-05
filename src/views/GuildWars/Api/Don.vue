@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { getApiKey } from '@/stores/user';
+/**import { getApiKey } from '@/stores/user';*/
 
 export default {
   name: 'App',

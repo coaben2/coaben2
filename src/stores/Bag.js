@@ -5,8 +5,8 @@ const partialStacks = {};
 const itemPlacements = {};
 const itemCounts = {};
 
-const canner = false; //67176
-const bandit = false; //67518
+let canner = false; //67176
+let bandit = false; //67518
 const itemsToCheckRarePrices = {};
 
 const organize = () => {
@@ -39,7 +39,7 @@ const getBankListings = (apiKey) => {
     })
 };
 
-const getMaterials = (apiKey) => {
+/**const getMaterials = (apiKey) => {
   const materialsURL = `https://api.guildwars2.com/v2/account/materials?access_token=${apiKey}`;
 
   axios.get(materialsURL)
@@ -60,7 +60,7 @@ const getMaterials = (apiKey) => {
 
       getBankListings(apiKey);
     })
-};
+};*/
 const getInventoryListings = (apiKey) => {
   const characterListURL = `https://api.guildwars2.com/v2/characters?access_token=${apiKey}`;
 
