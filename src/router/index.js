@@ -46,12 +46,17 @@ const router = createRouter({
               name: 'GuildWarsApiUnlocks',
               component: () => import('../views/GuildWars/Api/Unlocks.vue'),
             },
+            {
+              path: 'vide-ton-sac',
+              name: 'GuildWarsInventoryManager',
+              component: () => import('../views/GuildWars/Api/InventoryManagerView.vue'),
+            },
+            {
+              path: 'craft légendaire',
+              name: 'GuildWarsDON',
+              component: () => import('../views/GuildWars/Api/Don.vue'),
+            },
           ],
-        },
-        {
-          path: 'vide-ton-sac',
-          name: 'GuildWarsInventoryManager',
-          component: () => import('../views/GuildWars/InventoryManagerView.vue'),
         },
       ],
     },
@@ -63,7 +68,6 @@ const router = createRouter({
     {
       path: '/blog/divinity-s-reach',
       name: 'BlogPostDivinitysReach',
-
       component: () => import('../views/Blog/DivinityReachView.vue'),
     },
     {
@@ -100,6 +104,11 @@ const router = createRouter({
       path: '/login',
       name: 'Login',
       component: () => import('../views/LoginView.vue'),
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'NotFound',
+      component: () => import('@/components/404.vue'),
     },
   ],
 });

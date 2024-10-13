@@ -24,11 +24,6 @@ const links = [
         title: 'API',
         children: [],
       },
-      {
-        to: 'GuildWarsInventoryManager',
-        title: 'Vide ton sac',
-        children: [],
-      },
     ],
   },
   {
