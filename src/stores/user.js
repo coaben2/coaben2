@@ -20,7 +20,7 @@ export const useUserStore = defineStore('user', () => {
         try {
             const response = await axios.get(`${APIURL}/account?access_token=${newApiKey.value}`);
 
-            if (!response.ok || response.data.text) {
+            if (!response.status || response.data.text) {
                 throw new Error('Clé API non valide');
             }
             return true;
@@ -57,7 +57,7 @@ export const useUserStore = defineStore('user', () => {
 
     const getCharacters = async () => {
         try {
-            const response = await axios.get(`${APIURL}/characters?access_token=${apiKey.value}&`);
+            const response = await axios.get(`${APIURL}/characters?access_token=${apiKey.value}`);
             return response.data;
         } catch (error) {
             throw new Error(`Erreur lors de la récupération des personnages: ${error}`);

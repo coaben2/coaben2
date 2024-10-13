@@ -2,7 +2,8 @@
   <div id="app">
     <h1>Liste des Don</h1>
     <div v-if="loading" class="loading">Loading data, please wait...</div>
-    <div v-if="!loading">
+    <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+    <div v-if="!loading && !errorMessage">
       <section v-for="(group, index) in specificIdGroups" :key="index">
         <div class="material-group">
           <h3>{{ group.title }}</h3>
@@ -31,7 +32,7 @@
 </template>
 
 <script>
-/**import { getApiKey } from '@/stores/user';*/
+import { getApiKey } from '@/stores/user';
 
 export default {
   name: 'App',
@@ -41,6 +42,7 @@ export default {
       characters: [],
       materials: [],
       loading: false,
+      errorMessage: '',
       specificIdGroups: [
         { title: 'Don de Griffes', ids: [24351, 24350, 24349, 24348] },
         { title: 'Don d Ecailles', ids: [24289, 24288, 24287, 24286] },
@@ -91,16 +93,17 @@ export default {
   methods: {
     async fetchData() {
       if (!this.apiKey) {
-        alert('Please enter your API key.');
+        this.errorMessage = 'Please enter your API key.';
         return;
       }
       this.loading = true;
+      this.errorMessage = '';
 
       try {
         this.characters = [];
         this.materials = [];
       } catch (error) {
-        alert('Error fetching data.');
+        this.errorMessage = 'Error fetching data.';
       } finally {
         this.loading = false;
       }
@@ -144,10 +147,16 @@ button:hover {
   color: #ffd700;
 }
 
+.error {
+  color: red;
+  margin-bottom: 20px;
+}
+
 h1,
 h2 {
   color: #ffd700;
 }
+
 .material-group {
   margin-bottom: 20px;
 }
