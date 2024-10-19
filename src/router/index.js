@@ -42,7 +42,7 @@ const router = createRouter({
               component: () => import('../views/GuildWars/Api/Money.vue'),
             },
             {
-              path: 'Débloqué',
+              path: 'Unlocks',
               name: 'GuildWarsApiUnlocks',
               component: () => import('../views/GuildWars/Api/Unlocks.vue'),
             },
@@ -52,9 +52,9 @@ const router = createRouter({
               component: () => import('../views/GuildWars/Api/InventoryManagerView.vue'),
             },
             {
-              path: 'craft légendaire',
+              path: 'Don',
               name: 'GuildWarsDON',
-              component: () => import('../views/GuildWars/Api/Don.vue'),
+              component: () => import('../views/GuildWars/Api/DonView.vue'),
             },
           ],
         },
