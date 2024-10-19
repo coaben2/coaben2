@@ -1,13 +1,12 @@
+// eslint-disable-next-line vue/multi-word-component-names
 <template>
   <div id="app">
-    <h1>Liste des Don</h1>
-    <div v-if="loading" class="loading">Loading data, please wait...</div>
-    <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
-    <div v-if="!loading && !errorMessage">
+    <h2>Liste des Don</h2>
+    <div>
       <section v-for="(group, index) in specificIdGroups" :key="index">
-        <div class="material-group">
-          <h3>{{ group.title }}</h3>
-          <table class="mini-requirements-table">
+        <div>
+          <h2>{{ group.title }}</h2>
+          <table class="styled-table">
             <thead>
               <tr>
                 <th>Matériel</th>
@@ -32,13 +31,16 @@
 </template>
 
 <script>
-import { getApiKey } from '@/stores/user';
+import { computed } from 'vue';
+import { useUserStore } from '@/stores/user';
+
+const user = useUserStore();
+const haveApiKey = computed(() => !!user.haveApiKey);
 
 export default {
   name: 'App',
   data() {
     return {
-      apiKey: getApiKey(),
       characters: [],
       materials: [],
       loading: false,
@@ -90,20 +92,29 @@ export default {
       },
     };
   },
+  created() {
+    this.fetchMaterialsData();
+  },
   methods: {
-    async fetchData() {
-      if (!this.apiKey) {
-        this.errorMessage = 'Please enter your API key.';
-        return;
-      }
-      this.loading = true;
-      this.errorMessage = '';
-
+    async fetchMaterialsData() {
       try {
-        this.characters = [];
-        this.materials = [];
+        const apikey = haveApiKey();
+        this.loading = true;
+
+        const response = await fetch('https://api.guildwars2.com/v2', {
+          headers: {
+            Authorization: `Bearer ${apikey}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const data = await response.json();
+        this.materials = data.materials;
       } catch (error) {
-        this.errorMessage = 'Error fetching data.';
+        this.errorMessage = error.message;
       } finally {
         this.loading = false;
       }
@@ -115,66 +126,28 @@ export default {
   },
 };
 </script>
-
 <style scoped>
-#app {
-  font-family: Arial, sans-serif;
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  padding: 20px;
-}
-
-.input {
-  width: 100%;
-  height: 50px;
-  padding: 5px;
-  margin-bottom: 20px;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-.loading {
-  color: #ffd700;
-}
-
-.error {
-  color: red;
-  margin-bottom: 20px;
-}
-
-h1,
-h2 {
-  color: #ffd700;
-}
-
-.material-group {
-  margin-bottom: 20px;
-}
-
-.mini-requirements-table {
-  width: 100%;
+.styled-table {
+  width: max-content;
   border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.mini-requirements-table th,
-.mini-requirements-table td {
-  padding: 8px;
-  border: 1px solid #444;
+  font-size: 18px;
   text-align: left;
 }
-
-.mini-requirements-table th {
-  background-color: #333;
+.styled-table th,
+.styled-table td {
+  border: 1px solid #ddd;
+}
+.styled-table thead tr {
+  color: rgb(0, 0, 0);
+  text-align: left;
+}
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+.styled-table td:nth-child(2),
+.styled-table td:nth-child(3),
+.styled-table td:nth-child(4) {
+  color: rgb(0, 0, 0);
+  text-align: left;
 }
 </style>
