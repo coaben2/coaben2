@@ -39,7 +39,7 @@ const router = createRouter({
             {
               path: 'monnais',
               name: 'GuildWarsApiMoney',
-              component: () => import('../views/GuildWars/Api/Money.vue'),
+              component: () => import('../views/GuildWars/Api/MoneyViews.vue'),
             },
             {
               path: 'Unlocks',

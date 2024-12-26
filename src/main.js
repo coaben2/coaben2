@@ -6,6 +6,7 @@ import { VueQueryPlugin } from '@tanstack/vue-query';
 
 import App from './App.vue';
 import router from './router';
+import { useUserStore } from '@/stores/user';
 
 function globalErrorHandler(err, instance, info) {
     console.error(`Erreur capturée : ${err}`);
@@ -28,5 +29,8 @@ app.config.warnHandler = function (msg, instance, trace) {
 app.use(createPinia());
 app.use(router);
 app.use(VueQueryPlugin);
+
+const userStore = useUserStore();
+userStore.initApiKey();
 
 app.mount('#app');

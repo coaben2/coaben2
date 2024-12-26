@@ -2,6 +2,10 @@
 <template>
   <div id="app">
     <h2>Liste des Don</h2>
+    <div v-if="loading" class="loading">Chargement des matériaux...</div>
+    <div v-if="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
     <div>
       <section v-for="(group, index) in specificIdGroups" :key="index">
         <div>
@@ -31,17 +35,13 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
-
-const user = useUserStore();
-const haveApiKey = computed(() => !!user.haveApiKey);
 
 export default {
   name: 'App',
   data() {
     return {
-      characters: [],
       materials: [],
       loading: false,
       errorMessage: '',
@@ -92,27 +92,22 @@ export default {
       },
     };
   },
-  created() {
-    this.fetchMaterialsData();
+  setup() {
+    const user = useUserStore();
+
+    onMounted(async () => {
+      await fetchMaterialsData();
+    });
+
+    return {
+      user,
+    };
   },
   methods: {
     async fetchMaterialsData() {
       try {
-        const apikey = haveApiKey();
         this.loading = true;
-
-        const response = await fetch('https://api.guildwars2.com/v2', {
-          headers: {
-            Authorization: `Bearer ${apikey}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-
-        const data = await response.json();
-        this.materials = data.materials;
+        this.materials = (await this.user.getMaterials()) || [];
       } catch (error) {
         this.errorMessage = error.message;
       } finally {
@@ -120,13 +115,28 @@ export default {
       }
     },
     getMaterialCount(id) {
-      const material = this.materials.find((m) => m.id === id);
+      const material = this.materials.find((m) => m.id === parseInt(id));
       return material ? material.count : 0;
     },
   },
 };
 </script>
 <style scoped>
+.loading {
+  padding: 1rem;
+  text-align: center;
+  color: #666;
+}
+
+.error {
+  padding: 1rem;
+  color: red;
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  margin: 1rem 0;
+  border-radius: 4px;
+}
+
 .styled-table {
   width: max-content;
   border-collapse: collapse;
