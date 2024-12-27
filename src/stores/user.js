@@ -109,6 +109,7 @@ export const useUserStore = defineStore('user', () => {
 
     const getItems = async () => {
         try {
+            updateApiProgress('Chargement des objets...');
             const response = await axios.get(`${APIURL}/items?access_token=${apiKey.value}`);
             return response.data;
         } catch (error) {

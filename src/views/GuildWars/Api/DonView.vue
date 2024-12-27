@@ -17,7 +17,7 @@
     <div>
       <section v-for="(group, index) in specificIdGroups" :key="index">
         <div>
-          <h2>{{ group.title }}</h2>
+          <h3>{{ group.title }}</h3>
           <table class="styled-table">
             <thead>
               <tr>
@@ -25,6 +25,7 @@
                 <th>ID</th>
                 <th>Quantité Requise</th>
                 <th>Quantité Possédée</th>
+                <th>Différence</th>
               </tr>
             </thead>
             <tbody>
@@ -33,6 +34,14 @@
                 <td>{{ id }}</td>
                 <td>{{ materialNames[id]?.quantity || 0 }}</td>
                 <td>{{ getMaterialCount(id) }}</td>
+                <td
+                  :class="{
+                    positive: getDifference(id) >= 0,
+                    negative: getDifference(id) < 0,
+                  }"
+                >
+                  {{ getDifference(id) < 0 ? getDifference(id) : '✓' }}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -121,6 +130,12 @@ const getMaterialCount = (id) => {
   const material = materials.value.find((m) => m.id === parseInt(id));
   return material ? material.count : 0;
 };
+
+const getDifference = (id) => {
+  const required = materialNames[id]?.quantity || 0;
+  const possessed = getMaterialCount(id);
+  return possessed - required;
+};
 </script>
 
 <style scoped>
@@ -140,7 +155,7 @@ const getMaterialCount = (id) => {
 }
 
 .styled-table {
-  width: 800px;
+  width: 1200px;
   border-collapse: collapse;
   font-size: 18px;
   text-align: left;
@@ -151,7 +166,7 @@ const getMaterialCount = (id) => {
 .styled-table td {
   border: 1px solid #ddd;
   padding: 10px;
-  width: 25%;
+  width: 20%;
 }
 
 .styled-table thead tr {
@@ -181,29 +196,17 @@ section h2 {
   color: #333;
 }
 
-.api-progress-container {
-  margin: 10px 0;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 20px;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: #4caf50;
-  transition: width 0.3s ease;
-}
-
-.progress-text {
-  margin-top: 5px;
-  font-size: 12px;
-  color: #666;
+.positive {
+  background-color: rgba(76, 175, 80, 0.2);
   text-align: center;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.negative {
+  background-color: rgba(244, 67, 54, 0.2);
+  text-align: center;
+  color: #d32f2f;
+  font-weight: bold;
 }
 </style>

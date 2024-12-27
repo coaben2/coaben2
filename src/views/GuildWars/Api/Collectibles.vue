@@ -5,24 +5,24 @@ import { useQuery } from '@tanstack/vue-query';
 
 const user = useUserStore();
 const haveApiKey = computed(() => !!user.apiKey);
-const loadingMessage = ref('Chargement des objets de collection...');
+const loadingMessage = ref('Chargement des objets...');
 
 const fetchCollectibles = async () => {
   try {
-    const collectiblesData = await user.getCollectibles();
+    const collectiblesData = await user.getItems();
     return collectiblesData;
   } catch (error) {
-    console.error('Erreur lors de la récupération des collectibles:', error);
+    console.error('Erreur lors de la récupération des objets:', error);
     return null;
   }
 };
 
 const { isLoading, data: collectibles } = useQuery({
-  queryKey: ['collectibles'],
+  queryKey: ['items'],
   queryFn: fetchCollectibles,
   enabled: haveApiKey,
   retry: 3,
-  staleTime: 1000 * 60 * 5, // Cache pendant 5 minutes
+  staleTime: 1000 * 60 * 5,
 });
 </script>
 
@@ -42,9 +42,9 @@ const { isLoading, data: collectibles } = useQuery({
       <span>{{ loadingMessage }}</span>
     </div>
 
-    <!-- Grille des collectibles -->
+    <!-- Grille des objets -->
     <div v-if="collectibles" class="collectibles-container">
-      <h3>Objets de collection</h3>
+      <h3>Liste des objets</h3>
       <div class="items-grid">
         <div v-for="(item, index) in collectibles" :key="index" class="item-slot">
           <template v-if="item">
@@ -70,15 +70,20 @@ const { isLoading, data: collectibles } = useQuery({
 <style scoped>
 .collectibles-container {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .items-grid {
   display: grid;
-  grid-template-columns: repeat(10, 1fr); /* 10 items par ligne */
+  grid-template-columns: repeat(10, 1fr);
   gap: 10px;
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  width: fit-content;
+  margin: 0;
 }
 
 .item-slot {
@@ -123,29 +128,7 @@ const { isLoading, data: collectibles } = useQuery({
   z-index: 10;
 }
 
-.api-progress-container {
-  margin: 10px 0;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 20px;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: #4caf50;
-  transition: width 0.3s ease;
-}
-
-.progress-text {
-  margin-top: 5px;
-  font-size: 12px;
-  color: #666;
-  text-align: center;
+h3 {
+  margin-left: 10px;
 }
 </style>

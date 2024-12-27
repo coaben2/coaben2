@@ -14,17 +14,11 @@
       <span>{{ loadingMessage }}</span>
     </div>
 
-    <!-- Affichage des monnaies -->
+    <!-- Liste des monnaies -->
     <div v-if="walletData" class="wallet-container">
       <h3>Liste des monnaies du jeu</h3>
-      <div class="currencies-grid">
+      <div class="currencies-list">
         <div v-for="(currency, index) in walletData" :key="index" class="currency-item">
-          <img
-            v-if="currency.icon"
-            :src="currency.icon"
-            :alt="currency.name"
-            class="currency-icon"
-          />
           <div class="currency-info">
             <span class="currency-name">{{ currency.name }}</span>
             <span class="currency-amount">{{ currency.amount }}</span>
@@ -66,12 +60,13 @@ const { isLoading, data: walletData } = useQuery({
 <style scoped>
 .wallet-container {
   padding: 20px;
+  max-width: 600px;
 }
 
-.currencies-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
+.currencies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding: 15px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -79,22 +74,16 @@ const { isLoading, data: walletData } = useQuery({
 
 .currency-item {
   display: flex;
-  align-items: center;
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 6px;
-  gap: 10px;
-}
-
-.currency-icon {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
 }
 
 .currency-info {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
 }
 
 .currency-name {
@@ -104,31 +93,7 @@ const { isLoading, data: walletData } = useQuery({
 
 .currency-amount {
   color: #666;
-}
-
-.api-progress-container {
-  margin: 10px 0;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 20px;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: #4caf50;
-  transition: width 0.3s ease;
-}
-
-.progress-text {
-  margin-top: 5px;
-  font-size: 12px;
-  color: #666;
-  text-align: center;
+  font-family: monospace;
+  font-size: 1.1em;
 }
 </style>
