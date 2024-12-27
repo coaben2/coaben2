@@ -9,6 +9,19 @@ export const useUserStore = defineStore('user', () => {
     const newApiKey = ref(null);
     const haveApiKey = ref(false);
     const error = ref(null);
+    const apiProgress = ref(0);
+    const currentApiCall = ref('');
+    const totalApiCalls = 8; // Nombre total d'appels API possibles
+
+    const updateApiProgress = (call) => {
+        currentApiCall.value = call;
+        apiProgress.value = (apiProgress.value + 1) % totalApiCalls;
+    };
+
+    const resetApiProgress = () => {
+        apiProgress.value = 0;
+        currentApiCall.value = '';
+    };
 
     const getStoredApiKey = () => {
         return apiKey.value;
@@ -57,15 +70,22 @@ export const useUserStore = defineStore('user', () => {
 
     const getCharacters = async () => {
         try {
+            updateApiProgress('Chargement des personnages...');
+            if (!apiKey.value) {
+                console.error('Pas de clé API disponible');
+                return false;
+            }
             const response = await axios.get(`${APIURL}/characters?access_token=${apiKey.value}`);
             return response.data;
         } catch (error) {
+            console.error('Erreur détaillée:', error.response || error);
             throw new Error(`Erreur lors de la récupération des personnages: ${error}`);
         }
     };
 
     const getCharacterNames = async (name) => {
         try {
+            updateApiProgress(`Chargement du personnage ${name}...`);
             const response = await axios.get(`${APIURL}/characters/${name}?access_token=${apiKey.value}`);
             return response.data;
         } catch (error) {
@@ -76,5 +96,109 @@ export const useUserStore = defineStore('user', () => {
         const URLDATA = 'https://data.gw2.fr/db-icons/'
         return URLDATA + itemID + '.png';
     };
-    return { getIconUrl, getStoredApiKey, initApiKey, setApiKey, getApiKey, getCharacters, getCharacterNames };
+    const getMaterials = async () => {
+        try {
+            updateApiProgress('Chargement des matériaux...');
+            const response = await axios.get(`${APIURL}/account/materials?access_token=${apiKey.value}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching materials data:', error);
+            return null;
+        }
+    };
+
+    const getItems = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/items?access_token=${apiKey.value}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching items data:', error);
+            return null;
+        }
+    };
+
+    const getRecipes = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/recipes?access_token=${apiKey.value}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching recipes data:', error);
+            return null;
+        }
+    };
+
+    const getSkins = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/skins?access_token=${apiKey.value}`);;
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching skins data:', error);
+            return null;
+        }
+    };
+
+    const getColors = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/colors?access_token=${apiKey.value}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching colors data:', error);
+            return null;
+        }
+    };
+
+    const getBank = async () => {
+        try {
+            updateApiProgress('Chargement du coffre de banque...');
+            const response = await axios.get(`${APIURL}/account/bank?access_token=${apiKey.value}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching bank data:', error);
+            return null;
+        }
+    };
+    const getMoney = async (apiKey) => {
+        try {
+            updateApiProgress('Chargement des monnaies...');
+            const response = await axios.get(`${APIURL}/account/wallet?access_token=${apiKey}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching wallet data:', error);
+            return null;
+        }
+    };
+
+    const getCollectibles = async () => {
+        try {
+            updateApiProgress('Chargement des objets de collection...');
+            const response = await axios.get(`${APIURL}/account/inventory?access_token=${apiKey.value}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching collectibles data:', error);
+            return null;
+        }
+    };
+
+    return {
+        haveApiKey,
+        apiKey,
+        apiProgress,
+        currentApiCall,
+        resetApiProgress,
+        getIconUrl,
+        getStoredApiKey,
+        initApiKey,
+        setApiKey,
+        getApiKey,
+        getCharacters,
+        getCharacterNames,
+        getBank,
+        getMaterials,
+        getItems,
+        getRecipes,
+        getSkins,
+        getColors,
+        getMoney,
+        getCollectibles
+    };
 });

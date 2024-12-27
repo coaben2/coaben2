@@ -80,7 +80,7 @@
     <h2>BL : Black Liste</h2>
     <p>
       Liste, les gens que tu n'a pas envie de recroiser tellement ils t'ont laissé une mauvaise
-      impssion.
+      impression.
       <br />Pense à laisser un mot qui explique pourquoi ils sont BL.
     </p>
     <h2>Décrypter les message du LFG en raid</h2>

@@ -1,12 +1,12 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch, onUnmounted } from 'vue';
 import { useUserStore } from '@/stores/user';
 import itemData from '@/stores/itemData.json';
 import { useQuery, useMutation } from '@tanstack/vue-query';
 
 const user = useUserStore();
 
-const haveApiKey = computed(() => !!user.haveApiKey);
+const haveApiKey = computed(() => !!user.apiKey);
 
 const currentCharacter = ref(null);
 const loadingMessage = ref(null);
@@ -14,22 +14,34 @@ const loadingMessage = ref(null);
 const getCharacters = async () => {
   loadingMessage.value = 'Chargement de la liste des personnages';
 
-  const characters = await user.getCharacters();
-  if (!characters) return false;
-  currentCharacter.value = characters[0];
-  handleGetCharacter();
-  return characters;
+  try {
+    const characters = await user.getCharacters();
+    if (!characters) {
+      return false;
+    }
+    currentCharacter.value = characters[0];
+    handleGetCharacter();
+    return characters;
+  } catch (error) {
+    return false;
+  }
 };
 
 const getCharacterNames = () => {
   loadingMessage.value = `Chargement du personnage : ${currentCharacter.value}`;
-  return user.getCharacterNames(currentCharacter.value);
+  const result = user.getCharacterNames(currentCharacter.value);
+  return result;
 };
 
 const { isLoading: isCharactersLoading, data: charactersData } = useQuery({
   queryKey: ['characters'],
   queryFn: getCharacters,
   enabled: haveApiKey,
+  retry: 3,
+  staleTime: 1000 * 60 * 5,
+  onError: (error) => {
+    console.error('Erreur lors de la requête:', error);
+  },
 });
 
 const {
@@ -39,28 +51,12 @@ const {
 } = useMutation({
   mutationFn: () => getCharacterNames(),
 });
-/*const getProfessionImage = (profession) => {
-    if (!profession) return '/img/default.png';
 
-    const professions = ['Elementalist', 'Engineer', 'Guardian', 'Mesmer', 'Necromancer', 'Ranger', 'Revenant', 'Thief', 'Warrior'];
-
-    if (professions.includes(profession)) {
-        return `/img/${profession}.png`;
-    } else {
-        return '/img/default.png';
-    }
-};*/
-
-/*const getIconUrl = (itemID) => {
+const getIconUrl = (itemID) => {
   const URLDATA = 'https://data.gw2.fr/db-icons/';
   return URLDATA + itemID + '.png';
-};*/
-const getIconUrl = (itemID) => {
-  if (itemData[itemID]) {
-    return itemData[itemID].icon;
-  }
-  return '/img/default.png';
 };
+
 const getItemsDetails = async (itemId, event) => {
   try {
     const response = await fetch(`http://api.guildwars2.com/v2/items/${itemId}`);
@@ -115,9 +111,24 @@ const hideItemDetails = () => {
     itemDetailsDiv.remove();
   }
 };
+
+// Reset la progression quand on change de page
+onUnmounted(() => {
+  user.resetApiProgress();
+});
 </script>
 <template>
   <div>
+    <div class="debug-info">
+      <!-- Barre de progression API -->
+      <div class="api-progress-container" v-if="user.currentApiCall">
+        <div class="progress-bar">
+          <div class="progress-fill" :style="{ width: `${(user.apiProgress / 8) * 100}%` }"></div>
+        </div>
+        <p class="progress-text">{{ user.currentApiCall }}</p>
+      </div>
+    </div>
+
     <div
       class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center"
       v-if="isCharactersLoading || isCharacterPending"
@@ -376,7 +387,6 @@ const hideItemDetails = () => {
         </div>
       </div>
     </div>
-    <!--<pre v-if="characterData">{{ characterData }}</pre>-->
   </div>
 </template>
 
@@ -439,70 +449,82 @@ const hideItemDetails = () => {
 }
 
 .home-container > div {
-  border: 2px dashed rgba(120, 120, 120, 0.4);
-  align-items: flex-start;
-  justify-content: center;
+  border: 2px solid rgba(255, 0, 0, 0.5);
+  position: relative;
+  min-height: 50px;
 }
 
 .home-container01 {
   grid-area: un;
+  background-color: rgba(255, 0, 0, 0.1);
 }
 
 .home-container02 {
   grid-area: deux;
   display: flex;
   gap: 2rem;
+  background-color: rgba(0, 255, 0, 0.1);
 }
 
 .home-container03 {
   grid-area: trois;
   display: flex;
   gap: 2rem;
+  background-color: rgba(0, 0, 255, 0.1);
 }
 
 .home-container04 {
   grid-area: quatre;
   display: flex;
   gap: 2rem;
+  background-color: rgba(255, 255, 0, 0.1);
 }
 
 .home-container05 {
   grid-area: cinq;
+  background-color: rgba(255, 0, 255, 0.1);
 }
 
 .home-container06 {
   grid-area: six;
+  background-color: rgba(0, 255, 255, 0.1);
 }
 
 .home-container07 {
   grid-area: sept;
+  background-color: rgba(128, 128, 0, 0.1);
 }
 
 .home-container08 {
   grid-area: huit;
   display: flex;
   gap: 2rem;
+  background-color: rgba(0, 128, 128, 0.1);
 }
 
 .home-container09 {
   grid-area: neuf;
   display: flex;
   gap: 2rem;
+  background-color: rgba(128, 0, 128, 0.1);
 }
 
 .home-container10 {
   grid-area: dix;
   display: flex;
   gap: 2rem;
+  background-color: rgba(128, 128, 128, 0.1);
 }
 
 .home-container11 {
   grid-area: onze;
+  background-color: rgba(192, 192, 192, 0.1);
 }
 
 .home-container12 {
   width: max-content;
   grid-area: sac;
+  background-color: rgba(255, 128, 0, 0.1);
 }
 
 .home-container13 {
@@ -542,5 +564,30 @@ const hideItemDetails = () => {
   display: block;
   border: 2px dashed rgba(120, 120, 120, 0.4);
   margin-bottom: 20px;
+}
+.api-progress-container {
+  margin: 10px 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #666;
+  text-align: center;
 }
 </style>
