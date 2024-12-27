@@ -138,7 +138,6 @@ onUnmounted(() => {
     </div>
     <div class="home-container">
       <div class="home-container01" v-if="charactersData">
-        <div class="debug-label">Container 01 - Infos personnage</div>
         <select
           v-model="currentCharacter"
           @change="handleGetCharacter"
@@ -171,7 +170,6 @@ onUnmounted(() => {
         </table>
       </div>
       <div class="home-container02">
-        <div class="debug-label">Container 02 - Outils</div>
         <div class="column-container">
           <ul class="horizontal-list">
             <li v-for="slot in ['Sickle', 'Axe', 'Pick']" :key="slot">
@@ -192,7 +190,6 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="home-container03">
-        <div class="debug-label">Container 03 - PowerCore etc</div>
         <div class="column-container">
           <ul class="horizontal-list">
             <li v-for="slot in ['PowerCore', 'SensoryArray', 'ServiceChip']" :key="slot">
@@ -568,22 +565,6 @@ onUnmounted(() => {
   border: 2px dashed rgba(120, 120, 120, 0.4);
   margin-bottom: 20px;
 }
-
-.debug-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 2px 5px;
-  font-size: 10px;
-  z-index: 1;
-}
-
-.debug-info {
-  margin: 10px 0;
-}
-
 .api-progress-container {
   margin: 10px 0;
 }

@@ -159,13 +159,26 @@ export const useUserStore = defineStore('user', () => {
     };
     const getMoney = async (apiKey) => {
         try {
+            updateApiProgress('Chargement des monnaies...');
             const response = await axios.get(`${APIURL}/account/wallet?access_token=${apiKey}`);
             return response.data;
         } catch (error) {
-            console.error('Error fetching bank data:', error);
+            console.error('Error fetching wallet data:', error);
             return null;
         }
     };
+
+    const getCollectibles = async () => {
+        try {
+            updateApiProgress('Chargement des objets de collection...');
+            const response = await axios.get(`${APIURL}/account/inventory?access_token=${apiKey.value}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching collectibles data:', error);
+            return null;
+        }
+    };
+
     return {
         haveApiKey,
         apiKey,
@@ -185,6 +198,7 @@ export const useUserStore = defineStore('user', () => {
         getRecipes,
         getSkins,
         getColors,
-        getMoney
+        getMoney,
+        getCollectibles
     };
 });
