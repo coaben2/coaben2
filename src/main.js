@@ -1,4 +1,6 @@
 import './assets/style.css';
+import './assets/progressBar.css';
+import '@fortawesome/fontawesome-free/css/all.css'
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';

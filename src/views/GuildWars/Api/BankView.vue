@@ -60,15 +60,20 @@ const { isLoading, data: bankData } = useQuery({
 <style scoped>
 .bank-container {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .items-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  grid-template-columns: repeat(10, 1fr);
   gap: 10px;
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  width: fit-content;
+  margin: 0;
 }
 
 .item-slot {
@@ -99,29 +104,7 @@ const { isLoading, data: bankData } = useQuery({
   font-size: 12px;
 }
 
-.api-progress-container {
-  margin: 10px 0;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 20px;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: #4caf50;
-  transition: width 0.3s ease;
-}
-
-.progress-text {
-  margin-top: 5px;
-  font-size: 12px;
-  color: #666;
-  text-align: center;
+h3 {
+  margin-left: 10px;
 }
 </style>

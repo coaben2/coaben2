@@ -112,6 +112,10 @@ const hideItemDetails = () => {
   }
 };
 
+const getProfessionImage = (profession) => {
+  return new URL(`../../../assets/img/${profession}.png`, import.meta.url).href;
+};
+
 // Reset la progression quand on change de page
 onUnmounted(() => {
   user.resetApiProgress();
@@ -365,9 +369,9 @@ onUnmounted(() => {
           </ul>
         </div>
       </div>
-      <!--<div class="home-container13">
-                <img :src="getProfessionImage(characterData.profession)" alt="Profession Image" />
-            </div>-->
+      <div class="home-container13">
+        <img :src="getProfessionImage(characterData.profession)" :alt="characterData.profession" />
+      </div>
     </div>
     <div class="home-container12" v-if="characterData">
       <div>
@@ -449,87 +453,84 @@ onUnmounted(() => {
 }
 
 .home-container > div {
-  border: 2px solid rgba(255, 0, 0, 0.5);
+  border: 2px dashed rgba(0, 0, 0, 0.5);
   position: relative;
   min-height: 50px;
+  background: transparent;
 }
 
 .home-container01 {
   grid-area: un;
-  background-color: rgba(255, 0, 0, 0.1);
 }
 
 .home-container02 {
   grid-area: deux;
   display: flex;
   gap: 2rem;
-  background-color: rgba(0, 255, 0, 0.1);
 }
 
 .home-container03 {
   grid-area: trois;
   display: flex;
   gap: 2rem;
-  background-color: rgba(0, 0, 255, 0.1);
 }
 
 .home-container04 {
   grid-area: quatre;
   display: flex;
   gap: 2rem;
-  background-color: rgba(255, 255, 0, 0.1);
 }
 
 .home-container05 {
   grid-area: cinq;
-  background-color: rgba(255, 0, 255, 0.1);
 }
 
 .home-container06 {
   grid-area: six;
-  background-color: rgba(0, 255, 255, 0.1);
 }
 
 .home-container07 {
   grid-area: sept;
-  background-color: rgba(128, 128, 0, 0.1);
 }
 
 .home-container08 {
   grid-area: huit;
   display: flex;
   gap: 2rem;
-  background-color: rgba(0, 128, 128, 0.1);
 }
 
 .home-container09 {
   grid-area: neuf;
   display: flex;
   gap: 2rem;
-  background-color: rgba(128, 0, 128, 0.1);
 }
 
 .home-container10 {
   grid-area: dix;
   display: flex;
   gap: 2rem;
-  background-color: rgba(128, 128, 128, 0.1);
 }
 
 .home-container11 {
   grid-area: onze;
-  background-color: rgba(192, 192, 192, 0.1);
 }
 
 .home-container12 {
   width: max-content;
   grid-area: sac;
-  background-color: rgba(255, 128, 0, 0.1);
 }
 
 .home-container13 {
   grid-area: douze;
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-container13 img {
+  max-width: 100%;
+  height: auto;
+  max-height: 200px;
 }
 
 .item-info {
@@ -562,32 +563,7 @@ onUnmounted(() => {
 
 .bag-container {
   display: block;
-  border: 2px dashed rgba(120, 120, 120, 0.4);
+  border: 2px dashed rgba(0, 0, 0, 0.5);
   margin-bottom: 20px;
-}
-.api-progress-container {
-  margin: 10px 0;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 20px;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: #4caf50;
-  transition: width 0.3s ease;
-}
-
-.progress-text {
-  margin-top: 5px;
-  font-size: 12px;
-  color: #666;
-  text-align: center;
 }
 </style>

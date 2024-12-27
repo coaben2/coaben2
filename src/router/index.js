@@ -19,6 +19,7 @@ const router = createRouter({
         },
         {
           path: 'api',
+          name: 'GuildWarsAPI',
           component: () => import('../views/GuildWars/Api/HomeView.vue'),
           children: [
             {
