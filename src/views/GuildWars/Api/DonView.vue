@@ -1,13 +1,6 @@
 // eslint-disable-next-line vue/multi-word-component-names
 <template>
   <div id="app">
-    <div class="api-progress-container" v-if="user.currentApiCall">
-      <div class="progress-bar">
-        <div class="progress-fill" :style="{ width: `${(user.apiProgress / 8) * 100}%` }"></div>
-      </div>
-      <p class="progress-text">{{ user.currentApiCall }}</p>
-    </div>
-
     <h2>Liste des Don</h2>
     <div class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center" v-if="isLoading">
       <span class="loading loading-spinner text-primary"></span>

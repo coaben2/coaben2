@@ -5,37 +5,39 @@ import { useQuery } from '@tanstack/vue-query';
 
 const user = useUserStore();
 const haveApiKey = computed(() => !!user.apiKey);
-const loadingMessage = ref('Chargement des objets...');
+const loadingMessage = ref('Chargement des matériaux...');
 
 const fetchCollectibles = async () => {
   try {
-    const collectiblesData = await user.getItems();
+    const materialsData = await user.getMaterials();
+    const collectiblesData = materialsData.filter((item) => item.count > 0);
+    console.log('Matériaux récupérés:', collectiblesData);
     return collectiblesData;
   } catch (error) {
-    console.error('Erreur lors de la récupération des objets:', error);
+    console.error('Erreur lors de la récupération des matériaux:', error);
     return null;
   }
 };
 
 const { isLoading, data: collectibles } = useQuery({
-  queryKey: ['items'],
+  queryKey: ['materials'],
   queryFn: fetchCollectibles,
   enabled: haveApiKey,
   retry: 3,
   staleTime: 1000 * 60 * 5,
 });
+
+const showItemDetails = (item) => {
+  item.showDetails = true;
+};
+
+const hideItemDetails = (item) => {
+  item.showDetails = false;
+};
 </script>
 
 <template>
   <div>
-    <!-- Barre de progression API -->
-    <div class="api-progress-container" v-if="user.currentApiCall">
-      <div class="progress-bar">
-        <div class="progress-fill" :style="{ width: `${(user.apiProgress / 8) * 100}%` }"></div>
-      </div>
-      <p class="progress-text">{{ user.currentApiCall }}</p>
-    </div>
-
     <!-- Indicateur de chargement -->
     <div class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center" v-if="isLoading">
       <span class="loading loading-spinner text-primary"></span>
@@ -44,7 +46,7 @@ const { isLoading, data: collectibles } = useQuery({
 
     <!-- Grille des objets -->
     <div v-if="collectibles" class="collectibles-container">
-      <h3>Liste des objets</h3>
+      <h3>Liste des matériaux</h3>
       <div class="items-grid">
         <div v-for="(item, index) in collectibles" :key="index" class="item-slot">
           <template v-if="item">
@@ -52,13 +54,15 @@ const { isLoading, data: collectibles } = useQuery({
               :src="user.getIconUrl(item.id)"
               :alt="item.name"
               class="item-icon"
-              @mouseover="showItemDetails"
-              @mouseout="hideItemDetails"
+              @mouseover="showItemDetails(item)"
+              @mouseout="hideItemDetails(item)"
             />
             <span class="item-count" v-if="item.count > 1">{{ item.count }}</span>
             <div v-if="item.showDetails" class="item-details">
               <p>{{ item.name }}</p>
               <p>ID: {{ item.id }}</p>
+              <p>Quantité: {{ item.count }}</p>
+              <p>Catégorie: {{ item.category }}</p>
             </div>
           </template>
         </div>

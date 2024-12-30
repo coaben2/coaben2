@@ -6,9 +6,13 @@ import { useUserStore } from '@/stores/user';
 const newApiKey = ref('');
 const user = useUserStore();
 const showNotification = ref(false);
+const showProgress = ref(false);
 
 const setAndSaveApiKey = async () => {
   await user.setApiKey(newApiKey.value);
+  showProgress.value = true;
+  await user.initializeAllData();
+  showProgress.value = false;
   showNotification.value = true;
   setTimeout(() => {
     showNotification.value = false;
@@ -26,6 +30,27 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
     <div v-if="showNotification" class="notification">
       <span class="notification-icon">✓</span>
       Clé API sauvegardée avec succès!
+    </div>
+    <div v-if="showProgress" class="api-progress-overlay">
+      <div class="api-progress-modal">
+        <h3>Chargement des données</h3>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" :style="{ width: `${user.apiProgress}%` }"></div>
+          </div>
+          <p class="progress-text">{{ user.currentApiCall }}</p>
+        </div>
+        <div class="api-calls-list">
+          <div
+            v-for="(call, index) in user.apiCalls"
+            :key="index"
+            class="api-call-item"
+            :class="{ completed: index < user.completedCalls }"
+          >
+            {{ call }}
+          </div>
+        </div>
+      </div>
     </div>
     <div id="settings">
       <label for="api-key" class="label">clé API:</label>
@@ -167,5 +192,46 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+.api-progress-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.api-progress-modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.progress-container {
+  margin: 20px 0;
+}
+
+.api-calls-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.api-call-item {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  color: #666;
+}
+
+.api-call-item.completed {
+  color: #4caf50;
+  font-weight: bold;
 }
 </style>
