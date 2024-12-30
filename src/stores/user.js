@@ -11,16 +11,44 @@ export const useUserStore = defineStore('user', () => {
     const error = ref(null);
     const apiProgress = ref(0);
     const currentApiCall = ref('');
-    const totalApiCalls = 8; // Nombre total d'appels API possibles
+    const totalApiCalls = ref(0);
+    const completedCalls = ref(0);
+    const apiCalls = ref([]);
 
     const updateApiProgress = (call) => {
         currentApiCall.value = call;
-        apiProgress.value = (apiProgress.value + 1) % totalApiCalls;
+        completedCalls.value++;
+        apiProgress.value = (completedCalls.value / totalApiCalls.value) * 100;
+        apiCalls.value.push(call);
     };
 
     const resetApiProgress = () => {
         apiProgress.value = 0;
         currentApiCall.value = '';
+        completedCalls.value = 0;
+        apiCalls.value = [];
+    };
+
+    const initializeAllData = async () => {
+        resetApiProgress();
+        totalApiCalls.value = 7;
+
+        try {
+            await Promise.all([
+                getCharacters(),
+                getMaterials(),
+                getBank(),
+                getMoney(apiKey.value),
+                getItems(),
+                getCollectibles(),
+                getCurrencyNames()
+            ]);
+
+            return true;
+        } catch (error) {
+            console.error('Erreur lors de l\'initialisation des données:', error);
+            return false;
+        }
     };
 
     const getStoredApiKey = () => {
@@ -110,7 +138,7 @@ export const useUserStore = defineStore('user', () => {
     const getItems = async () => {
         try {
             updateApiProgress('Chargement des objets...');
-            const response = await axios.get(`${APIURL}/items?access_token=${apiKey.value}`);
+            const response = await axios.get(`${APIURL}/items?ids=all&access_token=${apiKey.value}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching items data:', error);
@@ -180,11 +208,25 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
+    const getCurrencyNames = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/currencies?ids=all`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching currency names:', error);
+            return null;
+        }
+    };
+
     return {
         haveApiKey,
         apiKey,
         apiProgress,
         currentApiCall,
+        apiCalls,
+        totalApiCalls,
+        completedCalls,
+        initializeAllData,
         resetApiProgress,
         getIconUrl,
         getStoredApiKey,
@@ -200,6 +242,7 @@ export const useUserStore = defineStore('user', () => {
         getSkins,
         getColors,
         getMoney,
-        getCollectibles
+        getCollectibles,
+        getCurrencyNames
     };
 });
