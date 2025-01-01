@@ -25,10 +25,10 @@
 
         <div class="step">
           <h3>3. Créez une nouvelle clé</h3>
-          <img src="/public/img/new-key.png" alt="Création d'une nouvelle clé" class="step-image" />
+          <img src="/public/img/newkey.png" alt="Création d'une nouvelle clé" class="step-image" />
           <p>
             Cliquez sur "Nouvelle clé" et :<br />
-            - Donnez un nom à votre clé (ex: "GW2 Inventory Manager")<br />
+            - Donnez un nom à votre clé (ex: "GW2")<br />
             - Cochez toutes les permissions nécessaires<br />
             - Cliquez sur "Créer une clé API"
           </p>
