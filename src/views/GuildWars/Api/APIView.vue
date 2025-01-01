@@ -25,11 +25,7 @@
 
         <div class="step">
           <h3>3. Créez une nouvelle clé</h3>
-<<<<<<< HEAD
-          <!--<img src="/public/img/newkey.png" alt="Création d'une nouvelle clé" class="step-image" />-->
-=======
           !<--<img src="/public/img/newkey.png" alt="Création d'une nouvelle clé" class="step-image" />-->
->>>>>>> e0600cfae691336f9d071fde3a3be8ca4d2da41d
           <p>
             Cliquez sur "Nouvelle clé" et :<br />
             - Donnez un nom à votre clé (ex: "GW2")<br />
