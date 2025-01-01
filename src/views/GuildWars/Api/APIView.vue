@@ -13,31 +13,19 @@
       <div class="steps">
         <div class="step">
           <h3>1. Connectez-vous à votre compte</h3>
-          <img
-            src="@/assets/img/api/login.png"
-            alt="Page de connexion ArenaNet"
-            class="step-image"
-          />
+          <img src="/public/img/login.png" alt="Page de connexion ArenaNet" class="step-image" />
           <p>Utilisez vos identifiants Guild Wars 2 pour vous connecter.</p>
         </div>
 
         <div class="step">
           <h3>2. Accédez à la section Applications</h3>
-          <img
-            src="@/assets/img/api/applications.png"
-            alt="Section Applications"
-            class="step-image"
-          />
+          <img src="/public/img/applications.png" alt="Section Applications" class="step-image" />
           <p>Dans le menu, cliquez sur "Applications".</p>
         </div>
 
         <div class="step">
           <h3>3. Créez une nouvelle clé</h3>
-          <img
-            src="@/assets/img/api/new-key.png"
-            alt="Création d'une nouvelle clé"
-            class="step-image"
-          />
+          <img src="/public/img/new-key.png" alt="Création d'une nouvelle clé" class="step-image" />
           <p>
             Cliquez sur "Nouvelle clé" et :<br />
             - Donnez un nom à votre clé (ex: "GW2 Inventory Manager")<br />
