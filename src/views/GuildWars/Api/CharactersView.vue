@@ -40,7 +40,7 @@ const { isLoading: isCharactersLoading, data: charactersData } = useQuery({
   retry: 3,
   staleTime: 1000 * 60 * 5,
   onError: (error) => {
-    console.error('Erreur lors de la requête:', error);
+    // console.error('Erreur lors de la requête:', error);
   },
 });
 
@@ -99,10 +99,7 @@ const getItemsDetails = async (itemId, event) => {
     itemDetailsDiv.style.top = `${event.clientY}px`;
     itemDetailsDiv.style.left = `${event.clientX}px`;
   } catch (error) {
-    console.error(
-      "Une erreur est survenue lors de la récupération des détails de l'objet: ",
-      error,
-    );
+    // console.error("Une erreur est survenue lors de la récupération des détails de l'objet: ", error);
   }
 };
 const hideItemDetails = () => {
@@ -113,7 +110,7 @@ const hideItemDetails = () => {
 };
 
 const getProfessionImage = (profession) => {
-  return new URL(`../../../assets/img/${profession}.png`, import.meta.url).href;
+  return new URL(`/public/img/${profession}.png`, import.meta.url).href;
 };
 
 // Reset la progression quand on change de page
