@@ -1,7 +1,6 @@
 <script setup>
-import { ref, computed, watch, onUnmounted } from 'vue';
+import { ref, computed, onUnmounted } from 'vue';
 import { useUserStore } from '@/stores/user';
-import itemData from '@/stores/itemData.json';
 import { useQuery, useMutation } from '@tanstack/vue-query';
 
 const user = useUserStore();
@@ -39,9 +38,9 @@ const { isLoading: isCharactersLoading, data: charactersData } = useQuery({
   enabled: haveApiKey,
   retry: 3,
   staleTime: 1000 * 60 * 5,
-  onError: (error) => {
-    // console.error('Erreur lors de la requête:', error);
-  },
+  /*onError: (error) => {
+    console.error('Erreur lors de la requête:', error);
+  },*/
 });
 
 const {
@@ -99,7 +98,10 @@ const getItemsDetails = async (itemId, event) => {
     itemDetailsDiv.style.top = `${event.clientY}px`;
     itemDetailsDiv.style.left = `${event.clientX}px`;
   } catch (error) {
-    // console.error("Une erreur est survenue lors de la récupération des détails de l'objet: ", error);
+    console.error(
+      "Une erreur est survenue lors de la récupération des détails de l'objet: ",
+      error,
+    );
   }
 };
 const hideItemDetails = () => {

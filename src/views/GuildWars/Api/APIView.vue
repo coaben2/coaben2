@@ -128,6 +128,7 @@ watch(
 
 <style scoped>
 .api-guide {
+  width: 1200px;
   margin: 20px 0;
   padding: 20px;
   border-radius: 8px;
@@ -173,6 +174,7 @@ watch(
 }
 
 .api-permissions {
+  width: 1200px;
   margin: 20px 0;
   padding: 20px;
   background-color: #f5f5f5;

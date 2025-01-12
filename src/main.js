@@ -11,11 +11,11 @@ import router from './router';
 import { useUserStore } from '@/stores/user';
 
 function globalErrorHandler(err, instance, info) {
-    console.error(`Erreur capturée : ${err}`);
-    console.error(`Instance :`, instance);
-    console.error(`Info :`, info);
+    console.debug(`Erreur capturée : ${err}`);
+    console.debug(`Instance :`, instance);
+    console.debug(`Info :`, info);
 
-    alert('Une erreur est survenue. Veuillez réessayer plus tard.');
+    /*alert('Une erreur est survenue. Veuillez réessayer plus tard.');*/
 }
 
 const app = createApp(App);

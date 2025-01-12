@@ -75,7 +75,7 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
       <h1>API Guild Wars 2</h1>
       <ul class="flex gap-2">
         <li>
-          <RouterLink :to="{ name: 'GuildWarsApiAbout' }">C'est quoi une clé API ?</RouterLink>
+          <RouterLink :to="{ name: 'GuildWarsApiAbout' }">API ?</RouterLink>
         </li>
         <li>
           <RouterLink :to="{ name: 'GuildWarsApiCharacters' }">Personnages</RouterLink>
@@ -214,7 +214,7 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
   background-color: white;
   padding: 20px;
   border-radius: 8px;
-  width: 400px;
+  width: 100%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
