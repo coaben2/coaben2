@@ -121,7 +121,7 @@ export const useUserStore = defineStore('user', () => {
         }
     };
     const getIconUrl = (itemID) => {
-        const URLDATA = 'https://data.gw2.fr/db-icons/'
+        const URLDATA = 'https://data.gw2.fr/db-icons/';
         return URLDATA + itemID + '.png';
     };
     const getMaterials = async () => {

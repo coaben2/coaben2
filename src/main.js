@@ -11,11 +11,12 @@ import router from './router';
 import { useUserStore } from '@/stores/user';
 
 function globalErrorHandler(err, instance, info) {
-    console.error(`Erreur capturée : ${err}`);
-    console.error(`Instance :`, instance);
-    console.error(`Info :`, info);
-
-    alert('Une erreur est survenue. Veuillez réessayer plus tard.');
+    if (process.env.NODE_ENV === 'test') {
+        console.error(`Erreur capturée : ${err}`);
+        console.error(`Instance :`, instance);
+        console.error(`Info :`, info);
+    }
+    // Optionally, you can log errors to an external service here
 }
 
 const app = createApp(App);
@@ -23,9 +24,12 @@ const app = createApp(App);
 app.config.errorHandler = globalErrorHandler;
 
 app.config.warnHandler = function (msg, instance, trace) {
-    console.warn(`Avertissement : ${msg}`);
-    console.warn(`Instance :`, instance);
-    console.warn(`Trace :`, trace);
+    if (process.env.NODE_ENV === 'test') {
+        console.error(`Avertissement : ${msg}`);
+        console.error(`Instance :`, instance);
+        console.error(`Trace :`, trace);
+    }
+    // Optionally, you can log warnings to an external service here
 };
 
 app.use(createPinia());
