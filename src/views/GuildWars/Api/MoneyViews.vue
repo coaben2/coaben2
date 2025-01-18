@@ -17,9 +17,22 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(currency, index) in walletData" :key="index">
-            <td>{{ currency.name }}</td>
-            <td class="amount">{{ currency.value }}</td>
+          <tr
+            v-for="(currency, index) in walletData"
+            :key="index"
+            :class="{ highlighted: currency.id === 1 }"
+          >
+            <template v-if="currency.id === 1">
+              <td>
+                {{ currency.name }}
+              </td>
+              <td class="amount">{{ formatCurrencyValue(currency.value) }}</td>
+            </template>
+
+            <template v-else>
+              <td>{{ currency.name }}</td>
+              <td class="amount">{{ currency.value }}</td>
+            </template>
           </tr>
         </tbody>
       </table>
@@ -37,6 +50,12 @@ const haveApiKey = computed(() => !!user.apiKey);
 const loadingMessage = ref('Chargement des monnaies...');
 const currencyNames = ref({});
 
+const formatCurrencyValue = (value) => {
+  const gold = Math.floor(value / 10000);
+  const silver = Math.floor((value % 10000) / 100);
+  const copper = value % 100;
+  return `${gold}Po ${silver}silver ${copper}copper`;
+};
 // Récupérer les noms des monnaies
 const fetchCurrencyNames = async () => {
   const currencies = await user.getCurrencyNames();
@@ -81,7 +100,6 @@ const { isLoading, data: walletData } = useQuery({
   width: 100%;
   max-width: 800px;
   border-collapse: collapse;
-  background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -93,19 +111,13 @@ const { isLoading, data: walletData } = useQuery({
 }
 
 .currencies-table th {
-  background-color: #f8f9fa;
   font-weight: bold;
-  color: #2c3e50;
+  color: #000000;
 }
-
-.currencies-table tr:hover {
-  background-color: #f5f5f5;
-}
-
 .currencies-table td.amount {
   text-align: right;
   font-family: monospace;
   font-size: 1.1em;
-  color: #666;
+  color: #000000;
 }
 </style>
