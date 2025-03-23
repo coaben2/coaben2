@@ -38,17 +38,19 @@ const hideItemDetails = (item) => {
 
 <template>
   <div>
-    <!-- Indicateur de chargement -->
     <div class="rounded bg-opacity-50 bg-black p-4 my-4 flex gap-2 items-center" v-if="isLoading">
       <span class="loading loading-spinner text-primary"></span>
       <span>{{ loadingMessage }}</span>
     </div>
-
-    <!-- Grille des objets -->
     <div v-if="collectibles" class="collectibles-container">
       <h3>Liste des matériaux</h3>
       <div class="items-grid">
-        <div v-for="(item, index) in collectibles" :key="index" class="item-slot">
+        <div
+          v-for="(item, index) in collectibles"
+          :key="index"
+          class="item-slot"
+          :class="{ 'grayed-out': item.count === 0 }"
+        >
           <template v-if="item">
             <img
               :src="user.getIconUrl(item.id)"
@@ -57,7 +59,7 @@ const hideItemDetails = (item) => {
               @mouseover="showItemDetails(item)"
               @mouseout="hideItemDetails(item)"
             />
-            <span class="item-count" v-if="item.count > 1">{{ item.count }}</span>
+            <span class="item-count">{{ item.count }}</span>
             <div v-if="item.showDetails" class="item-details">
               <p>{{ item.name }}</p>
               <p>ID: {{ item.id }}</p>
@@ -100,6 +102,10 @@ const hideItemDetails = (item) => {
   align-items: center;
   justify-content: center;
 }
+.item-slot.grayed-out {
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
 
 .item-icon {
   max-width: 100%;
@@ -111,11 +117,13 @@ const hideItemDetails = (item) => {
   position: absolute;
   bottom: 2px;
   right: 2px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
+  background-color: white;
+  color: black;
   padding: 1px 4px;
   border-radius: 3px;
   font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .item-details {
