@@ -22,7 +22,7 @@ const { isLoading, data: bankData } = useQuery({
   queryFn: fetchBankData,
   enabled: haveApiKey,
   retry: 3,
-  staleTime: 1000 * 60 * 5, // Cache pendant 5 minutes
+  staleTime: 1000 * 60 * 5,
 });
 </script>
 
@@ -40,7 +40,12 @@ const { isLoading, data: bankData } = useQuery({
       <div class="items-grid">
         <div v-for="(item, index) in bankData" :key="index" class="item-slot">
           <template v-if="item">
-            <img :src="user.getIconUrl(item.id)" :alt="item.id" class="item-icon" />
+            <img
+              :src="user.getIconUrl(item.id)"
+              :alt="item.id"
+              class="item-icon"
+              :class="{ 'grayed-out': item.count === 0 }"
+            />
             <span class="item-count" v-if="item.count > 1">{{ item.count }}</span>
           </template>
         </div>
@@ -79,6 +84,11 @@ const { isLoading, data: bankData } = useQuery({
   justify-content: center;
 }
 
+.item-slot.grayed-out {
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+
 .item-icon {
   max-width: 100%;
   max-height: 100%;
@@ -89,11 +99,13 @@ const { isLoading, data: bankData } = useQuery({
   position: absolute;
   bottom: 2px;
   right: 2px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
+  background-color: white;
+  color: black;
   padding: 1px 4px;
   border-radius: 3px;
   font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 h3 {

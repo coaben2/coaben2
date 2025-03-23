@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-    <p>
+    <p class="info-box">
       Les clés d'application permettent à des outils et applications tiers d'accéder à votre compte
       Guild Wars 2 en lecture seule.<br />
       Pour les utiliser, créez une clé, copiez-la puis collez-la dans le champ affiché par l'outil
@@ -225,5 +225,15 @@ h2 {
 
 .status-pending {
   color: #ffc107;
+}
+.info-box {
+  width: 1200px;
+  background-color: #f8f9fa;
+  color: #000000;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  line-height: 1.6;
+  margin: 20px 0;
 }
 </style>

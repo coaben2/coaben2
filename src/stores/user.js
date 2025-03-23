@@ -15,6 +15,11 @@ export const useUserStore = defineStore('user', () => {
     const completedCalls = ref(0);
     const apiCalls = ref([]);
 
+    // Ajout des nouvelles variables pour la gestion de l'inventaire
+    const itemCounts = ref({});
+    const partialStacks = ref({});
+    const itemPlacements = ref({});
+
     const updateApiProgress = (call) => {
         currentApiCall.value = call;
         completedCalls.value++;
@@ -124,10 +129,65 @@ export const useUserStore = defineStore('user', () => {
         const URLDATA = 'https://data.gw2.fr/db-icons/';
         return URLDATA + itemID + '.png';
     };
+
+    // Fonction utile de InventoryManager.js adaptée pour Vue 3
+    const addItem = (item, source) => {
+        if (item) {
+            if (itemCounts.value[item.id]) {
+                itemCounts.value[item.id] += item.count;
+            } else {
+                itemCounts.value[item.id] = item.count;
+            }
+
+            if (item.count % 250 > 0 && item.count > 0) {
+                const itemSource = {
+                    count: item.count,
+                    source: source
+                };
+                
+                if (!partialStacks.value[item.id]) {
+                    partialStacks.value[item.id] = [];
+                }
+                partialStacks.value[item.id].push(itemSource);
+            }
+
+            const itemSource = {
+                count: item.count,
+                source: source
+            };
+            
+            if (!itemPlacements.value[item.id]) {
+                itemPlacements.value[item.id] = [];
+            }
+            itemPlacements.value[item.id].push(itemSource);
+        }
+    };
+
+    // Modification de la fonction getBank pour utiliser addItem
+    const getBank = async () => {
+        try {
+            updateApiProgress('Chargement du coffre de banque...');
+            const response = await axios.get(`${APIURL}/account/bank?access_token=${apiKey.value}`);
+            // Ajout du traitement des items
+            response.data.forEach(item => {
+                addItem(item, 'Account bank');
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching bank data:', error);
+            return null;
+        }
+    };
+
+    // Modification de getMaterials pour utiliser addItem
     const getMaterials = async () => {
         try {
             updateApiProgress('Chargement des matériaux...');
             const response = await axios.get(`${APIURL}/account/materials?access_token=${apiKey.value}`);
+            // Ajout du traitement des matériaux
+            response.data.forEach(item => {
+                addItem(item, 'Material storage');
+            });
             return response.data;
         } catch (error) {
             console.error('Error fetching materials data:', error);
@@ -176,16 +236,6 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
-    const getBank = async () => {
-        try {
-            updateApiProgress('Chargement du coffre de banque...');
-            const response = await axios.get(`${APIURL}/account/bank?access_token=${apiKey.value}`);
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching bank data:', error);
-            return null;
-        }
-    };
     const getMoney = async (apiKey) => {
         try {
             updateApiProgress('Chargement des monnaies...');
@@ -218,6 +268,63 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
+    const getMinis = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/account/minis?access_token=${apiKey.value}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching minis data:', error);
+            return null;
+        }
+    };
+
+    const getPvpFinishers = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/account/finishers?access_token=${apiKey.value}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching pvp finishers data:', error);
+            return null;
+        }
+    };
+
+    const getTitles = async () => {
+        try {
+            const response = await axios.get(`${APIURL}/account/titles?access_token=${apiKey.value}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching titles data:', error);
+            return null;
+        }
+    };
+
+    async function getCurrencies() {
+        try {
+            const response = await fetch(`${APIURL}/account/wallet?access_token=${apiKey.value}`);
+            const walletData = await response.json();
+
+            // Récupérer les détails de toutes les monnaies
+            const currenciesResponse = await fetch(`${APIURL}/currencies?ids=all`);
+            const currenciesDetails = await currenciesResponse.json();
+
+            // Combiner les données du portefeuille avec les détails des monnaies
+            return walletData.map(wallet => {
+                const details = currenciesDetails.find(c => c.id === wallet.id);
+                return {
+                    id: wallet.id,
+                    value: wallet.value,
+                    name: details.name,
+                    description: details.description,
+                    icon: details.icon,
+                    order: details.order
+                };
+            }).sort((a, b) => a.order - b.order); // Trier selon l'ordre officiel du jeu
+        } catch (error) {
+            console.error('Erreur lors de la récupération des monnaies:', error);
+            throw error;
+        }
+    }
+
     return {
         haveApiKey,
         apiKey,
@@ -243,6 +350,14 @@ export const useUserStore = defineStore('user', () => {
         getColors,
         getMoney,
         getCollectibles,
-        getCurrencyNames
+        getCurrencyNames,
+        getMinis,
+        getPvpFinishers,
+        getTitles,
+        itemCounts,
+        partialStacks,
+        itemPlacements,
+        addItem,
+        getCurrencies
     };
 });
