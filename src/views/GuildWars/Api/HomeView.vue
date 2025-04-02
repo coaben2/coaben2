@@ -7,6 +7,7 @@ const newApiKey = ref('');
 const user = useUserStore();
 const showNotification = ref(false);
 const showProgress = ref(false);
+const accountName = ref('');
 
 const setAndSaveApiKey = async () => {
   await user.setApiKey(newApiKey.value);
@@ -19,8 +20,22 @@ const setAndSaveApiKey = async () => {
   }, 3000);
 };
 
+// Fonction pour récupérer le nom du compte
+const fetchAccountName = async () => {
+  try {
+    const response = await fetch(`https://api.guildwars2.com/v2/account?access_token=${user.apiKey}`);
+    const data = await response.json();
+    accountName.value = data.name;
+  } catch (error) {
+    console.error('Erreur lors de la récupération du nom du compte:', error);
+  }
+};
+
 onMounted(() => {
   user.initApiKey();
+  if (user.apiKey) {
+    fetchAccountName();
+  }
 });
 const placeholderText = 'Entrez une clé API avec toutes les permissions';
 </script>
@@ -72,7 +87,10 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
       </button>
     </div>
     <div>
-      <h1>API Guild Wars 2</h1>
+      <div class="header">
+        <h1>API Guild Wars 2</h1>
+        <h2 v-if="accountName">Bonjour {{ accountName }}</h2>
+      </div>
       <ul class="flex gap-2">
         <li>
           <RouterLink :to="{ name: 'GuildWarsApiAbout' }">API ?</RouterLink>
@@ -97,6 +115,9 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
         </li>
         <li>
           <RouterLink :to="{ name: 'GuildWarsDON' }">Craft légendaire</RouterLink>
+        </li>
+        <li>
+          <RouterLink :to="{ name: 'LEG_MCM' }">légendaire MCM</RouterLink>
         </li>
       </ul>
       <RouterView />
@@ -236,5 +257,23 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
 .api-call-item.completed {
   color: #4caf50;
   font-weight: bold;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 1rem 0;
+}
+
+.header h1 {
+  margin: 0;
+  color: #ffd700;
+}
+
+.header h2 {
+  margin: 0;
+  color: #4CAF50;
+  font-size: 1.5rem;
 }
 </style>

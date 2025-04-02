@@ -37,6 +37,13 @@ const posts = [
       "LA capitaine pirate à l'avant du navire a gracieusement coupé les vagues, ses cheveux gris volant au vent tandis que ses oreilles de loup trahissaient sa nature sauvage et impitoyable.",
     link: 'BlogPostLouvpirates',
   },
+  {
+    thumbnail: '',
+    title: 'path of Exile',
+    excerpt:
+      "",
+    link: 'BlogPathOfExile',
+  },
 ];
 </script>
 

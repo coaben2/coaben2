@@ -62,6 +62,11 @@ const router = createRouter({
               name: 'GuildWarsDON',
               component: () => import('../views/GuildWars/Api/DonView.vue'),
             },
+            {
+              path: 'Légendaire MCM',
+              name: 'LEG_MCM',
+              component: () => import('../views/GuildWars/Api/Leg_MCM.vue'),
+            },
           ],
         },
       ],
@@ -95,6 +100,11 @@ const router = createRouter({
       path: '/blog/Louvpirates',
       name: 'BlogPostLouvpirates',
       component: () => import('../views/Blog/Louvpirates.vue'),
+    },
+    {
+      path: '/blog/path-of-exile',
+      name: 'BlogPathOfExile',
+      component: () => import('../views/Blog/Path-of-exile.vue')
     },
     {
       path: '/portfolio',
