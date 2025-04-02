@@ -43,7 +43,7 @@ const links = [
   },
   {
     to: 'Login',
-    title: 'Connexion',
+    title: 'MCM',
     children: [],
   },
 ];

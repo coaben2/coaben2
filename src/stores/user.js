@@ -325,6 +325,19 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
+    async function getAccount() {
+        try {
+            const response = await fetch(`https://api.guildwars2.com/v2/account?access_token=${apiKey.value}`);
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération du compte');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Erreur dans getAccount:', error);
+            throw error;
+        }
+    }
+
     return {
         haveApiKey,
         apiKey,
@@ -358,6 +371,7 @@ export const useUserStore = defineStore('user', () => {
         partialStacks,
         itemPlacements,
         addItem,
-        getCurrencies
+        getCurrencies,
+        getAccount
     };
 });
