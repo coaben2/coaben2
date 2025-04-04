@@ -24,7 +24,7 @@ const posts = [
     link: 'BlogPostLouvEtLesMysteresDeLaForet',
   },
   {
-    thumbnail: '',
+    thumbnail: 'L_R.jpg',
     title: 'Le lierre et la rose',
     excerpt:
       "Il était une fois une magnifique rose, épanouie et fière dans un jardin enchanteur. Elle dégageait un parfum envoûtant et attirait l'attention de tous ceux qui la croisaient. Au fil du temps, une liane de lierre s'était enroulée autour d'elle, tombant amoureusement sous son charme.",
@@ -38,10 +38,10 @@ const posts = [
     link: 'BlogPostLouvpirates',
   },
   {
-    thumbnail: '',
+    thumbnail: 'POF-001.jpg',
     title: 'path of Exile',
     excerpt:
-      "",
+      "Hounoana, la Revenante, observait l'horizon depuis les remparts.Les murmures des esprits résonnaient dans son esprit.",
     link: 'BlogPathOfExile',
   },
 ];

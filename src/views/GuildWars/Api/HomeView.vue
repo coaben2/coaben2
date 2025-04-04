@@ -119,6 +119,9 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
         <li>
           <RouterLink :to="{ name: 'LEG_MCM' }">légendaire MCM</RouterLink>
         </li>
+        <li>
+          <RouterLink :to="{ name: 'MCM' }">MCM</RouterLink>
+        </li>
       </ul>
       <RouterView />
     </div>

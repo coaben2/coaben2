@@ -67,6 +67,11 @@ const router = createRouter({
               name: 'LEG_MCM',
               component: () => import('../views/GuildWars/Api/Leg_MCM.vue'),
             },
+            {
+              path: 'MCM',
+              name: 'MCM',
+              component: () => import('../views/GuildWars/Api/MCM.vue'),
+            },
           ],
         },
       ],
