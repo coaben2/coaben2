@@ -1,5 +1,5 @@
 <script setup>
-import { RouterView } from 'vue-router';
+import { RouterView, RouterLink } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
 
@@ -20,7 +20,6 @@ const setAndSaveApiKey = async () => {
   }, 3000);
 };
 
-// Fonction pour récupérer le nom du compte
 const fetchAccountName = async () => {
   try {
     const response = await fetch(`https://api.guildwars2.com/v2/account?access_token=${user.apiKey}`);
@@ -37,6 +36,7 @@ onMounted(() => {
     fetchAccountName();
   }
 });
+
 const placeholderText = 'Entrez une clé API avec toutes les permissions';
 </script>
 

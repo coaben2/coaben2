@@ -158,9 +158,6 @@ const craftingMaterials = ref({
   t4_dust: { id: 24275, name: 'Tas de poussière radieuse', required: 50, have: 0, tradable: true, price: 0 },
   t3_dust: { id: 24274, name: 'Tas de poussière luminescente', required: 50, have: 0, tradable: true, price: 0 },
 });
-
-const priceData = ref({});
-
 const calculateMaterials = async () => {
   try {
     const [materialsResponse, walletResponse, bankResponse] = await Promise.all([
@@ -206,13 +203,12 @@ const calculateMaterials = async () => {
 const calculateDifference = (material) => {
   const diff = material.required * selectedPieces.value.length - material.have;
   if (diff <= 0) return { diff: 0, cost: 0 };
-  
+
   return {
     diff,
-    cost: material.tradable ? diff * (priceData.value[material.id] || 0) : 0
+    cost: material.tradable && material.price ? diff * material.price : 0
   };
 };
-
 const calculateTotalCost = () => {
   return Object.values(craftingMaterials.value)
     .reduce((total, material) => {
@@ -313,6 +309,16 @@ const fetchPrices = async () => {
               <th>Coût</th>
             </tr>
           </thead>
+          <thead v-if="selectedPieces.length > 0">
+            <tr class="total-row">
+              <td colspan="4" class="text-right">
+                <strong>Coût total :</strong>
+              </td>
+              <td>
+                <strong>{{ (calculateTotalCost() / 10000).toFixed(2) }} po</strong>
+              </td>
+            </tr>
+          </thead>
           <tbody>
             <tr v-for="material in craftingMaterials" :key="material.id">
               <td>{{ material.name }}</td>
@@ -327,16 +333,7 @@ const fetchPrices = async () => {
               <td v-else>-</td>
             </tr>
           </tbody>
-          <tfoot v-if="selectedPieces.length > 0">
-            <tr class="total-row">
-              <td colspan="4" class="text-right">
-                <strong>Coût total :</strong>
-              </td>
-              <td>
-                <strong>{{ (calculateTotalCost() / 10000).toFixed(2) }} po</strong>
-              </td>
-            </tr>
-          </tfoot>
+
         </table>
       </div>
     </div>
