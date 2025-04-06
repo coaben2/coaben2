@@ -3,9 +3,8 @@ import { ref } from 'vue';
 import { useQuery } from '@tanstack/vue-query';
 
 const loadingMessage = ref('Chargement des scores McM...');
-const progress = ref(0); // État pour la progression de la barre
+const progress = ref(0); 
 
-// Fonction pour simuler la progression de la barre de chargement
 const simulateProgress = () => {
   let progressInterval;
   let progressValue = 0;
@@ -26,7 +25,7 @@ const fetchWvWData = async () => {
     const matchIds = await matchesResponse.json();
 
     const filteredMatchIds = matchIds.filter((id) =>
-      ['2-1', '2-2', '2-3', '2-4', '2-5'].includes(id),
+      ['2-1', '2-2', '2-3', '2-4', '2-5', '1-1', '1-2', '1-3', '1-4'].includes(id),
     );
 
     const matchDetailsPromises = filteredMatchIds.map((id) =>
@@ -78,19 +77,19 @@ const { isLoading, data: matches } = useQuery({
 
         <div class="world-row red">
           <span class="world-name">{{ match.worlds.red }}</span>
-          <span class="world-score">{{ match.scores.red.toLocaleString() }}</span>
+          <!--<span class="world-score">{{ match.scores.red.toLocaleString() }}</span>-->
           <span class="victory-points">PV: {{ match.victoryPoints.red }}</span>
         </div>
 
         <div class="world-row blue">
           <span class="world-name">{{ match.worlds.blue }}</span>
-          <span class="world-score">{{ match.scores.blue.toLocaleString() }}</span>
+          <!--<span class="world-score">{{ match.scores.blue.toLocaleString() }}</span>-->
           <span class="victory-points">PV: {{ match.victoryPoints.blue }}</span>
         </div>
 
         <div class="world-row green">
           <span class="world-name">{{ match.worlds.green }}</span>
-          <span class="world-score">{{ match.scores.green.toLocaleString() }}</span>
+          <!--<span class="world-score">{{ match.scores.green.toLocaleString() }}</span>-->
           <span class="victory-points">PV: {{ match.victoryPoints.green }}</span>
         </div>
       </div>
@@ -103,13 +102,19 @@ const { isLoading, data: matches } = useQuery({
 <style scoped>
 .wvw-container {
   padding: 1rem;
-  max-width: 600px;
+  max-width: max-content;
   margin: 10px;
 }
 
 .matches-grid {
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, auto);
+  writing-mode: horizontal-tb;
+  direction: ltr;
   gap: 1rem;
+  height: auto;
+  width: auto; /* ajuste à ton contenu */
 }
 
 .match-card {
