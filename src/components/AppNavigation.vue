@@ -42,15 +42,14 @@ const links = [
     children: [],
   },
   {
-    to: 'Login',
-    title: 'Login',
+    to: 'MTGA_View',
+    title: 'MTGA',
     children: [],
   },
 ];
 
 const openModalMenu = () => {
   modalMenu.value.showModal();
-
 };
 </script>
 

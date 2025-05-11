@@ -127,6 +127,21 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue'),
     },
     {
+      path: '/views/Magic',
+      name: 'MTGA_View',
+      component: () => import('../views/Magic/Magic.vue'),
+    },
+    {
+      path: '/views/Magic',
+      name: 'collection',
+      component: () => import('../views/Magic/CollectionView.vue'),
+    },
+    {
+      path: '/views/Magic',
+      name: 'DeckDetail',
+      component: () => import('../views/Magic/DeckDetailView.vue'),
+    },
+    {
       path: '/:catchAll(.*)',
       name: 'NotFound',
       component: () => import('@/components/404.vue'),
