@@ -10,36 +10,36 @@ const triumphantArmor = ref({
     name: 'Légère',
     rarity: 'Exotique',
     pieces: [
-      { name: 'Masque', id: 78512, skin: 78506, légendaire: 78518 },
-      { name: 'Épaulettes', id: 78513, skin: 78507, légendaire: 78519 },
-      { name: 'Manteau', id: 78514, skin: 78508, légendaire: 78520 },
-      { name: 'Gants', id: 78515, skin: 78509, légendaire: 78521 },
-      { name: 'Pantalon', id: 78516, skin: 78510, légendaire: 78522 },
-      { name: 'Bottes', id: 78517, skin: 78511, légendaire: 78523 }
+      { name: 'Masque', id: 6711, skin: 6739, légendaire: 82902 },
+      { name: 'Épaulettes', id: 6686, skin: 6722, légendaire: 82173 },
+      { name: 'Manteau', id: 6706, skin: 6716, légendaire: 83036 },
+      { name: 'Gants', id: 6718, skin: 6738, légendaire: 84629 },
+      { name: 'Pantalon', id: 6701, skin: 6728, légendaire: 83497 },
+      { name: 'Bottes', id: 6707, skin: 6705, légendaire: 83289 }
     ]
   },
   medium: {
     name: 'Intermédiaire',
     rarity: 'Exotique',
     pieces: [
-      { name: 'Masque', id: 78524, skin: 78503, légendaire: 78530 },
-      { name: 'Épaulettes', id: 78525, skin: 78504, légendaire: 78531 },
-      { name: 'Manteau', id: 78526, skin: 78505, légendaire: 78532 },
-      { name: 'Gants', id: 78527, skin: 78506, légendaire: 78533 },
-      { name: 'Pantalon', id: 78528, skin: 78507, légendaire: 78534 },
-      { name: 'Bottes', id: 78529, skin: 78508, légendaire: 78535 }
+      { name: 'Masque', id: 6695, skin: 6725, légendaire: 78530 },
+      { name: 'Épaulettes', id: 6694, skin: 6733, légendaire: 78531 },
+      { name: 'Manteau', id: 6697, skin: 6685, légendaire: 78532 },
+      { name: 'Gants', id: 6693, skin: 6684, légendaire: 78533 },
+      { name: 'Pantalon', id: 6690, skin: 6687, légendaire: 78534 },
+      { name: 'Bottes', id: 6699, skin: 6688, légendaire: 78535 }
     ]
   },
   heavy: {
     name: 'Lourde',
     rarity: 'Exotique',
     pieces: [
-      { name: 'Heaume', id: 78536, skin: 78501, légendaire: 78542 },
-      { name: 'Épaulettes', id: 78537, skin: 78502, légendaire: 78543 },
-      { name: 'Plastron', id: 78538, skin: 78503, légendaire: 78544 },
-      { name: 'Gantelets', id: 78539, skin: 78504, légendaire: 78545 },
-      { name: 'Jambières', id: 78540, skin: 78505, légendaire: 78546 },
-      { name: 'Bottes', id: 78541, skin: 78506, légendaire: 78547 }
+      { name: 'Heaume', id: 6715, skin: 6734, légendaire: 78542 },
+      { name: 'Épaulettes', id: 6736, skin: 6719, légendaire: 78543 },
+      { name: 'Plastron', id: 6698, skin: 6740, légendaire: 78544 },
+      { name: 'Gantelets', id: 6713, skin: 6730, légendaire: 78545 },
+      { name: 'Jambières', id: 6721, skin: 6682, légendaire: 78546 },
+      { name: 'Bottes', id: 6691, skin: 6726, légendaire: 78547 }
     ]
   }
 });
@@ -238,7 +238,6 @@ const fetchPrices = async () => {
 <template>
   <div class="triumphant-armor">
     <h2>Armures du héros triomphant</h2>
-    <p>partie du site en test / codage en cours</p>
 
     <div class="armor-tables">
       <div v-for="(armor, type) in triumphantArmor" :key="type" class="armor-type">
@@ -250,7 +249,7 @@ const fetchPrices = async () => {
               <th>Pièce</th>
               <th>Base</th>
               <th>Élevé</th>
-              <th>légendaire</th>
+              <!--<th>légendaire</th>-->
             </tr>
           </thead>
           <tbody>
@@ -262,9 +261,9 @@ const fetchPrices = async () => {
               <td :class="{ unlocked: isSkinUnlocked(piece.id, piece.id) }">
                 {{ isSkinUnlocked(piece.id, piece.id) ? '✓' : '✗' }}
               </td>
-              <td :class="{ unlocked: isSkinUnlocked(piece.légendaire, piece.légendaire) }">
+              <!--<td :class="{ unlocked: isSkinUnlocked(piece.légendaire, piece.légendaire) }">
                 {{ isSkinUnlocked(piece.légendaire, piece.légendaire) ? '✓' : '✗' }}
-              </td>
+              </td>-->
             </tr>
           </tbody>
         </table>
@@ -272,7 +271,7 @@ const fetchPrices = async () => {
     </div>
 
     <div class="legendary-calculator">
-      <h3>Calculateur de craft légendaire</h3>
+      <h3>Calculateur de craft des pieces légendaire MCM</h3>
       
       <div class="piece-selector">
         <h4>Sélectionner les pièces à crafter :</h4>

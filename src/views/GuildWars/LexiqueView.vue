@@ -169,7 +169,7 @@
     <p>EOD (end of dragon)</p>
     <ol>
       <li>Antre étherlame</li>
-      <li>Décharge de Xunlai Jade</li>
+      <li>Décharge de Xunlai Jade ou XJJ en LFG</li>
       <li>Belvédère de Kaineng</li>
       <li>Temple des moissons</li>
       <li>Cour du vieux Lion</li>
@@ -177,7 +177,7 @@
     <p>SOTO (Secrets of the Obscure)</p>
     <ol>
       <li>Observatoire cosmique</li>
-      <li>Temple de Febe</li>
+      <li>Temple de Febe ou FEBE en LFG</li>
     </ol>
   </div>
 </template>

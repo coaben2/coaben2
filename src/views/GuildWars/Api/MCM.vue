@@ -1,14 +1,25 @@
 <script setup>
 import { ref } from 'vue';
 import { useQuery } from '@tanstack/vue-query';
+import { useUserStore } from '@/stores/user';
 
 const loadingMessage = ref('Chargement des scores McM...');
-const progress = ref(0); 
+const progress = ref(0);
+const userWorld = ref(null);
+
+const customWorldNames = {
+  2002: "Bouche d'Abaddon", 2206: "Pierre Arboréenne", 2205: "Clarté d'Aurore", 2003: "Marée Noire",
+  2201: "Désolation", 2102: "Lac Drakkar", 2207: "Lointaines Cimesfroides", 2203: "Fort Ranik",
+  2204: "Gandara", 2209: "Refuge de Gunnar", 2202: "Mer de Jade", 2101: "Kodash",
+  2208: "Son du Meunier", 2104: "Place de Piken", 2004: "Riveflot", 2011: "Anneau de Feu",
+  2012: "Ruines de Surmia", 2013: "Repos du Marin", 2103: "Outre-Monde", 2200: "Place de Vizunah",
+  2014: "Crête de Blancos", 2001: "Roc d’Augure", 2006: "Baie de Baruch", 2105: "Dzagonur",
+  2106: "Retraite d’Elona", 2010: "Faille du Destin",
+};
 
 const simulateProgress = () => {
-  let progressInterval;
   let progressValue = 0;
-  progressInterval = setInterval(() => {
+  const progressInterval = setInterval(() => {
     if (progressValue < 100) {
       progressValue += 1;
       progress.value = progressValue;
@@ -33,18 +44,9 @@ const fetchWvWData = async () => {
     );
     const matches = await Promise.all(matchDetailsPromises);
 
-    const worldsResponse = await fetch('https://api.guildwars2.com/v2/worlds?ids=all');
-    const worlds = await worldsResponse.json();
-    const worldsMap = Object.fromEntries(worlds.map((world) => [world.id, world.name]));
-
     return matches.map((match) => ({
       id: match.id,
       tier: match.id.split('-')[1],
-      worlds: {
-        red: worldsMap[match.worlds.red] || 'Inconnu',
-        blue: worldsMap[match.worlds.blue] || 'Inconnu',
-        green: worldsMap[match.worlds.green] || 'Inconnu',
-      },
       scores: match.scores || { red: 0, blue: 0, green: 0 },
       victoryPoints: match.victory_points || { red: 0, blue: 0, green: 0 },
     }));
@@ -59,6 +61,30 @@ const { isLoading, data: matches } = useQuery({
   queryFn: fetchWvWData,
   refetchInterval: 60000,
 });
+
+const userStore = useUserStore();
+const apiKey = ref(userStore.apiKey);
+
+const fetchAccountWorld = async () => {
+  if (!apiKey.value) {
+    userWorld.value = 'Clé API manquante';
+    return;
+  }
+
+  try {
+    const response = await fetch('https://api.guildwars2.com/v2/account', {
+      headers: { Authorization: `Bearer ${apiKey.value}` },
+    });
+    const data = await response.json();
+    const worldId = data.world;
+    userWorld.value = customWorldNames[worldId] || `Serveur inconnu (${worldId})`;
+  } catch (error) {
+    console.error('Erreur récupération du monde McM:', error);
+    userWorld.value = 'Erreur de récupération du serveur';
+  }
+};
+
+fetchAccountWorld();
 </script>
 
 <template>
@@ -67,29 +93,28 @@ const { isLoading, data: matches } = useQuery({
       <div class="loading-progress" :style="{ width: progress + '%' }"></div>
     </div>
 
-    <div v-if="isLoading" class="loading">
-      {{ loadingMessage }}
-    </div>
+    <div v-if="isLoading" class="loading">{{ loadingMessage }}</div>
 
-    <div v-else-if="matches && matches.length" class="matches-grid">
+    <!--<h2 v-else-if="userWorld">
+      Tu représentes le serveur McM {{ userWorld }}
+    </h2>-->
+
+    <div v-if="matches && matches.length" class="matches-grid">
       <div v-for="match in matches" :key="match.id" class="match-card">
         <h3>Tier {{ match.tier }}</h3>
 
         <div class="world-row red">
-          <span class="world-name">{{ match.worlds.red }}</span>
-          <!--<span class="world-score">{{ match.scores.red.toLocaleString() }}</span>-->
+          <!--<span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span>-->
           <span class="victory-points">PV: {{ match.victoryPoints.red }}</span>
         </div>
 
         <div class="world-row blue">
-          <span class="world-name">{{ match.worlds.blue }}</span>
-          <!--<span class="world-score">{{ match.scores.blue.toLocaleString() }}</span>-->
+          <!--<span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span>-->
           <span class="victory-points">PV: {{ match.victoryPoints.blue }}</span>
         </div>
 
         <div class="world-row green">
-          <span class="world-name">{{ match.worlds.green }}</span>
-          <!--<span class="world-score">{{ match.scores.green.toLocaleString() }}</span>-->
+          <!--<span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span>-->
           <span class="victory-points">PV: {{ match.victoryPoints.green }}</span>
         </div>
       </div>
@@ -114,7 +139,7 @@ const { isLoading, data: matches } = useQuery({
   direction: ltr;
   gap: 1rem;
   height: auto;
-  width: auto; /* ajuste à ton contenu */
+  width: auto;
 }
 
 .match-card {
@@ -131,8 +156,8 @@ const { isLoading, data: matches } = useQuery({
 }
 
 .world-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
   padding: 0.5rem;
   margin: 0.25rem 0;
   border-radius: 4px;
@@ -148,11 +173,8 @@ const { isLoading, data: matches } = useQuery({
   background: rgba(0, 255, 0, 0.3);
 }
 
-.world-name {
-  font-weight: bold;
-}
-.world-score,
 .victory-points {
+  font-weight: bold;
   text-align: left;
 }
 
