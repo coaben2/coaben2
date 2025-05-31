@@ -18,6 +18,11 @@ const router = createRouter({
           component: () => import('../views/GuildWars/LexiqueView.vue'),
         },
         {
+          path: 'Combo GW2',
+          name: 'combo_GW2',
+          component: () => import('../views/GuildWars/ComboView.vue'),
+        },
+        {
           path: 'api',
           name: 'GuildWarsAPI',
           component: () => import('../views/GuildWars/Api/HomeView.vue'),
