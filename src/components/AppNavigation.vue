@@ -20,6 +20,11 @@ const links = [
         children: [],
       },
       {
+        to: 'combo_GW2',
+        title: 'Combos GW2',
+        children: [],
+      },
+      {
         to: 'GuildWarsApiCharacters',
         title: 'API',
         children: [],
