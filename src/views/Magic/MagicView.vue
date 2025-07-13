@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Future page MAGIC</h1>
-    <!--<header>
+   <!--<header>
       <nav>
         <ul>
           <li>

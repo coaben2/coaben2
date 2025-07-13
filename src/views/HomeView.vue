@@ -31,6 +31,13 @@ inject();
           </RouterLink>
         </div>
         <div class="w-full flex flex-col items-center text-center gap-4">
+          <h4>Groupe Dynamique GW2</h4>
+          <p class="flex-1">Outil pour créer des groupes optimisés.</p>
+          <RouterLink :to="{ name: 'Groupe_MCM' }" class="btn btn-sm btn-outline btn-primary"
+            >Créer un groupe
+          </RouterLink>
+        </div>
+        <div class="w-full flex flex-col items-center text-center gap-4">
           <h4>Blog</h4>
           <p class="flex-1">
             Un blog d'histoires écrites , ainsi que des illustrations réalisées par

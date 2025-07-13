@@ -23,6 +23,11 @@ const router = createRouter({
           component: () => import('../views/GuildWars/ComboView.vue'),
         },
         {
+          path: 'Groupe MCM',
+          name: 'Groupe_MCM',
+          component: () => import('../views/GuildWars/MCMgroupeView.vue'),
+        },
+        {
           path: 'api',
           name: 'GuildWarsAPI',
           component: () => import('../views/GuildWars/Api/HomeView.vue'),
@@ -112,9 +117,9 @@ const router = createRouter({
       component: () => import('../views/Blog/Louvpirates.vue'),
     },
     {
-      path: '/blog/path-of-exile',
-      name: 'BlogPathOfExile',
-      component: () => import('../views/Blog/Path-of-exile.vue')
+      path: '/blog/path-of-Fire',
+      name: 'BlogPathOfFire',
+      component: () => import('../views/Blog/Path-of-Fire.vue'),
     },
     {
       path: '/portfolio',
@@ -134,7 +139,7 @@ const router = createRouter({
     {
       path: '/views/Magic',
       name: 'MTGA_View',
-      component: () => import('../views/Magic/Magic.vue'),
+      component: () => import('../views/Magic/MagicView.vue'),
     },
     {
       path: '/views/Magic',

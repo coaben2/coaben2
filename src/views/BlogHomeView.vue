@@ -39,10 +39,10 @@ const posts = [
   },
   {
     thumbnail: 'POF-001.jpg',
-    title: 'path of Exile',
+    title: 'path of Fire',
     excerpt:
       "Hounoana, la Revenante, observait l'horizon depuis les remparts.Les murmures des esprits résonnaient dans son esprit.",
-    link: 'BlogPathOfExile',
+    link: 'BlogPathOfFire',
   },
 ];
 </script>
