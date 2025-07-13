@@ -25,6 +25,11 @@ const links = [
         children: [],
       },
       {
+        to: 'Groupe_MCM',
+        title: 'Groupe dynamique',
+        children: [],
+      },
+      {
         to: 'GuildWarsApiCharacters',
         title: 'API',
         children: [],
