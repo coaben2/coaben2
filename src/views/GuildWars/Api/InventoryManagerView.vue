@@ -13,7 +13,7 @@
 
     <!-- Section des recommandations d'items -->
     <div v-if="recommendations.length > 0" class="recommendations-section">
-      <h2>🎯 Recommandations d'items</h2>
+      <h2>Recommandations d'items</h2>
       <p>Voici des suggestions pour optimiser votre inventaire :</p>
       
       <div class="recommendations-grid">
@@ -62,7 +62,7 @@
 
     <!-- Section des piles partielles -->
     <div v-if="partialStacks.length > 0" class="partial-stacks-section">
-      <h2>📦 Empiler ces objets</h2>
+      <h2>Empiler ces objets</h2>
       <p>
         Ces articles ont des piles incomplètes (moins de 250 articles) à plusieurs endroits et
         doivent être empilés ensemble pour économiser de l'espace dans l'inventaire.
@@ -98,7 +98,7 @@
 
     <!-- Section des items à fabriquer -->
     <div v-if="craftableItems.length > 0" class="craftable-section">
-      <h2>⚒️ Fabriquer les objets</h2>
+      <h2>Fabriquer les objets</h2>
       <p>
         Vous avez plus d'une pile (250 articles) d'ingrédients pour les articles suivants. Vous
         pouvez fabriquer ces objets pour réduire le nombre de piles.
