@@ -15,6 +15,12 @@
     >
       PVE (2 groupes de 5)
     </button>
+        <button 
+      :class="{ active: currentMode === 'fractal' }" 
+      @click="switchMode('fractal')"
+    >
+      Fractal (1 groupe de 5)
+    </button>
   </div>
 
   <div id="groups">
@@ -96,7 +102,8 @@ const groups = ref([])
 // Configuration des groupes selon le mode
 const groupConfig = {
   mcm: { count: 10, size: 5 },
-  pve: { count: 2, size: 5 }
+  pve: { count: 2, size: 5 },
+  fractal: { count: 1, size: 5 }
 }
 
 // Buffs requis selon le mode actuel
