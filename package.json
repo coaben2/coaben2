@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "scripts": {
+ "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -18,6 +18,7 @@
     "axios": "^1.9.0",
     "fs": "^0.0.1-security",
     "gw2api-client": "^7.7.0",
+    "node": "^20.19.5",
     "pinia": "^2.1.7",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7",
