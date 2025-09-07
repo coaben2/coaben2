@@ -134,6 +134,14 @@ const buffsDataMCM = {
   Spectre: ['Soin', 'Fureur', 'Barrière'],
   Daredevil: ['Pouvoir'],
   sniper: ['Pouvoir', 'Fureur'],
+  Troubadour: ['Pouvoir', 'Fureur', 'Célérité', 'Alacrité'],
+  Luminary: ['Pouvoir', 'Protection', 'Stabilité', 'Régénération'],
+  Galeshot: ['Fureur', 'Super vitesse'],
+  Ritualist: ['Barrière', 'Régénération', 'Protection'],
+  Antiquary: ['Fureur', 'Vulnérabilité'],
+  Paragon: ['Pouvoir', 'Stabilité', 'Fureur'],
+  Conduit: ['Alacrité', 'Protection', 'Résistance'],
+  Evoker: ['Pouvoir', 'Fureur', 'Régénération'],
 }
 
 // Données des buffs PVE
@@ -166,6 +174,14 @@ const buffsDataPVE = {
   Spectre: ['Soin', 'Fureur'],
   Daredevil: ['Pouvoir'],
   sniper: ['Pouvoir', 'Fureur'],
+  Troubadour: ['Pouvoir', 'Fureur', 'Alacrité'],
+  Luminary: ['Pouvoir', 'Protection', 'Régénération'],
+  Galeshot: ['Fureur', 'Super vitesse'],
+  Ritualist: ['Barrière', 'Régénération', 'Protection'],
+  Antiquary: ['Fureur', 'Vulnérabilité'],
+  Paragon: ['Pouvoir', 'Fureur'],
+  Conduit: ['Alacrité', 'Protection'],
+  Evoker: ['Pouvoir', 'Fureur', 'Régénération'],
 }
 
 function getBuffCount(group, buff) {
