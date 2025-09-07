@@ -18,12 +18,14 @@
     "axios": "^1.9.0",
     "fs": "^0.0.1-security",
     "gw2api-client": "^7.7.0",
-    "node": "^20.19.5",
     "pinia": "^2.1.7",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
+  },
+  "engines": {
+    "node": "20.x"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.3",
