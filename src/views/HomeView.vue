@@ -56,6 +56,15 @@ inject();
             >Regarder le portfolio
           </RouterLink>
         </div>
+        <div class="w-full flex flex-col items-center text-center gap-4">
+          <h4>Magic: The Gathering</h4>
+          <p class="flex-1">
+            Constructeur de deck MTG avec recherche de cartes, analyse de deck et recommandations.
+          </p>
+          <RouterLink :to="{ name: 'Magic' }" class="btn btn-sm btn-outline btn-primary"
+            >Découvrir Magic
+          </RouterLink>
+        </div>
       </div>
     </div>
     <div class="mt-24">
