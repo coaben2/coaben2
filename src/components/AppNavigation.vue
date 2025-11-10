@@ -51,32 +51,6 @@ const links = [
     title: 'instagram',
     children: [],
   },
-  {
-    to: false,
-    title: 'Magic',
-    children: [
-      {
-        to: 'Magic',
-        title: 'Cartes Magic',
-        children: [],
-      },
-      {
-        to: 'DeckBuilder',
-        title: 'Constructeur de Deck',
-        children: [],
-      },
-      {
-        to: 'DeckAnalysis',
-        title: 'Analyse de Deck',
-        children: [],
-      },
-      {
-        to: 'DeckBuilderOld',
-        title: 'Ancien Constructeur',
-        children: [],
-      },
-    ],
-  },
 ];
 
 const openModalMenu = () => {

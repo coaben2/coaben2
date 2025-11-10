@@ -132,26 +132,6 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue'),
     },
     {
-      path: '/magic',
-      name: 'Magic',
-      component: () => import('../views/Magic/MagicView.vue'),
-    },
-    {
-      path: '/magic/deck-builder',
-      name: 'DeckBuilder',
-      component: () => import('../views/Magic/DeckBuilderHome.vue'),
-    },
-    {
-      path: '/magic/deck-builder-old',
-      name: 'DeckBuilderOld',
-      component: () => import('../views/Magic/DeckBuilderView.vue'),
-    },
-    {
-      path: '/magic/deck-analysis',
-      name: 'DeckAnalysis',
-      component: () => import('../views/Magic/DeckAnalysis.vue'),
-    },
-    {
       path: '/:catchAll(.*)',
       name: 'NotFound',
       component: () => import('../components/404.vue'),
