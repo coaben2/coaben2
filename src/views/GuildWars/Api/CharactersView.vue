@@ -1,9 +1,10 @@
 <script setup>
-import { ref, computed, onUnmounted } from 'vue';
+import { ref, computed, onUnmounted, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
-import { useQuery, useMutation } from '@tanstack/vue-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query';
 
 const user = useUserStore();
+const queryClient = useQueryClient();
 
 const haveApiKey = computed(() => !!user.apiKey);
 
@@ -114,6 +115,14 @@ const hideItemDetails = () => {
 const getProfessionImage = (profession) => {
   return new URL(`/public/img/${profession}.png`, import.meta.url).href;
 };
+
+// Recharger les données quand on revient sur la page
+onMounted(() => {
+  if (haveApiKey.value) {
+    // Invalider le cache pour forcer un rechargement
+    queryClient.invalidateQueries({ queryKey: ['characters'] });
+  }
+});
 
 // Reset la progression quand on change de page
 onUnmounted(() => {
