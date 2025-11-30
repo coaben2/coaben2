@@ -179,6 +179,10 @@
       <li>Observatoire cosmique</li>
       <li>Temple de Febe ou FEBE en LFG</li>
     </ol>
+    <p>Janthir Wilds</p>
+    <ol>
+      <li>Convergences : mont Balrior (groupe de 50)</li>
+    </ol>
   </div>
 </template>
 <style scoped>

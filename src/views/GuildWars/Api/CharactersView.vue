@@ -56,54 +56,54 @@ const getIconUrl = (itemID) => {
   return URLDATA + itemID + '.png';
 };
 
-const getItemsDetails = async (itemId, event) => {
-  try {
-    const response = await fetch(`http://api.guildwars2.com/v2/items/${itemId}`);
-    const data = await response.json();
+// const getItemsDetails = async (itemId, event) => {
+//   try {
+//     const response = await fetch(`http://api.guildwars2.com/v2/items/${itemId}`);
+//     const data = await response.json();
 
-    const itemDetailsDiv = document.createElement('div');
-    itemDetailsDiv.id = 'item-details';
-    itemDetailsDiv.style.position = 'fixed';
-    itemDetailsDiv.style.top = '50%';
-    itemDetailsDiv.style.left = '50%';
-    itemDetailsDiv.style.transform = 'translate(-50%, -50%)';
-    itemDetailsDiv.style.zIndex = '9999';
-    itemDetailsDiv.style.background = 'white';
-    itemDetailsDiv.style.padding = '20px';
+//     const itemDetailsDiv = document.createElement('div');
+//     itemDetailsDiv.id = 'item-details';
+//     itemDetailsDiv.style.position = 'fixed';
+//     itemDetailsDiv.style.top = '50%';
+//     itemDetailsDiv.style.left = '50%';
+//     itemDetailsDiv.style.transform = 'translate(-50%, -50%)';
+//     itemDetailsDiv.style.zIndex = '9999';
+//     itemDetailsDiv.style.background = 'white';
+//     itemDetailsDiv.style.padding = '20px';
 
-    const keysToDisplay = ['name', 'icon', 'rarity', 'id'];
+//     const keysToDisplay = ['name', 'icon', 'rarity', 'id'];
 
-    keysToDisplay.sort();
+//     keysToDisplay.sort();
 
-    const ul = document.createElement('ul');
-    ul.style.listStyleType = 'none';
-    ul.style.padding = '0';
+//     const ul = document.createElement('ul');
+//     ul.style.listStyleType = 'none';
+//     ul.style.padding = '0';
 
-    for (const key of keysToDisplay) {
-      const li = document.createElement('li');
-      li.textContent = `${key}: ${data[key]}`;
-      ul.appendChild(li);
-    }
+//     for (const key of keysToDisplay) {
+//       const li = document.createElement('li');
+//       li.textContent = `${key}: ${data[key]}`;
+//       ul.appendChild(li);
+//     }
 
-    itemDetailsDiv.appendChild(ul);
+//     itemDetailsDiv.appendChild(ul);
 
-    document.body.appendChild(itemDetailsDiv);
+//     document.body.appendChild(itemDetailsDiv);
 
-    itemDetailsDiv.addEventListener('mouseout', hideItemDetails);
+//     itemDetailsDiv.addEventListener('mouseout', hideItemDetails);
 
-    itemDetailsDiv.addEventListener('mouseover', (event) => {
-      event.stopPropagation();
-    });
+//     itemDetailsDiv.addEventListener('mouseover', (event) => {
+//       event.stopPropagation();
+//     });
 
-    itemDetailsDiv.style.top = `${event.clientY}px`;
-    itemDetailsDiv.style.left = `${event.clientX}px`;
-  } catch (error) {
-    console.error(
-      "Une erreur est survenue lors de la récupération des détails de l'objet: ",
-      error,
-    );
-  }
-};
+//     itemDetailsDiv.style.top = `${event.clientY}px`;
+//     itemDetailsDiv.style.left = `${event.clientX}px`;
+//   } catch (error) {
+//     console.error(
+//       "Une erreur est survenue lors de la récupération des détails de l'objet: ",
+//       error,
+//     );
+//   }
+// };
 const hideItemDetails = () => {
   const itemDetailsDiv = document.getElementById('item-details');
   if (itemDetailsDiv) {
