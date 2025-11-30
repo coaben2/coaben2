@@ -39,9 +39,6 @@ const { isLoading: isCharactersLoading, data: charactersData } = useQuery({
   enabled: haveApiKey,
   retry: 3,
   staleTime: 1000 * 60 * 5,
-  /*onError: (error) => {
-    console.error('Erreur lors de la requête:', error);
-  },*/
 });
 
 const {
