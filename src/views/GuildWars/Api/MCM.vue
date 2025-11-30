@@ -13,8 +13,8 @@ const customWorldNames = {
   2204: "Gandara", 2209: "Refuge de Gunnar", 2202: "Mer de Jade", 2101: "Kodash",
   2208: "Son du Meunier", 2104: "Place de Piken", 2004: "Riveflot", 2011: "Anneau de Feu",
   2012: "Ruines de Surmia", 2013: "Repos du Marin", 2103: "Outre-Monde", 2200: "Place de Vizunah",
-  2014: "Crête de Blancos", 2001: "Roc d’Augure", 2006: "Baie de Baruch", 2105: "Dzagonur",
-  2106: "Retraite d’Elona", 2010: "Faille du Destin",
+  2014: "Crête de Blancos", 2001: "Roc d Augure", 2006: "Baie de Baruch", 2105: "Dzagonur",
+  2106: "Retraite d Elona", 2010: "Faille du Destin",
 };
 
 const simulateProgress = () => {
