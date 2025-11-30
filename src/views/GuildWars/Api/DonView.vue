@@ -175,7 +175,7 @@ const getDifference = (id) => {
 .styled-table td:nth-child(2),
 .styled-table td:nth-child(3),
 .styled-table td:nth-child(4) {
-  color: rgb(0, 0, 0);
+  color: #fff;
   text-align: left;
 }
 

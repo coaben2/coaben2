@@ -14,7 +14,7 @@ import GitHubIcon from '@/components/icons/GitHubIcon.vue';
                     <GitHubIcon />
                 </a>
             </li>
-            <li>
+            <!--<li>
                 <a href="https://www.youtube.com/@coaben" target="_blank" rel="nofollow">
                     <YoutubeIcon />
                 </a>
@@ -28,7 +28,7 @@ import GitHubIcon from '@/components/icons/GitHubIcon.vue';
                 <a href="https://www.twitch.tv/coaben" target="_blank" rel="nofollow">
                     <TwitchIcon />
                 </a>
-            </li>
+            </li>-->
         </ul>
     </footer>
 </template>
