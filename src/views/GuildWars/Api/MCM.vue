@@ -104,17 +104,17 @@ fetchAccountWorld();
         <h3>Tier {{ match.tier }}</h3>
 
         <div class="world-row red">
-          <!--<span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span>-->
+          <!-- <span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span> -->
           <span class="victory-points">PV: {{ match.victoryPoints.red }}</span>
         </div>
 
         <div class="world-row blue">
-          <!--<span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span>-->
+          <!-- <span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span> -->
           <span class="victory-points">PV: {{ match.victoryPoints.blue }}</span>
         </div>
 
         <div class="world-row green">
-          <!--<span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span>-->
+          <!-- <span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span> -->
           <span class="victory-points">PV: {{ match.victoryPoints.green }}</span>
         </div>
       </div>

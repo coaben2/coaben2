@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import HomeView from '@/views/HomeView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,7 +27,7 @@ const router = createRouter({
     {
       path: '/guildwars2/api',
       name: 'GuildWarsAPI',
-      component: () => import('../views/GuildWars/Api/HomeView.vue'),
+      component: () => import('../views/GuildWars/Api/HomeGWView.vue'),
       children: [
         {
           path: 'about-api',
@@ -132,11 +132,63 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue'),
     },
     {
+      path: '/guildwars2/classes',
+      name: 'Classes',
+      component: () => import('../views/classesView.vue'),
+      children: [
+        {
+          path: 'guerrier',
+          name: 'Guerrier',
+          component: () => import('../views/GuildWars/classe/guerrierView.vue')
+        },
+        {
+          path: 'gardien',
+          name: 'Gardien',
+          component: () => import('../views/GuildWars/classe/GardienView.vue')
+        },
+        {
+          path: 'revenant',
+          name: 'Revenant',
+          component: () => import('../views/GuildWars/classe/RevenantView.vue')
+        },
+        {
+          path: 'voleur',
+          name: 'Voleur',
+          component: () => import('../views/GuildWars/classe/voleurView.vue')
+        },
+        {
+          path: 'rodeur',
+          name: 'Rodeur',
+          component: () => import('../views/GuildWars/classe/rodeurView.vue')
+        },
+        {
+          path: 'ingenieur',
+          name: 'Ingenieur',
+          component: () => import('../views/GuildWars/classe/ingenieurView.vue')
+        },
+        {
+          path: 'necromant',
+          name: 'Necromant',
+          component: () => import('../views/GuildWars/classe/necromantView.vue')
+        },
+        {
+          path: 'envouteur',
+          name: 'Envouteur',
+          component: () => import('../views/GuildWars/classe/envouteurView.vue')
+        },
+        {
+          path: 'elementaliste',
+          name: 'Elementaliste',
+          component: () => import('../views/GuildWars/classe/elementalisteView.vue')
+        },
+      ]
+    }, 
+    {
       path: '/:catchAll(.*)',
       name: 'NotFound',
       component: () => import('../components/404.vue'),
     },
-  ],
-});
+  ], 
+}); 
 
 export default router;

@@ -15,7 +15,7 @@
       de mettre des +9 pour atteindre ce nombre.
 
       <br />18 emplacements * +9 = 162 de RA
-    <ul>
+    <p>
       <li>T1 : 1 à 25 </li>Niveau de difficulté 20+ = 25 AR
       <li>T2 : 26 à 50 </li>Difficulté 30+ palier = 40 AR <br />Difficulté 40+ palier = 55 AR <br />Difficulté 50+
       palier
@@ -24,7 +24,7 @@
       <li>T3 : 51 à 75 </li> Niveau de difficulté 60+ = 85 AR <br />Difficulté 70+ palier = 100 AR
       <li>T4 : 76 à 100 </li> Difficulté 80+ palier = 115 AR <br />Niveau de difficulté 90+ = 130
       AR <br />Niveau de difficulté 100 = 145 AR
-    </ul>
+    </p>
     </p>
     <h2>CM (Challenge Mode) :</h2>
     <p>

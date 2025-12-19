@@ -34,6 +34,11 @@ const links = [
         title: 'API',
         children: [],
       },
+            {
+        to: 'Classes',
+        title: 'Classes',
+        children: [],
+      },
     ],
   },
   {
