@@ -76,7 +76,7 @@
                 Soutien & Distance
               </h3>
               <ul class="space-y-2 text-white text-sm font-medium">
-                <li class="flex justify-between border-b border-white/5 pb-1"><span>Arc Long / Fusil / Lance</span> <span class="text-orange-400">2 Mains</span></li>
+                <li class="flex justify-between border-b border-white/5 pb-1"><span>Arc Long / Fusil / Lance / baton</span> <span class="text-orange-400">2 Mains</span></li>
                 <li class="flex justify-between border-b border-white/5 pb-1"><span>Bouclier / Cor de guerre / Torche / Pistolet</span> <span class="text-orange-400">Main Gauche</span></li>
               </ul>
             </div>
