@@ -8,13 +8,32 @@ const progress = ref(0);
 const userWorld = ref(null);
 
 const customWorldNames = {
-  2002: "Bouche d'Abaddon", 2206: "Pierre Arboréenne", 2205: "Clarté d'Aurore", 2003: "Marée Noire",
-  2201: "Désolation", 2102: "Lac Drakkar", 2207: "Lointaines Cimesfroides", 2203: "Fort Ranik",
-  2204: "Gandara", 2209: "Refuge de Gunnar", 2202: "Mer de Jade", 2101: "Kodash",
-  2208: "Son du Meunier", 2104: "Place de Piken", 2004: "Riveflot", 2011: "Anneau de Feu",
-  2012: "Ruines de Surmia", 2013: "Repos du Marin", 2103: "Outre-Monde", 2200: "Place de Vizunah",
-  2014: "Crête de Blancos", 2001: "Roc d Augure", 2006: "Baie de Baruch", 2105: "Dzagonur",
-  2106: "Retraite d Elona", 2010: "Faille du Destin",
+  2002: "Bouche d'Abaddon",
+  2206: 'Pierre Arboréenne',
+  2205: "Clarté d'Aurore",
+  2003: 'Marée Noire',
+  2201: 'Désolation',
+  2102: 'Lac Drakkar',
+  2207: 'Lointaines Cimesfroides',
+  2203: 'Fort Ranik',
+  2204: 'Gandara',
+  2209: 'Refuge de Gunnar',
+  2202: 'Mer de Jade',
+  2101: 'Kodash',
+  2208: 'Son du Meunier',
+  2104: 'Place de Piken',
+  2004: 'Riveflot',
+  2011: 'Anneau de Feu',
+  2012: 'Ruines de Surmia',
+  2013: 'Repos du Marin',
+  2103: 'Outre-Monde',
+  2200: 'Place de Vizunah',
+  2014: 'Crête de Blancos',
+  2001: 'Roc d Augure',
+  2006: 'Baie de Baruch',
+  2105: 'Dzagonur',
+  2106: 'Retraite d Elona',
+  2010: 'Faille du Destin',
 };
 
 const simulateProgress = () => {
@@ -119,8 +138,155 @@ fetchAccountWorld();
         </div>
       </div>
     </div>
-
     <div v-else class="error">Aucune donnée disponible</div>
+    <div class="fond-page">
+      <h2>Abréviation et mot clée en MCM</h2>
+      <h2>Lexique Général & Technique</h2>
+      <dl>
+        <dt>AoE (Area of Effect)</dt>
+        <dd>Zone d'effet d'un sort.</dd>
+
+        <dt>Bomb / Bombing</dt>
+        <dd>
+          Action de placer un maximum de compétences à effets de zone (AoE), généralement sur le tag
+          du lead, pour faire tomber les adversaires au sol. Souvent en référence à la 5ᵉ compétence
+          d’ombre du Fléau.
+        </dd>
+
+        <dt>Borderlands</dt>
+        <dd>Territoires frontaliers.</dd>
+
+        <dt>Bulle</dt>
+        <dd>
+          Compétence n°5 de la catapulte et/ou compétence n°3 du générateur de bouclier. Désigne
+          aussi les <strong>Vents de désenchantement</strong> (élite du Brisesort) qui bloque les
+          projectiles et supprime les avantages. Le joueur est alors appelé
+          <span class="highlight">"war bulle"</span>.
+        </dd>
+
+        <dt>Buff</dt>
+        <dd>Avantage temporaire conféré à un personnage.</dd>
+
+        <dt>Camp de Supply</dt>
+        <dd>Camp de ravitaillement.</dd>
+
+        <dt>CBE / EBG</dt>
+        <dd>Carte Champs de Bataille Éternels.</dd>
+
+        <dt>CC (Crowd Control)</dt>
+        <dd>
+          Sorts de contrôle (givre, boitement, etc.). Permet de faire tomber la barre de défiance
+          (barre bleue).
+        </dd>
+
+        <dt>CD (Cooldown)</dt>
+        <dd>Temps de recharge avant qu'un sort soit de nouveau disponible.</dd>
+
+        <dt>Dodge</dt>
+        <dd>Esquive.</dd>
+
+        <dt>Down</dt>
+        <dd>Adversaire au sol. On dit "achever", "valider" ou "faire les achevs".</dd>
+
+        <dt>Escarmouche</dt>
+        <dd>Période de deux heures au sein d’un match-up.</dd>
+
+        <dt>Home Map</dt>
+        <dd>Territoire frontalier appartenant à votre propre serveur.</dd>
+
+        <dt>KT (Karma Train)</dt>
+        <dd>
+          Action de tourner sur une carte pour capturer et réinitialiser les structures adverses en
+          boucle.
+        </dd>
+
+        <dt>Lead / Commandant</dt>
+        <dd>
+          Joueur avec un tag (flèche bleue) qui dirige le groupe. On parle de
+          <span class="highlight">Lead PU</span> pour celui qui regroupe les joueurs sans guilde.
+        </dd>
+
+        <dt>Multi Map</dt>
+        <dd>Se dit d'un bus qui change de carte selon les besoins spécifiques de chacune.</dd>
+
+        <dt>Match-up (MU)</dt>
+        <dd>Période de référence du McM d'une durée d'une semaine.</dd>
+
+        <dt>P1 / Out</dt>
+        <dd>Première muraille d'une structure.</dd>
+
+        <dt>P2 / Inner</dt>
+        <dd>Deuxième muraille d'une structure.</dd>
+
+        <dt>PPK / PPT</dt>
+        <dd>
+          <strong>PPK :</strong> Points par Kill. <strong>PPT :</strong> Points par Tick (score
+          généré toutes les 5 min par les structures tenues).
+        </dd>
+
+        <dt>PU (Pick Up)</dt>
+        <dd>Joueur n'appartenant à aucune structure ou guilde organisée présente.</dd>
+
+        <dt>Refresh</dt>
+        <dd>Action d'utiliser une arme de siège pour remettre son compteur d'expiration à zéro.</dd>
+
+        <dt>TDS</dt>
+        <dd>Tour du Spawn (la première tour en sortant du point de départ).</dd>
+
+        <dt>Tier (T0 à T3)</dt>
+        <dd>Niveau de développement d'une structure (T0: neutre, T3: fortifiée).</dd>
+
+        <dt>WP (Waypoint)</dt>
+        <dd>Point de passage / téléportation.</dd>
+      </dl>
+
+      <h2>Ordres et Expressions en Combat</h2>
+      <dl>
+        <dt>"Back !"</dt>
+        <dd>Faire demi-tour immédiatement.</dd>
+
+        <dt>"Buff / Explo"</dt>
+        <dd>
+          Demande de poser des zones (Feu pour la puissance, Air pour la rapidité) et d'y utiliser
+          des coups de grâce explosifs.
+        </dd>
+
+        <dt>"Clean TS/Discord"</dt>
+        <dd>Demande de silence radio pour écouter les instructions du lead.</dd>
+
+        <dt>"Double Esquive !"</dt>
+        <dd>Réaliser deux esquives consécutives pour traverser une zone dangereuse.</dd>
+
+        <dt>"Empo"</dt>
+        <dd>Compétence 4 du bâton du Gardien (Empower) pour monter le pouvoir du groupe.</dd>
+
+        <dt>"Fufu"</dt>
+        <dd>Furtivité collective (souvent via une zone de fumée combinée à une explosion).</dd>
+
+        <dt>"INC" (Incoming)</dt>
+        <dd>Un groupe ennemi arrive sur votre position.</dd>
+
+        <dt>"Pas de Tag / Croix"</dt>
+        <dd>
+          Ne pas attaquer pour ne pas faire apparaître les épées oranges sur la carte et rester
+          discret.
+        </dd>
+
+        <dt>"Repack !"</dt>
+        <dd>Se regrouper serré sur le tag du commandant.</dd>
+
+        <dt>"Tagger / Contest"</dt>
+        <dd>Attaquer une structure pour empêcher l'utilisation du WP adverse.</dd>
+
+        <dt>"Tortue / Turtle"</dt>
+        <dd>Se regrouper en boule pour partager les dégâts et les soins.</dd>
+
+        <dt>"TP Mesmer / Voile"</dt>
+        <dd>
+          Utilisation des portails ou de l'invisibilité de l'Envoûteur pour surprendre l'ennemi.
+        </dd>
+      </dl>
+    </div>
   </div>
 </template>
 
@@ -188,7 +354,6 @@ fetchAccountWorld();
 }
 
 h2 {
-  color: #ffd700;
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -206,5 +371,32 @@ h2 {
   height: 100%;
   width: 0;
   border-radius: 3px;
+}
+dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 20px;
+}
+dt {
+  font-weight: bold;
+  color: #000dfb;
+  white-space: nowrap;
+}
+dd {
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f9f9f9;
+}
+.highlight {
+  color: #2980b9;
+}
+.fond-page {
+  background-color: #f4f4f493;
+  color: #000000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 </style>
