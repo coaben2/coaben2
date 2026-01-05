@@ -5,7 +5,7 @@ const formulas = ref([
   {
     id: 'strike',
     title: 'Dégâts Directs (Frappe)',
-    equation: "Dégâts = (Dégâts de l'arme) × Puissance × Coefficient ÷ Armure de la cible",
+    equation: "Dégâts = (Dégâts de l'arme) * Puissance * Coefficient ÷ Armure de la cible",
     variables: [
       { name: 'Dégâts de l\'arme', desc: 'Moyenne des dégâts de l\'arme (ex: 1000 pour une épée exotique 80)' },
       { name: 'Puissance', desc: 'Statistique principale de dégâts directs (Base 1000 au niveau 80)' },
@@ -20,7 +20,7 @@ const formulas = ref([
   {
     id: 'condi',
     title: 'Dégâts par Altération (DoT)',
-    equation: 'Dégâts par tick = (Valeur de Base) + (Coefficient × Dégâts par altération)',
+    equation: 'Dégâts par tick = (Valeur de Base) + (Coefficient * Dégâts par altération)',
     variables: [
       { name: 'Base', desc: 'Dégâts fixes liés au niveau (augmente peu entre le niv 1 et 80)' },
       { name: 'Dégâts par altération', desc: 'Statistique augmentant la force de chaque tick' },
@@ -34,7 +34,7 @@ const formulas = ref([
   {
     id: 'heal',
     title: 'Soins Sortants',
-    equation: 'Soin total = Base de soin + (Pouvoir de guérison × Coefficient de soin)',
+    equation: 'Soin total = Base de soin + (Pouvoir de guérison * Coefficient de soin)',
     variables: [
       { name: 'Base de soin', desc: 'Valeur de soin fixe de la compétence utilisée' },
       { name: 'Pouvoir de guérison', desc: 'Statistique de soin (Base 0)' },
