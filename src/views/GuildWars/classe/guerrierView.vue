@@ -76,7 +76,7 @@
                 Soutien & Distance
               </h3>
               <ul class="space-y-2 text-white text-sm font-medium">
-                <li class="flex justify-between border-b border-white/5 pb-1"><span>Arc Long / Fusil / Lance / baton</span> <span class="text-orange-400">2 Mains</span></li>
+                <li class="flex justify-between border-b border-white/5 pb-1"><span>Arc Long / Fusil / Lance / Bâton</span> <span class="text-orange-400">2 Mains</span></li>
                 <li class="flex justify-between border-b border-white/5 pb-1"><span>Bouclier / Cor de guerre / Torche / Pistolet</span> <span class="text-orange-400">Main Gauche</span></li>
               </ul>
             </div>
@@ -95,6 +95,8 @@
             </div>
           </div>
         </section>
+
+
       </div>
 
       <aside class="lg:col-span-4 space-y-8">
@@ -126,10 +128,16 @@
         </div>
       </aside>
     </div>
+    <BuildDrawer :builds="builds" profession="Guerrier" />
   </div>
 </template>
 
 <script setup>
+import gw2Builds from '@/data/gw2Builds.json';
+import BuildDrawer from './BuildDrawer.vue';
+
+const builds = gw2Builds.guerrier;
+
 const skillTypes = [
   { title: 'Bannières', desc: 'Placez des étendards pour octroyer des avantages puissants aux alliés dans une large zone.' },
   { title: 'Cris', desc: 'Ordres vocaux qui soignent les alliés ou infligent des altérations de contrôle aux ennemis.' },

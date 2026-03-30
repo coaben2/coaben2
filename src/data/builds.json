@@ -1,0 +1,291 @@
+{
+  "sources": {
+    "Snowcrows": "https://snowcrows.com",
+    "GW2Mists": "https://gw2mists.com",
+    "GuildJen": "https://guildjen.com",
+    "Discretize": "https://discretize.eu",
+    "Metabattle": "https://metabattle.com"
+  },
+  "guerrier": [
+    {
+      "id": "WVW-power-Berserker",
+      "name": "Power Berserker",
+      "specialization": "Berserker",
+      "mode": "WVW",
+      "source": "Snowcrows",
+      "chatCode": "[&DQIkKjM6EhXyEgAAsgAAAK8AAACpAAAA7gAAAAAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Arc long + Espadon",
+        "stats": "11 Berserker + 3 Assassin",
+        "runes": "Scholar",
+        "sigils": "Force, Air, Impact, Célérité"
+      }
+    },
+    {
+      "id": "WVW-power-Warrior",
+      "name": "Power Warrior",
+      "specialization": "guerrier",
+      "mode": "WVW",
+      "source": "Snowcrows",
+      "chatCode": "[&DQIEHyQaMzpwAAAAswAAAK8AAACpAAAA7gAAAAAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "épée / hache + lance",
+        "stats": "6 Dragon + 9 Berserker",
+        "runes": "Scholar",
+        "sigils": "soif_de_sang, Hydromancie, force, feu"
+      }
+    },
+    {
+      "id": "war-condi-berserker-raid",
+      "name": "Condition Berserker",
+      "specialization": "Berserker",
+      "mode": "PvE Raid / Strike",
+      "source": "Snowcrows",
+      "chatCode": "[&DQIkJQQfEibyEgAA3BIAAKESrQDXEqgAwhKcAAAAAAAAAAAAAAAAAAAAAAABWgAA]",
+      "details": {
+        "weapons": "Arc long + Épée / Torche",
+        "stats": "15 Vipérin",
+        "runes": "Rune du trappeur supérieure",
+        "sigils": "Malice, Géomancie, Terre, Éclatement"
+      }
+    },
+    {
+      "id": "war-spellbreaker-wvw-zerg",
+      "name": "Support Spellbreaker",
+      "specialization": "Brise-sort",
+      "mode": "WVW",
+      "source": "GW2Mists",
+      "chatCode": "[&DQIWKQsaPSopDwAAEBcAAG4AAACyAAAAfAEAAAAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "épée / Bouclier + Bâton",
+        "stats": "13 Voyageur",
+        "runes": "Cavalier",
+        "sigils": "Cachet d'hydromancie supérieur,Cachet de purification supérieur,Cachet de drain supérieur,Cachet d'énergie supérieur"
+      }
+    }
+  ],
+  "gardien": [
+    {
+      "id": "guard-support-firebrand-wvw",
+      "name": "Support Firebrand",
+      "specialization": "Incendiaire",
+      "mode": "WVW",
+      "source": "GuildJen",
+      "chatCode": "[&DQENHhA7Pj9LF0sXNgGKAFMXUxctATUBNwE3AQAAAAAAAAAAAAAAAAAAAAAEWgBmAAUAVwAA]",
+      "details": {
+        "weapons": "Masse / Bouclier + Bâton",
+        "stats": "15 Ménestrel",
+        "runes": "Flock",
+        "sigils": "Énergie, Transfert, Eau, Renouvellement"
+      }
+    },
+    {
+      "id": "Power Core Guardian Roaming",
+      "name": "Core Guardian Roaming",
+      "specialization": "gardien",
+      "mode": "WVW",
+      "source": "GuildJen",
+      "chatCode": "[&DQEqOhA2DSomDwMBeAEAAAQBAABHAQAANwEAAAAAAAAAAAAAAAAAAAAAAAADVgAxADIAAA==]",
+      "details": {
+        "weapons": "Espadon / sceptre + focus",
+        "stats": "14 Dragon + 1 Maraudeur",
+        "runes": "Scholar",
+        "sigils": "hydromancy,rage,cleansing,energy"
+      }
+    }
+  ],
+  "revenant": [
+    {
+      "id": "Celestial Ventari Conduit Havoc",
+      "name": "Celectial Vantari",
+      "specialization": "conduit",
+      "mode": "WVW",
+      "source": "GuildJen",
+      "chatCode": "[&DQkMKgMpTyvcEdwRBhIGEtQR1BErEisSyhHKEQYCAgMrEtQRBhIGEisS1BE=]",
+      "details": {
+        "weapons": "arc court / Bâton",
+        "stats": "14 Celestial",
+        "runes": "vitesse",
+        "sigils": "doom, stars, énergie, purification"
+      }
+    }
+  ],
+  "voleur": [],
+  "rodeur": [],
+  "ingenieur": [
+    {
+      "id": "eng-support-scrapper-wvw",
+      "name": "Support Scrapper",
+      "specialization": "Scrapper",
+      "mode": "WVW",
+      "source": "GuildJen",
+      "chatCode": "[&DQMvHh09KxvZEgAADhOKAZUBjQFhAQAAgxKJAQAAAAAAAAAAAAAAAAAAAAACawAJAQA=]",
+      "details": {
+        "weapons": "Arc court",
+        "stats": "13 Ménestrel",
+        "runes": "Eau",
+        "sigils": "Cachet de bonté supérieur,Cachet de purification supérieur"
+      }
+    },
+    {
+      "id": "Celestial Amalgam Roaming",
+      "name": "Celectial Amalgam",
+      "specialization": "Amalgam",
+      "mode": "WVW",
+      "source": "GuildJen",
+      "chatCode": "[&DQMmNhUmSx+AHRQBgh1eAVgdigGTAY0BmAGJAQAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Lance",
+        "stats": "13 Celectial",
+        "runes": "Trapper",
+        "sigils": "Cachet de purification supérieur,Cachet d'énergie supérieur"
+      }
+    }
+  ],
+  "necromant": [
+    {
+      "id": "Condition-harbinger-Quickness-DPS",
+      "name": "Condition Harbinger",
+      "specialization": "Harbinger",
+      "mode": "PvE Raid / Strike",
+      "source": "GuildJen",
+      "chatCode": "[&DQgnNjI1QCvnGqIAgAD6AHUB5ADsGr0B6BqSAAAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "pistolet / Dagger + screpter / Torch",
+        "stats": "16 Vipérin",
+        "runes": "Tourment",
+        "sigils": "Tourmente, Terre"
+      }
+    },
+    {
+      "id": "necro-heal-scourge-raid",
+      "name": "Heal Scourge",
+      "specialization": "Fléau",
+      "mode": "PvE Raid / Strike",
+      "source": "Snowcrows",
+      "chatCode": "[&DQgTPjIaPD0SAAAAbwEAAHgWAAByFgAAlQAAAAAAAAAAAAAAAAAAAAAAAAADWQAvAGcAAA==]",
+      "details": {
+        "weapons": "Bâton + dagger/cor-de-guerre",
+        "stats": "15 Célestial",
+        "runes": "Eau",
+        "sigils": "Eau, Concentration"
+      }
+    },
+    {
+      "id": "necro-power-reaper-fractal",
+      "name": "Power Reaper",
+      "specialization": "Faucheur",
+      "mode": "PvE Fractal",
+      "source": "GuildJen",
+      "chatCode": "[&DQgyJjUpIjabAKIAgQD6AHUB5ABAAb0BlQCSAAAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Espadon + Baton",
+        "stats": "13 Berserker + 1 Assassin",
+        "runes": "Scholar",
+        "sigils": "Force, exactitude , Force , exactitude"
+      }
+    },
+    {
+      "id": "Power-Ritualist-Wvw",
+      "name": "Power Ritualist",
+      "specialization": "Ritualist",
+      "mode": "WVW",
+      "source": "Snowcrows",
+      "chatCode": "[&DQg1PjInTD+bAAAAVR0AAHMBAACBAAAAfR0AAAAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "hache/focus + espadon",
+        "stats": "15 Marauder",
+        "runes": "Scholar",
+        "sigils": "force,feu,force,soif-de-sang"
+      }
+    }
+  ],
+  "envouteur": [
+    {
+      "id": "Support Troubadour",
+      "name": "Support Troubadour",
+      "specialization": "Troubadour",
+      "mode": "WVW",
+      "source": "Snowcrows",
+      "chatCode": "[&DQctOhcaSTqJHQAAhQEAAIQBAACEHQAAbR0AAAAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Pistolet + épée/bouclier",
+        "stats": "15 Ménestrel",
+        "runes": "eau",
+        "sigils": "Cachet de vie supérieur,Cachet de transfert supérieur,Cachet d'énergie supérieur,Cachet de transfert supérieur"
+      }
+    },
+    {
+      "id": "mes-condi-virtuoso-raid",
+      "name": "Condition Virtuoso",
+      "specialization": "Virtuose",
+      "mode": "PvE Raid / Strike",
+      "source": "Snowcrows",
+      "chatCode": "[&DQcBHRgdQjsjDwAAgwEAAIIBAACBAQAA5RoAAAAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Dague / Épée +  Focus",
+        "stats": "12 Vipérin + 4 Carnage",
+        "runes": "Krait",
+        "sigils": "Agonie,terre,terre"
+      }
+    }
+  ],
+  "elementaliste": [
+    {
+      "id": "ele-power-Tempest-raid",
+      "name": "Power Tempest",
+      "specialization": "Tempest",
+      "mode": "WVW",
+      "source": "Snowcrows",
+      "chatCode": "[&DQYfHikrMBcnDwAAQgEAAAUBAADLAAAAlwAAAAAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Bâton / Bâton",
+        "stats": "14 Marauder",
+        "runes": "Scholar",
+        "sigils": "Force, Impact, Force,soif-de-sang"
+      }
+    },
+    {
+      "id": "ele-condi-tempest-raid",
+      "name": "Condition Alacrity Tempest",
+      "specialization": "Tempest",
+      "mode": "PvE Raid / Strike",
+      "source": "Snowcrows",
+      "chatCode": "[&DQYfFRomMCfHEgAAcwAAAJEAAADLAAAAJgAAAAAAAAAAAAAAAAAAAAAAAAADVgBnAC8AAA==]",
+      "details": {
+        "weapons": "Sceptre / Cor de guerre",
+        "stats": "6 Vipérin + 2 Pionnier + 4 Ritualist",
+        "runes": "Rune du trappeur supérieure",
+        "sigils": "malice, Terre"
+      }
+    },
+    {
+      "id": "ele-heal-tempest-fractal",
+      "name": "Heal Alacrity Tempest",
+      "specialization": "Tempest",
+      "mode": "PvE Fractal",
+      "source": "Snowcrows",
+      "chatCode": "[&DQYfFREuMD7HEgAAwxIAAHIAAADLAAAAJgAAAAAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Sceptre / Cor de guerre",
+        "stats": "14 Celestial",
+        "runes": "divinité",
+        "sigils": "consumation, tourment"
+      }
+    },
+    {
+      "id": "ele-support-tempest-wvw",
+      "name": "Support Tempest",
+      "specialization": "Tempest",
+      "mode": "McM Zerg",
+      "source": "GW2Mists",
+      "chatCode": "[&DQYfKxEpMD/HEgAAdhIAAHQSAAAdAQAAmRIAAAAAAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Bâton + Dagger/Dagger",
+        "stats": "14 Ménestrel",
+        "runes": "Moine",
+        "sigils": "Transfert, Renouvellement"
+      }
+    }
+  ]
+}

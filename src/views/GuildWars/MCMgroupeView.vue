@@ -1,24 +1,15 @@
 <template>
   <h1>GW2 - Groupes dynamiques</h1>
-  
+
   <!-- Sélecteur de mode -->
   <div class="mode-selector">
-    <button 
-      :class="{ active: currentMode === 'mcm' }" 
-      @click="switchMode('mcm')"
-    >
+    <button :class="{ active: currentMode === 'mcm' }" @click="switchMode('mcm')">
       MCM (10 groupes de 5)
     </button>
-    <button 
-      :class="{ active: currentMode === 'pve' }" 
-      @click="switchMode('pve')"
-    >
+    <button :class="{ active: currentMode === 'pve' }" @click="switchMode('pve')">
       PVE (2 groupes de 5)
     </button>
-        <button 
-      :class="{ active: currentMode === 'fractal' }" 
-      @click="switchMode('fractal')"
-    >
+    <button :class="{ active: currentMode === 'fractal' }" @click="switchMode('fractal')">
       Fractal (1 groupe de 5)
     </button>
   </div>
@@ -26,33 +17,33 @@
   <div id="groups">
     <div v-for="(group, groupIndex) in groups" :key="groupIndex" class="group">
       <div class="buff-column">
-        <div 
-          v-for="buff in currentRequiredBuffs" 
-          :key="buff" 
+        <div
+          v-for="buff in currentRequiredBuffs"
+          :key="buff"
           class="buff"
-          :data-count="getBuffCount(group, buff)"
+          :class="`buff-count-${getBuffCount(group, buff)}`"
         >
           {{ getBuffDisplay(group, buff) }}
         </div>
       </div>
-      
+
       <div class="members-column">
         <div v-for="(member, memberIndex) in group" :key="memberIndex" class="member">
-          <img 
-            v-if="member && specializations[member]" 
-            :src="specializations[member].icon" 
+          <img
+            v-if="member && specializations[member]"
+            :src="specializations[member].icon"
             :alt="member"
           />
           <div v-else class="placeholder"></div>
-          
-          <select 
-            :value="member || ''" 
+
+          <select
+            :value="member || ''"
             @change="updateMember(groupIndex, memberIndex, $event.target.value)"
           >
             <option value="">-- Choisir --</option>
-            <option 
-              v-for="specName in Object.keys(specializations)" 
-              :key="specName" 
+            <option
+              v-for="specName in Object.keys(specializations).sort()"
+              :key="specName"
               :value="specName"
             >
               {{ specName }}
@@ -65,9 +56,9 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue';
 
-const API_URL = 'https://api.guildwars2.com/v2/specializations?lang=fr'
+const API_URL = 'https://api.guildwars2.com/v2/specializations?lang=fr';
 
 // Buffs MCM
 const requiredBuffsMCM = [
@@ -81,7 +72,7 @@ const requiredBuffsMCM = [
   'Soin',
   'Fureur',
   'Protection',
-]
+];
 
 // Buffs PVE
 const requiredBuffsPVE = [
@@ -93,139 +84,139 @@ const requiredBuffsPVE = [
   'Soin',
   'Stabilité',
   'Résistance',
-]
+];
 
-const currentMode = ref('mcm')
-const specializations = reactive({})
-const groups = ref([])
+const currentMode = ref('mcm');
+const specializations = reactive({});
+const groups = ref([]);
 
 // Configuration des groupes selon le mode
 const groupConfig = {
   mcm: { count: 10, size: 5 },
   pve: { count: 2, size: 5 },
-  fractal: { count: 1, size: 5 }
-}
+  fractal: { count: 1, size: 5 },
+};
 
 // Buffs requis selon le mode actuel
 const currentRequiredBuffs = computed(() => {
-  return currentMode.value === 'mcm' ? requiredBuffsMCM : requiredBuffsPVE
-})
+  return currentMode.value === 'mcm' ? requiredBuffsMCM : requiredBuffsPVE;
+});
 
 // Données des buffs MCM
 const buffsDataMCM = {
-  Tempest: ['Soin', 'Pouvoir', 'Stabilité', 'Régénération'],
-  TisseSort: ['Pouvoir', 'Fureur', 'Super vitesse'],
-  Catalyseur: ['Pouvoir', 'Fureur', 'Stabilité', 'Protection'],
-  Chronomancien: ['Alacrité', 'Stabilité', 'Fureur', 'Célérité'],
-  Mirage: ['Pouvoir'],
-  Virtuose: ['Pouvoir', 'Fureur'],
-  Incendiaire: ['Pouvoir', 'Résistance', 'Fureur', 'Stabilité'],
-  Brisesort: ['Pouvoir', 'Stabilité', 'Protection'],
-  Vertu: ['Pouvoir', 'Protection', 'Fureur'],
-  Holographiste: ['Pouvoir', 'Super vitesse'],
-  Mécatronicien: ['Pouvoir', 'Protection'],
-  Faucheur: ['Pouvoir', 'Résistance', 'Vulnérabilité'],
-  Fléau: ['Barrière', 'Résistance'],
-  Augure: ['Pouvoir', 'Fureur'],
   Druide: ['Soin', 'Régénération', 'Protection'],
-  Indomptable: ['Fureur', 'Pouvoir'],
-  Animorph: ['Célérité', 'Fureur'],
-  Héraut: ['Pouvoir', 'Fureur', 'Protection'],
-  Renégat: ['Pouvoir', 'Alacrité', 'Fureur'],
-  Vindicteur: ['Pouvoir', 'Protection', 'Résistance'],
+  Fracasdeur: ['Pouvoir'],
   Berserker: ['Pouvoir', 'Fureur'],
-  Marteleur: ['Pouvoir', 'Protection', 'Stabilité'],
-  Anéantisseur: ['Pouvoir', 'Stabilité'],
-  Fractureur: ['Pouvoir'],
-  Deadeye: ['Pouvoir', 'Fureur'],
-  Spectre: ['Soin', 'Fureur', 'Barrière'],
-  Daredevil: ['Pouvoir'],
+  draconier: [],
+  Faucheur: ['Pouvoir', 'Résistance', 'Vulnérabilité'],
+  Chronomancien: ['Alacrité', 'Stabilité', 'Fureur', 'Célérité'],
+  Mécatronicien: ['Pouvoir', 'Protection'],
+  cataclyste: [],
+  Héraut: ['Pouvoir', 'Fureur', 'Protection'],
+  Animorph: ['Célérité', 'Fureur'],
+  TisseSort: ['Pouvoir', 'Fureur', 'Super vitesse'],
+  Holographiste: ['Pouvoir', 'Super vitesse'],
   sniper: ['Pouvoir', 'Fureur'],
-  Troubadour: ['Pouvoir', 'Fureur', 'Célérité', 'Alacrité'],
-  Luminary: ['Pouvoir', 'Protection', 'Stabilité', 'Régénération'],
-  Galeshot: ['Fureur', 'Super vitesse'],
+  Mirage: ['Pouvoir'],
+  Fléau: ['Barrière', 'Résistance'],
+  Brisesort: ['Pouvoir', 'Stabilité', 'Protection'],
+  Incendiaire: ['Pouvoir', 'Résistance', 'Fureur', 'Stabilité'],
+  Renégat: ['Pouvoir', 'Alacrité', 'Fureur'],
+  Augure: ['Pouvoir', 'Fureur'],
+  subjugeur: [],
+  Virtuose: ['Pouvoir', 'Fureur'],
+  Catalyseur: ['Pouvoir', 'Fureur', 'Stabilité', 'Protection'],
+  jurelame: [],
+  justicier: [],
+  Méchamancien: ['Pouvoir', 'Protection', 'Stabilité'],
+  Spectre: ['Soin', 'Fureur', 'Barrière'],
+  Indomptable: ['Fureur', 'Pouvoir'],
+  Troubadour: ['Stabilité', 'Pouvoir', 'Fureur', 'Célérité', 'Alacrité'],
+  Parangon: ['Pouvoir', 'Stabilité', 'Fureur'],
+  Amalgame: [],
   Ritualist: ['Barrière', 'Régénération', 'Protection'],
   Antiquary: ['Fureur', 'Vulnérabilité'],
-  Paragon: ['Pouvoir', 'Stabilité', 'Fureur'],
+  Ventireur: ['Fureur', 'Super vitesse'],
   Conduit: ['Alacrité', 'Protection', 'Résistance'],
-  Evoker: ['Pouvoir', 'Fureur', 'Régénération'],
-}
+  Évocateur: ['Pouvoir', 'Fureur', 'Régénération'],
+  Luminescence: ['Pouvoir', 'Protection', 'Stabilité', 'Régénération'],
+};
 
 // Données des buffs PVE
 const buffsDataPVE = {
-  Tempest: ['Soin', 'Pouvoir', 'Régénération'],
-  TisseSort: ['Pouvoir', 'Fureur'],
-  Catalyseur: ['Pouvoir', 'Fureur', 'Protection'],
-  Chronomancien: ['Alacrité', 'Fureur'],
-  Mirage: ['Pouvoir'],
-  Virtuose: ['Pouvoir', 'Fureur'],
-  Incendiaire: ['Pouvoir', 'Fureur'],
-  Brisesort: ['Pouvoir', 'Protection'],
-  Vertu: ['Pouvoir', 'Protection', 'Fureur'],
-  Holographiste: ['Pouvoir'],
-  Mécatronicien: ['Pouvoir', 'Protection'],
-  Faucheur: ['Pouvoir'],
-  Fléau: ['Résistance'],
-  Augure: ['Pouvoir', 'Fureur'],
   Druide: ['Soin', 'Régénération', 'Protection'],
-  Indomptable: ['Fureur', 'Pouvoir'],
-  Animorph: ['Fureur'],
-  Héraut: ['Pouvoir', 'Fureur', 'Protection'],
-  Renégat: ['Pouvoir', 'Alacrité', 'Fureur'],
-  Vindicteur: ['Pouvoir', 'Protection'],
+  Fracasdeur: ['Pouvoir'],
   Berserker: ['Pouvoir', 'Fureur'],
-  Marteleur: ['Pouvoir', 'Protection'],
-  Anéantisseur: ['Pouvoir'],
-  Fractureur: ['Pouvoir'],
-  Deadeye: ['Pouvoir', 'Fureur'],
-  Spectre: ['Soin', 'Fureur'],
-  Daredevil: ['Pouvoir'],
+  draconier: [],
+  Faucheur: ['Pouvoir', 'Résistance'],
+  Chronomancien: ['Alacrité', 'Fureur'],
+  Mécatronicien: ['Pouvoir', 'Protection'],
+  cataclyste: ['Soin', 'Pouvoir', 'Régénération'],
+  Héraut: ['Pouvoir', 'Fureur', 'Protection'],
+  Animorph: ['Fureur'],
+  TisseSort: ['Pouvoir', 'Fureur'],
+  Holographiste: ['Pouvoir'],
   sniper: ['Pouvoir', 'Fureur'],
+  Mirage: ['Pouvoir'],
+  Fléau: ['Résistance'],
+  Brisesort: ['Pouvoir', 'Protection'],
+  Incendiaire: ['Pouvoir', 'Fureur'],
+  Renégat: ['Pouvoir', 'Alacrité', 'Fureur'],
+  Augure: ['Pouvoir', 'Fureur'],
+  subjugeur: [],
+  Virtuose: ['Pouvoir', 'Fureur'],
+  Catalyseur: ['Pouvoir', 'Fureur', 'Protection'],
+  jurelame: [],
+  justicier: ['Pouvoir', 'Protection'],
+  Méchamancien: ['Pouvoir', 'Protection'],
+  Spectre: ['Soin', 'Fureur'],
+  Indomptable: ['Fureur', 'Pouvoir'],
   Troubadour: ['Pouvoir', 'Fureur', 'Alacrité'],
-  Luminary: ['Pouvoir', 'Protection', 'Régénération'],
-  Galeshot: ['Fureur', 'Super vitesse'],
+  Parangon: ['Pouvoir', 'Fureur'],
+  Amalgame: [],
   Ritualist: ['Barrière', 'Régénération', 'Protection'],
   Antiquary: ['Fureur', 'Vulnérabilité'],
-  Paragon: ['Pouvoir', 'Fureur'],
+  Ventireur: ['Fureur'],
   Conduit: ['Alacrité', 'Protection'],
-  Evoker: ['Pouvoir', 'Fureur', 'Régénération'],
-}
+  Évocateur: ['Pouvoir', 'Fureur', 'Régénération'],
+  Luminescence: ['Pouvoir', 'Protection', 'Régénération'],
+};
 
 function getBuffCount(group, buff) {
-  let count = 0
+  let count = 0;
   group.forEach((member) => {
     if (member && specializations[member]) {
-      const buffsData = currentMode.value === 'mcm' ? buffsDataMCM : buffsDataPVE
-      const memberBuffs = buffsData[member] || []
+      const buffsData = currentMode.value === 'mcm' ? buffsDataMCM : buffsDataPVE;
+      const memberBuffs = buffsData[member] || [];
       memberBuffs.forEach((b) => {
-        if (b === buff) count++
-      })
+        if (b === buff) count++;
+      });
     }
-  })
-  return count
+  });
+  return count;
 }
 
 function getBuffDisplay(group, buff) {
-  const count = getBuffCount(group, buff)
-  if (count === 0) return `❌ ${buff}`
-  if (count === 1) return `✅ ${buff}`
-  return `${count}× ${buff}`
+  const count = getBuffCount(group, buff);
+  if (count === 0) return `❌ ${buff}`;
+  if (count === 1) return `✅ ${buff}`;
+  return `${count}× ${buff}`;
 }
 
 function updateMember(groupIndex, memberIndex, value) {
-  groups.value[groupIndex][memberIndex] = value || null
+  groups.value[groupIndex][memberIndex] = value || null;
 }
 
 function switchMode(mode) {
-  currentMode.value = mode
-  const config = groupConfig[mode]
-  groups.value = Array.from({ length: config.count }, () => Array(config.size).fill(null))
+  currentMode.value = mode;
+  const config = groupConfig[mode];
+  groups.value = Array.from({ length: config.count }, () => Array(config.size).fill(null));
 }
 
 onMounted(() => {
   // Initialiser avec le mode MCM par défaut
-  switchMode('mcm')
-  
+  switchMode('mcm');
+
   fetch(API_URL)
     .then((r) => r.json())
     .then((ids) =>
@@ -239,12 +230,12 @@ onMounted(() => {
             id: spec.id,
             icon: spec.icon,
             buffs: [],
-          }
+          };
         }
-      })
+      });
     })
-    .catch((e) => console.error('Erreur API GW2:', e))
-})
+    .catch((e) => console.error('Erreur API GW2:', e));
+});
 </script>
 
 <style scoped>

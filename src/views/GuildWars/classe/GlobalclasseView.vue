@@ -62,7 +62,7 @@ const professions = ref([
     name: 'Guerrier',
     focus: 'Puissance et Férocité',
     color: '#FFD100',
-    playstyle: 'DPS Physique de mêlée avec forte survie',
+    playstyle: 'DPS Physique de mêlée with forte survie',
     mechanics: [
       '<strong>Adrénaline (F1) :</strong> Générée en combat, permet de lancer des "Déchaînements" dévastateurs.',
       '<strong>Berserker :</strong> Entre en mode Rage pour augmenter la vitesse d\'attaque et les dégâts.',
@@ -74,7 +74,7 @@ const professions = ref([
     name: 'Gardien',
     focus: 'Support et Brûlure',
     color: '#72C1D9',
-    playstyle: 'Support / DPS hybride avec protections permanentes',
+    playstyle: 'Support / DPS hybride with protections permanentes',
     mechanics: [
       '<strong>Vertus (F1-F3) :</strong> Passifs de soin et de dégâts qui peuvent être activés pour le groupe.',
       '<strong>Firebrand :</strong> Utilise des Tomes au lieu des vertus. Reine de la Brûlure et du Support.',
@@ -86,7 +86,7 @@ const professions = ref([
     name: 'Revenant',
     focus: 'Énergie et Invocations',
     color: '#D12727',
-    playstyle: 'Gestion d\'énergie avec switch de légendes',
+    playstyle: 'Gestion d\'énergie with switch de légendes',
     mechanics: [
       '<strong>Énergie :</strong> Toutes les compétences coûtent de l\'énergie au lieu de cooldowns classiques.',
       '<strong>Légendes :</strong> Switcher entre deux héros du passé pour changer tout votre kit utilitaire.',
@@ -98,11 +98,11 @@ const professions = ref([
     name: 'Rôdeur',
     focus: 'Précision et Guérison',
     color: '#8DD448',
-    playstyle: 'Combat avec familier et polyvalence nature',
+    playstyle: 'Combat with familier et polyvalence nature',
     mechanics: [
-      '<strong>Familiers :</strong> Gère un compagnon animal avec ses propres stats et compétences.',
+      '<strong>Familiers :</strong> Gère un compagnon animal with ses propres stats et compétences.',
       '<strong>Druide :</strong> Spécialisation de soin pur utilisant la Forme Céleste.',
-      '<strong>Soulbeast :</strong> Permet de fusionner avec son familier pour gagner des stats massives.',
+      '<strong>Soulbeast :</strong> Permet de fusionner with son familier pour gagner des stats massives.',
     ],
     tips: 'En Soulbeast, fusionnez avant le combat pour bénéficier des bonus de statistiques permanents.',
   },
@@ -112,11 +112,11 @@ const professions = ref([
     color: '#C08F95',
     playstyle: 'Burst DPS extrême et mobilité',
     mechanics: [
-      '<strong>Initiative :</strong> Pas de cooldowns sur les armes, mais une réserve d\'énergie consommable.',
+      '<strong>Initiative :</strong> Pas de cooldowns on les armes, mais une réserve d\'énergie consommable.',
       '<strong>Larcin :</strong> Permet de voler une compétence unique à l\'adversaire.',
       '<strong>Deadeye :</strong> Utilise des marques pour infliger des dégâts massifs à une cible unique.',
     ],
-    tips: 'L\'initiative se recharge avec le temps. Évitez de la vider d\'un coup sans garantie de kill.',
+    tips: 'L\'initiative se recharge with le temps. Évitez de la vider d\'un coup sans garantie de kill.',
   },
   {
     name: 'Ingénieur',
@@ -128,13 +128,13 @@ const professions = ref([
       '<strong>Holosmith :</strong> Forge photonique augmentant les dégâts au prix d\'une jauge de chaleur.',
       '<strong>Mechanist :</strong> Invoque un Jade Mech surpuissant qui combat en autonomie.',
     ],
-    tips: 'C\'est la classe avec le plus grand nombre de compétences actives. La mémoire musculaire est clé.',
+    tips: 'C\'est la classe with le plus grand nombre de compétences actives. La mémoire musculaire est clé.',
   },
   {
     name: 'Élémentaliste',
     focus: 'Puissance et Éléments',
     color: '#F68A87',
-    playstyle: 'Mage fragile avec des dégâts de zone massifs',
+    playstyle: 'Mage fragile with des dégâts de zone massifs',
     mechanics: [
       '<strong>Affinités (F1-F4) :</strong> Switch entre Feu, Eau, Air et Terre pour changer de rôle instantanément.',
       '<strong>Weaver :</strong> Permet de mélanger deux éléments simultanément pour des attaques hybrides.',
@@ -180,7 +180,7 @@ const roles = ref([
     name: 'DPS Altération (Condition)',
     stats: 'Dégâts par altération, Expertise, Puissance',
     gear: 'Vipère / Sinistre',
-    impact: 'Dégâts sur la durée (DoT). Très efficace sur les boss avec beaucoup de points de vie.',
+    impact: 'Dégâts sur la durée (DoT). Très efficace sur les boss with beaucoup de points de vie.',
     classes: 'Nécromant, Ingénieur, Envoûteur, Rôdeur',
   },
   {
@@ -205,6 +205,7 @@ const roles = ref([
     classes: 'Chronomancien, Incendiaire, Fracasseur',
   },
 ]);
+
 </script>
 
 <template>
@@ -302,6 +303,8 @@ const roles = ref([
           </table>
         </div>
       </section>
+
+      <hr class="section-divider" />
     </div>
   </div>
 </template>
@@ -403,6 +406,7 @@ h1 { color: #f39c12; font-size: 2.5em; margin-bottom: 10px; }
 .stats-table { width: 100%; border-collapse: collapse; background: #111; }
 .stats-table th { background: #34495e; color: #f39c12; padding: 15px; text-align: left; }
 .stats-table td { padding: 15px; border-bottom: 1px solid #333; }
+.role-name { color: #fff; }
 .gear-cell { color: #2ecc71; font-family: monospace; }
 .section-divider { border: 0; border-top: 1px solid #444; margin: 40px 0; }
 

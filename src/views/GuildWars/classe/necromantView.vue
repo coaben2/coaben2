@@ -59,8 +59,8 @@
             <div class="bg-black/60 p-6 rounded-2xl border border-slate-800">
               <h3 class="text-emerald-600 font-bold mb-4 uppercase text-xs">Main Droite / Gauche</h3>
               <ul class="space-y-2 text-sm text-slate-300">
-                <li class="flex justify-between border-b border-white/5 pb-1"><span>epée / Hache / Dague / Pistolet / Sceptre</span><span class="text-emerald-600">Main Droite</span></li>
-                <li class="flex justify-between border-b border-white/5 pb-1"><span>epée / Dague / Cor / Focus / Torche</span><span class="text-emerald-600">Main Gauche</span></li>
+                <li class="flex justify-between border-b border-white/5 pb-1"><span>Épée / Hache / Dague / Pistolet / Sceptre</span><span class="text-emerald-600">Main Droite</span></li>
+                <li class="flex justify-between border-b border-white/5 pb-1"><span>Épée / Dague / Cor / Focus / Torche</span><span class="text-emerald-600">Main Gauche</span></li>
               </ul>
             </div>
           </div>
@@ -78,6 +78,8 @@
             </div>
           </div>
         </section>
+
+
       </div>
 
       <aside class="lg:col-span-4 space-y-8">
@@ -100,10 +102,16 @@
         </div>
       </aside>
     </div>
+    <BuildDrawer :builds="builds" profession="Necromant" />
   </div>
 </template>
 
 <script setup>
+import gw2Builds from '@/data/gw2Builds.json';
+import BuildDrawer from './BuildDrawer.vue';
+
+const builds = gw2Builds.necromant;
+
 const necroStats = [
   { label: 'Transfert', desc: 'Déplace les maux vers l\'ennemi.' },
   { label: 'Vampire', desc: 'Se soigne en frappant.' },

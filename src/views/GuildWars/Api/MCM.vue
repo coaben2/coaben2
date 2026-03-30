@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useQuery } from '@tanstack/vue-query';
 import { useUserStore } from '@/stores/user';
 
@@ -81,6 +81,9 @@ const { isLoading, data: matches } = useQuery({
   refetchInterval: 60000,
 });
 
+const usMatches = computed(() => matches.value?.filter((m) => m.id.startsWith('1-')) ?? []);
+const euMatches = computed(() => matches.value?.filter((m) => m.id.startsWith('2-')) ?? []);
+
 const userStore = useUserStore();
 const apiKey = ref(userStore.apiKey);
 
@@ -117,30 +120,47 @@ fetchAccountWorld();
     <!--<h2 v-else-if="userWorld">
       Tu représentes le serveur McM {{ userWorld }}
     </h2>-->
-
-    <div v-if="matches && matches.length" class="matches-grid">
-      <div v-for="match in matches" :key="match.id" class="match-card">
-        <h3>Tier {{ match.tier }}</h3>
-
-        <div class="world-row red">
-          <!-- <span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span> -->
-          <span class="victory-points">PV: {{ match.victoryPoints.red }}</span>
-        </div>
-
-        <div class="world-row blue">
-          <!-- <span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span> -->
-          <span class="victory-points">PV: {{ match.victoryPoints.blue }}</span>
-        </div>
-
-        <div class="world-row green">
-          <!-- <span class="nom-serveur">Nom : {{ customWorldNames[match.id] }}</span> -->
-          <span class="victory-points">PV: {{ match.victoryPoints.green }}</span>
+    <!-- Matches US -->
+    <div v-if="usMatches.length" class="region-section">
+      <h2>Amérique</h2>
+      <div class="matches-grid">
+        <div v-for="match in usMatches" :key="match.id" class="match-card">
+          <h3>Tier {{ match.tier }}</h3>
+          <div class="world-row red">
+            <span class="victory-points">PV: {{ match.victoryPoints.red }}</span>
+          </div>
+          <div class="world-row blue">
+            <span class="victory-points">PV: {{ match.victoryPoints.blue }}</span>
+          </div>
+          <div class="world-row green">
+            <span class="victory-points">PV: {{ match.victoryPoints.green }}</span>
+          </div>
         </div>
       </div>
     </div>
-    <div v-else class="error">Aucune donnée disponible</div>
+
+    <!-- Matches EU -->
+    <div v-if="euMatches.length" class="region-section">
+      <h2>Europe</h2>
+      <div class="matches-grid">
+        <div v-for="match in euMatches" :key="match.id" class="match-card">
+          <h3>Tier {{ match.tier }}</h3>
+          <div class="world-row red">
+            <span class="victory-points">PV: {{ match.victoryPoints.red }}</span>
+          </div>
+          <div class="world-row blue">
+            <span class="victory-points">PV: {{ match.victoryPoints.blue }}</span>
+          </div>
+          <div class="world-row green">
+            <span class="victory-points">PV: {{ match.victoryPoints.green }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="!usMatches.length && !euMatches.length" class="error">Aucune donnée disponible</div>
     <div class="fond-page">
-      <h2>Abréviation et mot clée en MCM</h2>
+      <h2>Abréviation et mot clé en MCM</h2>
       <h2>Lexique Général & Technique</h2>
       <dl>
         <dt>AoE (Area of Effect)</dt>

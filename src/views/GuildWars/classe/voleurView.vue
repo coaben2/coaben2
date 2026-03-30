@@ -73,6 +73,8 @@
             </div>
           </div>
         </section>
+
+
       </div>
 
       <aside class="lg:col-span-4 space-y-8">
@@ -105,10 +107,16 @@
         </div>
       </aside>
     </div>
+    <BuildDrawer :builds="builds" profession="Voleur" />
   </div>
 </template>
 
 <script setup>
+import gw2Builds from '@/data/gw2Builds.json';
+import BuildDrawer from './BuildDrawer.vue';
+
+const builds = gw2Builds.voleur;
+
 const skillTypes = [
   { title: 'Physiques', desc: 'Attaques de contrôle au corps-à-corps pour projeter ou étourdir.' },
   { title: 'Sorts de zone', desc: 'Techniques d\'esquive et de survie instantanées (Cantrips).' },

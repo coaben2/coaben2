@@ -90,7 +90,7 @@
                   <span>Épée / Hache / Dague / Masse</span> <span class="text-emerald-400">Main Droite</span>
                 </li>
                 <li class="flex justify-between border-b border-white/5 pb-1">
-                  <span>Hache / Dague / Masse / Torche / cor</span> <span class="text-emerald-400">Main Gauche</span>
+                  <span>Hache / Dague / Masse / Torche / Cor</span> <span class="text-emerald-400">Main Gauche</span>
                 </li>
               </ul>
             </div>
@@ -114,6 +114,8 @@
             </div>
           </div>
         </section>
+
+
       </div>
 
       <aside class="lg:col-span-4 space-y-8">
@@ -147,10 +149,16 @@
         </div>
       </aside>
     </div>
+    <BuildDrawer :builds="builds" profession="Rodeur" />
   </div>
 </template>
 
 <script setup>
+import gw2Builds from '@/data/gw2Builds.json';
+import BuildDrawer from './BuildDrawer.vue';
+
+const builds = gw2Builds.rodeur;
+
 const skillTypes = [
   {
     title: 'Esprits',

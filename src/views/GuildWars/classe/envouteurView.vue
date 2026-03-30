@@ -58,8 +58,8 @@
               <h3 class="text-fuchsia-500 font-bold mb-4 uppercase text-xs">Maniement Élégant</h3>
               <ul class="space-y-2 text-sm text-slate-300">
                 <li class="flex justify-between border-b border-white/5 pb-1"><span>Espadon / Bâton / Lance / Fusil</span><span>2 Mains</span></li>
-                <li class="flex justify-between border-b border-white/5 pb-1"><span>épée / Ache / Dague / Sceptre</span><span>Mains Droite</span></li>
-                <li class="flex justify-between border-b border-white/5 pb-1"><span>Épée / Pistolet / Focus / Torche / Bouclier</span><span>Mains Gauche</span></li>
+                <li class="flex justify-between border-b border-white/5 pb-1"><span>Épée / Hache / Dague / Sceptre</span><span>Main Droite</span></li>
+                <li class="flex justify-between border-b border-white/5 pb-1"><span>Épée / Pistolet / Focus / Torche / Bouclier</span><span>Main Gauche</span></li>
               </ul>
             </div>
           </div>
@@ -76,6 +76,8 @@
             </div>
           </div>
         </section>
+
+
       </div>
 
       <aside class="lg:col-span-4 space-y-8">
@@ -103,10 +105,16 @@
         </div>
       </aside>
     </div>
+    <BuildDrawer :builds="builds" profession="Envouteur" />
   </div>
 </template>
 
 <script setup>
+import gw2Builds from '@/data/gw2Builds.json';
+import BuildDrawer from './BuildDrawer.vue';
+
+const builds = gw2Builds.envouteur;
+
 const skillTypes = [
   { title: 'Chants de Guerre', desc: 'Compétences du Troubadour qui émettent des ondes de choc harmoniques autour de la lance.' },
   { title: 'Mantra', desc: 'Méditez pour préparer des sorts puissants pouvant être lancés plusieurs fois instantanément.' },

@@ -7,10 +7,33 @@ import AppFooter from './components/AppFooter.vue';
 
 <template>
   <AppNavigation />
-  <main class="flex-1">
-    <RouterView />
+  <main class="flex-1 relative">
+    <RouterView v-slot="{ Component }">
+      <transition 
+        name="page" 
+        mode="out-in"
+        appear
+      >
+        <component :is="Component" />
+      </transition>
+    </RouterView>
   </main>
   <AppFooter />
 </template>
 
-<style scoped></style>
+<style>
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.3s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+</style>
