@@ -99,6 +99,8 @@
             </div>
           </div>
         </section>
+
+
       </div>
 
       <aside class="lg:col-span-4 space-y-8">
@@ -130,10 +132,16 @@
         </div>
       </aside>
     </div>
+    <BuildDrawer :builds="builds" profession="Elementaliste" />
   </div>
 </template>
 
 <script setup>
+import gw2Builds from '@/data/gw2Builds.json';
+import BuildDrawer from './BuildDrawer.vue';
+
+const builds = gw2Builds.elementaliste;
+
 const skillTypes = [
   { title: 'Cris', desc: 'Invocations vocales puissantes qui soignent les alliés ou affaiblissent les ennemis.' },
   { title: 'Postures', desc: 'Techniques de concentration permettant de fusionner les éléments ou d\'augmenter sa vitesse.' },

@@ -95,6 +95,8 @@
             </div>
           </div>
         </section>
+
+
       </div>
 
       <aside class="lg:col-span-4 space-y-8">
@@ -126,10 +128,16 @@
         </div>
       </aside>
     </div>
+    <BuildDrawer :builds="builds" profession="Gardien" />
   </div>
 </template>
 
 <script setup>
+import gw2Builds from '@/data/gw2Builds.json';
+import BuildDrawer from './BuildDrawer.vue';
+
+const builds = gw2Builds.gardien;
+
 const skillTypes = [
   { title: 'Consécrations', desc: 'Zones de lumière purifiant les alliés ou brûlant les ennemis au sol.' },
   { title: 'Méditations', desc: 'Sorts instantanés pour se soigner, se téléporter ou riposter avec force.' },

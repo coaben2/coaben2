@@ -125,7 +125,7 @@ const scholars = computed(() => classes.filter((c) => c.category === 'scholar'))
       </header>
 
       <div
-        v-if="$route.name === 'ProfessionsHome'"
+        v-if="$route.name === 'Classes'"
         class="grid md:grid-cols-3 gap-8 mb-12 animate-fadeIn"
       >
         <section class="space-y-4">

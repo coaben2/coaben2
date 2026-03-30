@@ -88,6 +88,8 @@
             </div>
           </div>
         </section>
+
+        
       </div>
 
       <aside class="lg:col-span-4 space-y-8">
@@ -120,10 +122,16 @@
         </div>
       </aside>
     </div>
+    <BuildDrawer :builds="builds" profession="Revenant" />
   </div>
 </template>
 
 <script setup>
+import gw2Builds from '@/data/gw2Builds.json';
+import BuildDrawer from './BuildDrawer.vue';
+
+const builds = gw2Builds.revenant;
+
 const coreLegends = [
   { name: 'Shiro Tagachi', desc: 'Assassin légendaire : Mobilité et dégâts de frappe.' },
   { name: 'Ventari', desc: 'Centaure légendaire : Soins et purification via la tablette.' },

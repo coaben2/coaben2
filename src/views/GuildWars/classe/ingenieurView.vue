@@ -57,7 +57,7 @@
             <div class="bg-black/60 p-6 rounded-2xl border border-orange-600/20">
               <h3 class="text-orange-500 font-bold mb-4 uppercase text-xs">Armement</h3>
               <ul class="space-y-2 text-sm">
-                <li class="flex justify-between border-b border-white/5 pb-1"><span>Fusil / Marteau / Lance / arc court</span> <span class="text-orange-400">2 Mains</span></li>
+                <li class="flex justify-between border-b border-white/5 pb-1"><span>Fusil / Marteau / Lance / Arc Court</span> <span class="text-orange-400">2 Mains</span></li>
                 <li class="flex justify-between border-b border-white/5 pb-1"><span>Pistolet / Épée / Masse</span> <span class="text-orange-400">Main Droite</span></li>
                 <li class="flex justify-between border-b border-white/5 pb-1"><span>Bouclier / Pistolet</span> <span class="text-orange-400">Main Gauche</span></li>
               </ul>
@@ -76,6 +76,8 @@
             </div>
           </div>
         </section>
+
+
       </div>
 
       <aside class="lg:col-span-4 space-y-8">
@@ -103,10 +105,16 @@
         </div>
       </aside>
     </div>
+    <BuildDrawer :builds="builds" profession="Ingenieur" />
   </div>
 </template>
 
 <script setup>
+import gw2Builds from '@/data/gw2Builds.json';
+import BuildDrawer from './BuildDrawer.vue';
+
+const builds = gw2Builds.ingenieur;
+
 const skillTypes = [
   { title: 'Kits de combat', desc: 'Remplacez votre arme actuelle par un kit spécialisé (Flammes, Médicinal, Grenades).' },
   { title: 'Drones', desc: 'Invoquez de petits robots automatisés pour soigner, protéger ou attaquer.' },

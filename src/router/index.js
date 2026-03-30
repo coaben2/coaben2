@@ -189,6 +189,21 @@ const router = createRouter({
       ],
     },
     {
+      path: '/faq',
+      name: 'FAQ',
+      component: () => import('../views/FAQ/FAQHomeView.vue'),
+    },
+    {
+      path: '/faq/ask',
+      name: 'FAQAsk',
+      component: () => import('../views/FAQ/QuestionFormView.vue'),
+    },
+    {
+      path: '/faq/:id',
+      name: 'FAQDetail',
+      component: () => import('../views/FAQ/QuestionDetailView.vue'),
+    },
+    {
       path: '/:catchAll(.*)',
       name: 'NotFound',
       component: () => import('../components/404.vue'),
