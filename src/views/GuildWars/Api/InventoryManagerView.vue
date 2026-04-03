@@ -16,47 +16,62 @@
       <h2>Recommandations d'items</h2>
       <p>Voici des suggestions pour optimiser votre inventaire :</p>
       
-      <div class="recommendations-grid">
-        <div 
-          v-for="rec in recommendations" 
-          :key="`${rec.itemName}-${rec.type}`" 
-          class="recommendation-card"
-          :class="rec.type"
-        >
-          <div class="item-header">
-            <img 
-              :src="getItemIcon(rec.itemId)" 
-              :alt="rec.itemName" 
-              class="item-icon"
-              @error="$event.target.src = 'https://render.guildwars2.com/file/1468C6A946BFF0A42CBD08A70E45F8F05851FED0/631480.png'"
-            />
-            <div class="item-info">
-              <h3 class="item-name">{{ rec.itemName }}</h3>
-              <span class="item-count">{{ rec.currentCount }}x</span>
-            </div>
-          </div>
-          
-          <div class="recommendation-content">
-            <div class="message" v-html="rec.message"></div>
-            <div class="action-badge" :class="rec.action">
-              {{ getActionLabel(rec.action) }}
-            </div>
-          </div>
-          
-          <!-- Affichage des emplacements si disponibles -->
-          <div v-if="rec.placements && rec.placements.length > 0" class="placements">
-            <h4>Emplacements :</h4>
-            <div class="placement-list">
-              <span 
-                v-for="placement in rec.placements" 
-                :key="`${placement.source}-${placement.count}`"
-                class="placement-item"
-              >
-                {{ placement.source }}: {{ placement.count }}x
-              </span>
-            </div>
-          </div>
-        </div>
+      <div class="recommendations-table-wrapper">
+        <table class="recommendations-table">
+          <thead>
+            <tr>
+              <th class="col-icon"></th>
+              <th class="col-name">Item</th>
+              <th class="col-count">Quantité</th>
+              <th class="col-action">Action</th>
+              <th class="col-message">Message</th>
+              <th class="col-placements">Emplacements</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="rec in recommendations"
+              :key="`${rec.itemName}-${rec.type}`"
+              class="recommendation-row"
+              :class="rec.type"
+            >
+              <td class="col-icon">
+                <img
+                  :src="getItemIcon(rec.itemId)"
+                  :alt="rec.itemName"
+                  class="item-icon"
+                  @error="$event.target.src = 'https://render.guildwars2.com/file/1468C6A946BFF0A42CBD08A70E45F8F05851FED0/631480.png'"
+                />
+              </td>
+              <td class="col-name">
+                <span class="item-name">{{ rec.itemName }}</span>
+              </td>
+              <td class="col-count">
+                <span class="item-count">{{ rec.currentCount }}x</span>
+              </td>
+              <td class="col-action">
+                <div class="action-badge" :class="rec.action">
+                  {{ getActionLabel(rec.action) }}
+                </div>
+              </td>
+              <td class="col-message">
+                <div class="message" v-html="rec.message"></div>
+              </td>
+              <td class="col-placements">
+                <div v-if="rec.placements && rec.placements.length > 0" class="placement-list">
+                  <span
+                    v-for="placement in rec.placements"
+                    :key="`${placement.source}-${placement.count}`"
+                    class="placement-item"
+                  >
+                    {{ placement.source }}: {{ placement.count }}x
+                  </span>
+                </div>
+                <span v-else class="no-placement">—</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -68,31 +83,45 @@
         doivent être empilés ensemble pour économiser de l'espace dans l'inventaire.
       </p>
       
-      <div class="partial-stacks-grid">
-        <div 
-          v-for="stack in partialStacks" 
-          :key="stack.id" 
-          class="partial-stack-card"
-        >
-          <div class="stack-header">
-            <img :src="getItemIcon(stack.id)" :alt="stack.id" class="item-icon" />
-            <div class="stack-info">
-              <h3>{{ itemNamesCache.get(stack.id) || `Chargement...` }}</h3>
-              <span class="total-count">Total: {{ stack.totalCount }}x</span>
-            </div>
-          </div>
-          
-          <div class="stack-details">
-            <div 
-              v-for="placement in stack.placements" 
-              :key="`${placement.source}-${placement.count}`"
-              class="placement-detail"
+      <div class="partial-stacks-table-wrapper">
+        <table class="partial-stacks-table">
+          <thead>
+            <tr>
+              <th class="col-icon"></th>
+              <th class="col-name">Item</th>
+              <th class="col-total">Total</th>
+              <th class="col-placements">Emplacements</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="stack in partialStacks"
+              :key="stack.id"
+              class="partial-stack-row"
             >
-              <span class="source">{{ placement.source }}</span>
-              <span class="count">{{ placement.count }}x</span>
-            </div>
-          </div>
-        </div>
+              <td class="col-icon">
+                <img :src="getItemIcon(stack.id)" :alt="stack.id" class="item-icon" />
+              </td>
+              <td class="col-name">
+                <span class="stack-name">{{ itemNamesCache.get(stack.id) || `Chargement...` }}</span>
+              </td>
+              <td class="col-total">
+                <span class="total-count">{{ stack.totalCount }}x</span>
+              </td>
+              <td class="col-placements">
+                <div class="placement-list">
+                  <span
+                    v-for="placement in stack.placements"
+                    :key="`${placement.source}-${placement.count}`"
+                    class="placement-tag"
+                  >
+                    {{ placement.source }}: {{ placement.count }}x
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -104,20 +133,33 @@
         pouvez fabriquer ces objets pour réduire le nombre de piles.
       </p>
       
-      <div class="craftable-grid">
-        <div 
-          v-for="item in craftableItems" 
-          :key="item.id" 
-          class="craftable-card"
-        >
-          <div class="item-header">
-            <img :src="getItemIcon(item.id)" :alt="item.name" class="item-icon" />
-            <div class="item-info">
-              <h3>{{ itemNamesCache.get(item.id) || `Chargement...` }}</h3>
-              <span class="stacks-count">{{ Math.floor(item.totalCount / 250) }} piles complètes</span>
-            </div>
-          </div>
-        </div>
+      <div class="craftable-table-wrapper">
+        <table class="craftable-table">
+          <thead>
+            <tr>
+              <th class="col-icon"></th>
+              <th class="col-name">Item</th>
+              <th class="col-stacks">Piles complètes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="item in craftableItems"
+              :key="item.id"
+              class="craftable-row"
+            >
+              <td class="col-icon">
+                <img :src="getItemIcon(item.id)" :alt="item.name" class="item-icon" />
+              </td>
+              <td class="col-name">
+                <span class="craftable-name">{{ itemNamesCache.get(item.id) || `Chargement...` }}</span>
+              </td>
+              <td class="col-stacks">
+                <span class="stacks-count">{{ Math.floor(item.totalCount / 250) }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -355,115 +397,115 @@ onMounted(async () => {
   line-height: 1.6;
 }
 
-/* Grille des recommandations */
-.recommendations-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 20px;
-}
-
-.recommendation-card {
-  background: rgba(42, 42, 42, 0.8);
+/* Tableau des recommandations */
+.recommendations-table-wrapper {
+  overflow-x: auto;
   border-radius: 10px;
-  padding: 20px;
-  border: 2px solid;
-  transition: all 0.3s ease;
+  border: 1px solid rgba(74, 144, 226, 0.2);
 }
 
-.recommendation-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+.recommendations-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
 }
 
-.recommendation-card.craft {
-  border-color: #4caf50;
+.recommendations-table thead tr {
+  background: rgba(74, 144, 226, 0.15);
+  border-bottom: 2px solid rgba(74, 144, 226, 0.4);
 }
 
-.recommendation-card.consume {
-  border-color: #ff9800;
+.recommendations-table th {
+  padding: 12px 14px;
+  text-align: left;
+  color: #ffd700;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
-.recommendation-card.exchange {
-  border-color: #9c27b0;
+.recommendation-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.2s ease;
 }
 
-.recommendation-card.sell {
-  border-color: #f44336;
+.recommendation-row:last-child {
+  border-bottom: none;
 }
 
-/* En-tête des items */
-.item-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
+.recommendation-row:hover {
+  background: rgba(74, 144, 226, 0.07);
+}
+
+.recommendation-row td {
+  padding: 12px 14px;
+  vertical-align: middle;
+}
+
+/* Colonne icône */
+.col-icon {
+  width: 52px;
+  text-align: center;
+  padding: 8px 10px !important;
 }
 
 .item-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
   border: 2px solid #555;
   background: #000;
   object-fit: cover;
-  transition: all 0.3s ease;
+  display: block;
+  transition: all 0.25s ease;
 }
 
 .item-icon:hover {
   border-color: #4a90e2;
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.35);
 }
 
-.item-icon[src*="default"] {
-  opacity: 0.6;
-  filter: grayscale(0.5);
-}
-
-.item-info {
-  flex: 1;
+/* Colonne nom */
+.col-name {
+  min-width: 180px;
 }
 
 .item-name {
   color: #4a90e2;
-  margin: 0 0 5px 0;
-  font-size: 1.3rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Colonne quantité */
+.col-count {
+  white-space: nowrap;
+  text-align: center;
 }
 
 .item-count {
   color: #ffd700;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
-/* Contenu des recommandations */
-.recommendation-content {
-  margin-bottom: 15px;
-}
-
-.message {
-  color: #fff;
-  line-height: 1.5;
-  margin-bottom: 15px;
-}
-
-.message a {
-  color: #4a90e2;
-  text-decoration: none;
-}
-
-.message a:hover {
-  text-decoration: underline;
+/* Colonne action */
+.col-action {
+  white-space: nowrap;
+  text-align: center;
 }
 
 .action-badge {
   display: inline-block;
-  padding: 6px 12px;
+  padding: 5px 11px;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .action-badge.craft {
@@ -490,120 +532,204 @@ onMounted(async () => {
   border: 1px solid #f44336;
 }
 
-/* Emplacements */
-.placements {
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+/* Bordure gauche colorée selon le type */
+.recommendation-row.craft td:first-child {
+  border-left: 3px solid #4caf50;
+}
+.recommendation-row.consume td:first-child {
+  border-left: 3px solid #ff9800;
+}
+.recommendation-row.exchange td:first-child {
+  border-left: 3px solid #9c27b0;
+}
+.recommendation-row.sell td:first-child {
+  border-left: 3px solid #f44336;
 }
 
-.placements h4 {
-  color: #ffd700;
-  margin: 0 0 10px 0;
-  font-size: 1rem;
+/* Colonne message */
+.col-message {
+  min-width: 220px;
+}
+
+.message {
+  color: #ddd;
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+.message a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+.message a:hover {
+  text-decoration: underline;
+}
+
+/* Colonne emplacements */
+.col-placements {
+  min-width: 160px;
 }
 
 .placement-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .placement-item {
-  background: rgba(74, 144, 226, 0.2);
+  background: rgba(74, 144, 226, 0.15);
   color: #4a90e2;
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  border: 1px solid rgba(74, 144, 226, 0.25);
+  white-space: nowrap;
+}
+
+.no-placement {
+  color: #555;
   font-size: 0.9rem;
-  border: 1px solid rgba(74, 144, 226, 0.3);
 }
 
-/* Grille des piles partielles */
-.partial-stacks-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.partial-stack-card {
-  background: rgba(42, 42, 42, 0.8);
+/* Tableau des piles partielles */
+.partial-stacks-table-wrapper {
+  overflow-x: auto;
   border-radius: 10px;
-  padding: 20px;
-  border: 2px solid #ff9800;
-  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 152, 0, 0.25);
 }
 
-.partial-stack-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+.partial-stacks-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
 }
 
-.stack-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
+.partial-stacks-table thead tr {
+  background: rgba(255, 152, 0, 0.12);
+  border-bottom: 2px solid rgba(255, 152, 0, 0.35);
 }
 
-.stack-info h3 {
+.partial-stacks-table th {
+  padding: 12px 14px;
+  text-align: left;
+  color: #ffd700;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.partial-stack-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-left: 3px solid #ff9800;
+  transition: background 0.2s ease;
+}
+
+.partial-stack-row:last-child {
+  border-bottom: none;
+}
+
+.partial-stack-row:hover {
+  background: rgba(255, 152, 0, 0.07);
+}
+
+.partial-stack-row td {
+  padding: 12px 14px;
+  vertical-align: middle;
+}
+
+.stack-name {
   color: #ff9800;
-  margin: 0 0 5px 0;
-  font-size: 1.2rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.col-total {
+  white-space: nowrap;
+  text-align: center;
 }
 
 .total-count {
   color: #ffd700;
   font-weight: bold;
+  font-size: 1rem;
 }
 
-.stack-details {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.placement-tag {
+  background: rgba(255, 152, 0, 0.15);
+  color: #ff9800;
+  padding: 3px 7px;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  border: 1px solid rgba(255, 152, 0, 0.25);
+  white-space: nowrap;
 }
 
-.placement-detail {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 12px;
-  background: rgba(255, 152, 0, 0.1);
-  border-radius: 6px;
-  border: 1px solid rgba(255, 152, 0, 0.2);
-}
-
-.source {
-  color: #ccc;
-  font-size: 0.9rem;
-}
-
-.count {
-  color: #ffd700;
-  font-weight: bold;
-}
-
-/* Grille des items à fabriquer */
-.craftable-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.craftable-card {
-  background: rgba(42, 42, 42, 0.8);
+/* Tableau des items à fabriquer */
+.craftable-table-wrapper {
+  overflow-x: auto;
   border-radius: 10px;
-  padding: 20px;
-  border: 2px solid #4caf50;
-  transition: all 0.3s ease;
+  border: 1px solid rgba(76, 175, 80, 0.25);
 }
 
-.craftable-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+.craftable-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.craftable-table thead tr {
+  background: rgba(76, 175, 80, 0.12);
+  border-bottom: 2px solid rgba(76, 175, 80, 0.35);
+}
+
+.craftable-table th {
+  padding: 12px 14px;
+  text-align: left;
+  color: #ffd700;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.craftable-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-left: 3px solid #4caf50;
+  transition: background 0.2s ease;
+}
+
+.craftable-row:last-child {
+  border-bottom: none;
+}
+
+.craftable-row:hover {
+  background: rgba(76, 175, 80, 0.07);
+}
+
+.craftable-row td {
+  padding: 12px 14px;
+  vertical-align: middle;
+}
+
+.craftable-name {
+  color: #4caf50;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.col-stacks {
+  white-space: nowrap;
+  text-align: center;
 }
 
 .stacks-count {
   color: #4caf50;
   font-weight: bold;
+  font-size: 1rem;
 }
 
 /* Message d'absence de données */
@@ -635,7 +761,15 @@ onMounted(async () => {
     font-size: 2rem;
   }
   
-  .recommendations-grid,
+  .recommendations-table th,
+  .recommendations-table td {
+    padding: 10px 8px;
+  }
+
+  .col-message {
+    min-width: 140px;
+  }
+
   .partial-stacks-grid,
   .craftable-grid {
     grid-template-columns: 1fr;
