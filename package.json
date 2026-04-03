@@ -19,7 +19,7 @@
     "axios": "^1.9.0",
     "fs": "^0.0.1-security",
     "gw2api-client": "^7.7.0",
-    "gw2e-chat-codes": "^1.4.1",
+    "node": "^20.19.5",
     "pinia": "^2.1.7",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7",
