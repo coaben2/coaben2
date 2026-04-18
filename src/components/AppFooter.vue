@@ -14,21 +14,6 @@ import GitHubIcon from '@/components/icons/GitHubIcon.vue';
                     <GitHubIcon />
                 </a>
             </li>
-            <!--<li>
-                <a href="https://www.youtube.com/@coaben" target="_blank" rel="nofollow">
-                    <YoutubeIcon />
-                </a>
-            </li>
-            <li>
-                <a href="https://www.instagram.com/coaben2" target="_blank" rel="nofollow">
-                    <InstagramIcon />
-                </a>
-            </li>
-            <li>
-                <a href="https://www.twitch.tv/coaben" target="_blank" rel="nofollow">
-                    <TwitchIcon />
-                </a>
-            </li>-->
         </ul>
     </footer>
 </template>

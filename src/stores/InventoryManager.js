@@ -44,20 +44,6 @@ async function initializeInventory() {
     }
 }
 
-/* Ancien code commenté
-function getBankListings(apiKey) {
-    var bankURL = 'https://api.guildwars2.com/v2/account/bank?access_token=' + apiKey;
-    message("Accessing bank...");
-    $.getJSON(bankURL, function (json) {
-        for (var i = 0; i < json.length; i++) {
-            var item = json[i];
-            addItem(item, 'Account bank');
-        };
-        getInventoryListings(apiKey);
-    })
-}
-*/
-
 // Fonction de traitement des inventaires des personnages
 function processCharactersInventory(characters) {
     characters.forEach(async (characterName) => {
@@ -119,43 +105,6 @@ function getBankListings(apiKey) {
 
     })
 }
-
-/*function getMaterials(apiKey) {
-
-    var materialsURL = 'https://api.guildwars2.com/v2/account/materials?access_token=' + apiKey;
-    message("Accessing materials...");
-    $.getJSON(materialsURL, function (json) {
-        for (var i = 0; i < json.length; i++) {
-            var item = json[i];
-            addItem(item, 'Material storage');
-            if (item.count > collections) {
-                collections = item.count;
-            }
-        };
-
-        collections = Math.ceil(collections / 250) * 250;
-        if (collections == 0) {
-            collections = 250;
-        }
-
-        getBankListings(apiKey);
-
-    }).fail(function (jqxhr, textStatus, error) {
-        message("Failed to access materials.");
-    });
-}*/
-
-/*function getInventoryListings(apiKey) {
-
-    var characterListURL = 'https://api.guildwars2.com/v2/characters?access_token=' + apiKey;
-    message("Getting character list...");
-    $.getJSON(characterListURL, function (json) {
-        recurseCharacter(json, apiKey);
-    }).fail(function (jqxhr, textStatus, error) {
-        message("Failed to get character list.");
-    });
-
-}*/
 
 function recurseCharacter(characterList, apiKey) {
     if (characterList.length > 0) {
