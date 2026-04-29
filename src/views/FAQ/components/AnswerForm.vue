@@ -102,14 +102,14 @@ const handleSubmit = async () => {
   try {
     if (props.existingAnswer) {
       // Modifier une réponse existante
-      const updatedAnswer = faqStore.updateAnswer(props.existingAnswer.id, {
+      const updatedAnswer = await faqStore.updateAnswer(props.existingAnswer.id, {
         content: formData.value.content.trim(),
         author: formData.value.author.trim() || 'Admin'
       });
       emit('submit', updatedAnswer);
     } else {
       // Créer une nouvelle réponse
-      const newAnswer = faqStore.addAnswer(props.questionId, {
+      const newAnswer = await faqStore.addAnswer(props.questionId, {
         content: formData.value.content.trim(),
         author: formData.value.author.trim() || 'Admin'
       });

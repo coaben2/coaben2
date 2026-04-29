@@ -39,28 +39,6 @@ const getBankListings = (apiKey) => {
     })
 };
 
-/**const getMaterials = (apiKey) => {
-  const materialsURL = `https://api.guildwars2.com/v2/account/materials?access_token=${apiKey}`;
-
-  axios.get(materialsURL)
-    .then(response => {
-      const json = response.data;
-      for (let i = 0; i < json.length; i++) {
-        const item = json[i];
-        addItem(item, 'Material storage');
-        if (item.count > collections) {
-          collections = item.count;
-        }
-      }
-
-      collections = Math.ceil(collections / 250) * 250;
-      if (collections === 0) {
-        collections = 250;
-      }
-
-      getBankListings(apiKey);
-    })
-};*/
 const getInventoryListings = (apiKey) => {
   const characterListURL = `https://api.guildwars2.com/v2/characters?access_token=${apiKey}`;
 

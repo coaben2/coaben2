@@ -62,7 +62,9 @@ const filteredQuestions = computed(() => faqStore.filteredQuestions);
 const searchQuery = computed(() => faqStore.searchQuery);
 const selectedTags = computed(() => faqStore.selectedTags);
 
-onMounted(() => {
+onMounted(async () => {
+  await faqStore.fetchTags();
+  await faqStore.migrateFromLocalStorage();
   faqStore.fetchQuestions();
 });
 </script>
