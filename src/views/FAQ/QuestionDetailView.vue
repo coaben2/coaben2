@@ -193,18 +193,23 @@ const formatDate = (dateString) => {
   });
 };
 
-const loadQuestion = () => {
+const loadQuestion = async () => {
   loading.value = true;
   const questionId = route.params.id;
-  question.value = faqStore.fetchQuestionById(questionId);
-  if (question.value) {
-    answers.value = faqStore.getAnswersByQuestionId(questionId);
+  try {
+    question.value = await faqStore.fetchQuestionById(questionId);
+    if (question.value) {
+      answers.value = await faqStore.getAnswersByQuestionId(questionId);
+    }
+  } catch (error) {
+    console.error('Erreur lors du chargement de la question:', error);
+    question.value = null;
   }
   loading.value = false;
 };
 
-const handleAnswerSubmit = (answer) => {
-  loadQuestion();
+const handleAnswerSubmit = async (answer) => {
+  await loadQuestion();
   editingAnswer.value = null;
 };
 
@@ -216,14 +221,17 @@ const cancelEdit = () => {
   editingAnswer.value = null;
 };
 
-const deleteAnswer = (answerId) => {
+const deleteAnswer = async (answerId) => {
   if (confirm('Êtes-vous sûr de vouloir supprimer cette réponse ?')) {
-    faqStore.deleteAnswer(answerId);
-    loadQuestion();
+    await faqStore.deleteAnswer(answerId);
+    await loadQuestion();
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
+  if (faqStore.tags.length === 0) {
+    await faqStore.fetchTags();
+  }
   loadQuestion();
 });
 </script>

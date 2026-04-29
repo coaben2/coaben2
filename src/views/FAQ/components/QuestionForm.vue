@@ -43,7 +43,8 @@
 
         <div class="form-control mb-4">
           <label class="label">
-            <span class="label-text font-semibold">Tags</span>
+            <span class="label-text font-semibold">Tags <span class="text-error">*</span></span>
+            <span v-if="tagError" class="label-text-alt text-error">Veuillez sélectionner au moins un tag</span>
           </label>
           <div class="flex flex-wrap gap-2">
             <span
@@ -98,6 +99,7 @@ const formData = ref({
 });
 
 const availableTags = computed(() => faqStore.tags);
+const tagError = ref(false);
 
 const isTagSelected = (tagId) => {
   return formData.value.tags.includes(tagId);
@@ -109,6 +111,7 @@ const toggleTag = (tagId) => {
     formData.value.tags.splice(index, 1);
   } else {
     formData.value.tags.push(tagId);
+    tagError.value = false;
   }
 };
 
@@ -117,9 +120,14 @@ const handleSubmit = async () => {
     return;
   }
 
+  if (formData.value.tags.length === 0) {
+    tagError.value = true;
+    return;
+  }
+
   loading.value = true;
   try {
-    const question = faqStore.createQuestion({
+    const question = await faqStore.createQuestion({
       title: formData.value.title.trim(),
       content: formData.value.content.trim(),
       author: formData.value.author.trim() || undefined,
