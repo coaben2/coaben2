@@ -229,10 +229,15 @@ const deleteAnswer = async (answerId) => {
 };
 
 onMounted(async () => {
-  if (faqStore.tags.length === 0) {
-    await faqStore.fetchTags();
+  try {
+    if (faqStore.tags.length === 0) {
+      await faqStore.fetchTags();
+    }
+  } catch (error) {
+    console.error('Erreur lors du chargement des tags FAQ:', error);
+  } finally {
+    loadQuestion();
   }
-  loadQuestion();
 });
 </script>
 

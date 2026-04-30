@@ -21,7 +21,16 @@ export const useFAQStore = defineStore('faq', () => {
       .from('tags')
       .select('*')
       .order('name');
-    if (error) throw error;
+
+    if (error) {
+      if (error.code === 'PGRST205' || error.code === '42P01') {
+        throw new Error(
+          "La table public.tags est introuvable sur ce projet Supabase. Exécute src/views/FAQ/faq_database.sql dans l'éditeur SQL Supabase puis recharge la page."
+        );
+      }
+      throw error;
+    }
+
     tags.value = data || [];
   };
 

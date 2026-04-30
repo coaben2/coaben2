@@ -16,6 +16,17 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 npm install
 ```
 
+## Environment Variables
+
+Create a `.env` file at the project root with:
+
+```sh
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+```
+
+On Vercel, set the same 2 variables in the project settings, then redeploy.
+
 ### Compile and Hot-Reload for Development
 
 ```sh

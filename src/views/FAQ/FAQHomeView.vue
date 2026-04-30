@@ -20,6 +20,11 @@
     <SearchBar />
     <TagFilter />
 
+    <div v-if="errorMessage" class="alert alert-error mb-6">
+      <i class="fas fa-triangle-exclamation mr-2"></i>
+      <span>{{ errorMessage }}</span>
+    </div>
+
     <div v-if="loading" class="flex justify-center items-center py-12">
       <span class="loading loading-spinner loading-lg"></span>
     </div>
@@ -50,7 +55,7 @@
 </template>
 
 <script setup>
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import { useFAQStore } from '@/stores/faqStore';
 import QuestionCard from './components/QuestionCard.vue';
 import TagFilter from './components/TagFilter.vue';
@@ -61,11 +66,17 @@ const loading = computed(() => faqStore.loading);
 const filteredQuestions = computed(() => faqStore.filteredQuestions);
 const searchQuery = computed(() => faqStore.searchQuery);
 const selectedTags = computed(() => faqStore.selectedTags);
+const errorMessage = ref('');
 
 onMounted(async () => {
-  await faqStore.fetchTags();
-  await faqStore.migrateFromLocalStorage();
-  faqStore.fetchQuestions();
+  try {
+    await faqStore.fetchTags();
+    await faqStore.migrateFromLocalStorage();
+  } catch (error) {
+    errorMessage.value = error?.message || 'Erreur de chargement des tags FAQ.';
+  } finally {
+    faqStore.fetchQuestions();
+  }
 });
 </script>
 
