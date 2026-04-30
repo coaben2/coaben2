@@ -10,7 +10,8 @@
       </p>
     </div>
 
-    <div class="mb-6">
+    <!-- bouton caché temporairement -->
+    <div v-if="false" class="mb-6">
       <router-link to="/faq/ask" class="btn btn-primary btn-lg">
         <i class="fas fa-plus mr-2"></i>
         Poser une question
@@ -19,11 +20,6 @@
 
     <SearchBar />
     <TagFilter />
-
-    <div v-if="errorMessage" class="alert alert-error mb-6">
-      <i class="fas fa-triangle-exclamation mr-2"></i>
-      <span>{{ errorMessage }}</span>
-    </div>
 
     <div v-if="loading" class="flex justify-center items-center py-12">
       <span class="loading loading-spinner loading-lg"></span>
@@ -36,9 +32,7 @@
           ? 'Aucune question ne correspond à vos critères' 
           : 'Aucune question pour le moment' }}
       </p>
-      <router-link v-if="!searchQuery && selectedTags.length === 0" to="/faq/ask" class="btn btn-primary mt-4">
-        Être le premier à poser une question
-      </router-link>
+
     </div>
 
     <div v-else>
@@ -55,7 +49,7 @@
 </template>
 
 <script setup>
-import { onMounted, computed, ref } from 'vue';
+import { onMounted, computed } from 'vue';
 import { useFAQStore } from '@/stores/faqStore';
 import QuestionCard from './components/QuestionCard.vue';
 import TagFilter from './components/TagFilter.vue';
@@ -66,17 +60,10 @@ const loading = computed(() => faqStore.loading);
 const filteredQuestions = computed(() => faqStore.filteredQuestions);
 const searchQuery = computed(() => faqStore.searchQuery);
 const selectedTags = computed(() => faqStore.selectedTags);
-const errorMessage = ref('');
-
 onMounted(async () => {
-  try {
-    await faqStore.fetchTags();
-    await faqStore.migrateFromLocalStorage();
-  } catch (error) {
-    errorMessage.value = error?.message || 'Erreur de chargement des tags FAQ.';
-  } finally {
-    faqStore.fetchQuestions();
-  }
+  await faqStore.fetchTags();
+  await faqStore.migrateFromLocalStorage();
+  faqStore.fetchQuestions();
 });
 </script>
 

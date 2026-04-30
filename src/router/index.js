@@ -193,11 +193,8 @@ const router = createRouter({
       name: 'FAQ',
       component: () => import('../views/FAQ/FAQHomeView.vue'),
     },
-    {
-      path: '/faq/ask',
-      name: 'FAQAsk',
-      component: () => import('../views/FAQ/QuestionFormView.vue'),
-    },
+    // route cachée temporairement
+    // { path: '/faq/ask', name: 'FAQAsk', component: () => import('../views/FAQ/QuestionFormView.vue') },
     {
       path: '/faq/:id',
       name: 'FAQDetail',
