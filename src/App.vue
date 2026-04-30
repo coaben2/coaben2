@@ -1,8 +1,26 @@
 <script setup>
 import { RouterView } from 'vue-router';
+import { onMounted } from 'vue';
 
 import AppNavigation from './components/AppNavigation.vue';
 import AppFooter from './components/AppFooter.vue';
+import { supabase } from '@/lib/supabase';
+
+async function checkSupabaseConnection() {
+  const { error } = await supabase.auth.getSession();
+
+  if (error) {
+    console.error('Supabase connection error:', error.message);
+    return;
+  }
+
+  console.info('Supabase connection OK');
+}
+
+onMounted(() => {
+  checkSupabaseConnection();
+});
+
 </script>
 
 <template>
