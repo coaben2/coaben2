@@ -2,7 +2,7 @@
   <div class="card bg-base-100 shadow-xl">
     <div class="card-body">
       <h2 class="card-title mb-4">Poser une question</h2>
-      
+
       <form @submit.prevent="handleSubmit">
         <div class="form-control mb-4">
           <label class="label">
@@ -11,7 +11,7 @@
           <input
             v-model="formData.title"
             type="text"
-            placeholder="Ex: Comment utiliser cette fonctionnalité ?"
+            placeholder="Ex: Comment utiliser cette fonctionnalite ?"
             class="input input-bordered w-full"
             required
           />
@@ -24,7 +24,7 @@
           <textarea
             v-model="formData.content"
             class="textarea textarea-bordered h-32"
-            placeholder="Décrivez votre question en détail..."
+            placeholder="Decrivez votre question en detail..."
             required
           ></textarea>
         </div>
@@ -44,7 +44,7 @@
         <div class="form-control mb-4">
           <label class="label">
             <span class="label-text font-semibold">Tags <span class="text-error">*</span></span>
-            <span v-if="tagError" class="label-text-alt text-error">Veuillez sélectionner au moins un tag</span>
+            <span v-if="tagError" class="label-text-alt text-error">Veuillez selectionner au moins un tag</span>
           </label>
           <div class="flex flex-wrap gap-2">
             <span
@@ -61,21 +61,17 @@
         </div>
 
         <div class="card-actions justify-end mt-6">
-          <button
-            type="button"
-            class="btn btn-ghost"
-            @click="$emit('cancel')"
-          >
+          <button type="button" class="btn btn-ghost" @click="$emit('cancel')">
             Annuler
           </button>
-          <button
-            type="submit"
-            class="btn btn-primary"
-            :disabled="loading"
-          >
+          <button type="submit" class="btn btn-primary" :disabled="loading">
             <span v-if="loading" class="loading loading-spinner loading-sm"></span>
             <span v-else>Poser la question</span>
           </button>
+        </div>
+
+        <div v-if="mailSyncInfo" class="alert alert-info mt-4">
+          <span>{{ mailSyncInfo }}</span>
         </div>
       </form>
     </div>
@@ -83,13 +79,15 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useFAQStore } from '@/stores/faqStore';
+import { syncPendingFaqQuestions } from '@/lib/faqMailSync';
 
 const emit = defineEmits(['submit', 'cancel']);
 
 const faqStore = useFAQStore();
 const loading = ref(false);
+const mailSyncInfo = ref('');
 
 const formData = ref({
   title: '',
@@ -134,7 +132,6 @@ const handleSubmit = async () => {
       tags: formData.value.tags
     });
 
-    // Réinitialiser le formulaire
     formData.value = {
       title: '',
       content: '',
@@ -143,11 +140,25 @@ const handleSubmit = async () => {
     };
 
     emit('submit', question);
+
+    const syncResult = await syncPendingFaqQuestions();
+    if (syncResult.sent > 0 && syncResult.failed === 0) {
+      mailSyncInfo.value = `${syncResult.sent} question(s) envoyee(s) par email.`;
+    } else if (syncResult.failed > 0) {
+      mailSyncInfo.value = 'Question enregistree localement. Envoi email en attente.';
+    }
   } catch (error) {
-    console.error('Erreur lors de la création de la question:', error);
+    console.error('Erreur lors de la creation de la question:', error);
+    mailSyncInfo.value = 'Question enregistree localement. Envoi email en attente.';
   } finally {
     loading.value = false;
   }
 };
-</script>
 
+onMounted(async () => {
+  const syncResult = await syncPendingFaqQuestions();
+  if (syncResult.sent > 0) {
+    mailSyncInfo.value = `${syncResult.sent} ancienne(s) question(s) locale(s) envoyee(s).`;
+  }
+});
+</script>

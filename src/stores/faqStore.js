@@ -1,275 +1,216 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
-import { supabase } from '@/lib/supabase';
+import { computed, ref } from 'vue';
+
+const STORAGE_KEY = 'faq_system';
+
+const DEFAULT_TAGS = [
+  { id: 1, name: 'Guerrier', color: '#FF6B6B' },
+  { id: 2, name: 'Gardien', color: '#4ECDC4' },
+  { id: 3, name: 'Revenant', color: '#95E1D3' },
+  { id: 4, name: 'Voleur', color: '#F38181' },
+  { id: 5, name: 'Rodeur', color: '#AAE3E2' },
+  { id: 6, name: 'Ingenieur', color: '#FFD93D' },
+  { id: 7, name: 'Necromant', color: '#6BCB77' },
+  { id: 8, name: 'Envouteur', color: '#4D96FF' },
+  { id: 9, name: 'Elementaliste', color: '#FF6B9D' },
+  { id: 10, name: 'General', color: '#9B9B9B' },
+  { id: 11, name: 'Technique', color: '#5C7AEA' },
+  { id: 12, name: 'Bug', color: '#E74C3C' },
+  { id: 13, name: 'Feature', color: '#2ECC71' },
+  { id: 14, name: 'Aide', color: '#F39C12' },
+  { id: 15, name: 'Autre', color: '#95A5A6' }
+];
+
+function nowIso() {
+  return new Date().toISOString();
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      return {
+        tags: DEFAULT_TAGS,
+        questions: [],
+        answers: []
+      };
+    }
+
+    const parsed = JSON.parse(raw);
+    return {
+      tags: Array.isArray(parsed.tags) && parsed.tags.length > 0 ? parsed.tags : DEFAULT_TAGS,
+      questions: Array.isArray(parsed.questions) ? parsed.questions : [],
+      answers: Array.isArray(parsed.answers) ? parsed.answers : []
+    };
+  } catch {
+    return {
+      tags: DEFAULT_TAGS,
+      questions: [],
+      answers: []
+    };
+  }
+}
+
+function persistState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function nextId(items) {
+  if (!items.length) return 1;
+  return Math.max(...items.map((item) => Number(item.id) || 0)) + 1;
+}
 
 export const useFAQStore = defineStore('faq', () => {
   const questions = ref([]);
+  const answers = ref([]);
   const tags = ref([]);
   const selectedTags = ref([]);
   const searchQuery = ref('');
   const loading = ref(false);
 
-  // Normalise les données Supabase : transforme question_tags en tableau d'IDs
-  const normalizeQuestion = (q) => ({
-    ...q,
-    tags: (q.question_tags || []).map(qt => qt.tag_id)
-  });
-
-  // Charger tous les tags
-  const fetchTags = async () => {
-    const { data, error } = await supabase
-      .from('tags')
-      .select('*')
-      .order('name');
-
-    if (error) {
-      if (error.code === 'PGRST205' || error.code === '42P01') {
-        throw new Error(
-          "La table public.tags est introuvable sur ce projet Supabase. Exécute src/views/FAQ/faq_database.sql dans l'éditeur SQL Supabase puis recharge la page."
-        );
-      }
-      throw error;
-    }
-
-    tags.value = data || [];
+  const hydrate = () => {
+    const state = loadState();
+    tags.value = state.tags;
+    questions.value = state.questions;
+    answers.value = state.answers;
   };
 
-  // Migration unique depuis localStorage vers Supabase
-  const migrateFromLocalStorage = async () => {
-    const STORAGE_KEY = 'faq_system';
-    const MIGRATION_DONE_KEY = 'faq_migrated_to_supabase';
-
-    if (localStorage.getItem(MIGRATION_DONE_KEY)) return;
-
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      localStorage.setItem(MIGRATION_DONE_KEY, '1');
-      return;
-    }
-
-    let localData;
-    try {
-      localData = JSON.parse(raw);
-    } catch {
-      localStorage.setItem(MIGRATION_DONE_KEY, '1');
-      return;
-    }
-
-    const localQuestions = localData.questions || [];
-    const localAnswers = localData.answers || [];
-    if (localQuestions.length === 0) {
-      localStorage.setItem(MIGRATION_DONE_KEY, '1');
-      return;
-    }
-
-    // S'assurer que les tags sont chargés
-    if (tags.value.length === 0) await fetchTags();
-
-    // Ancien mapping : les tags avaient des IDs 1-15 fixes, on mappe par position
-    // On reconstruit un map oldId -> newId par ordre d'insertion (les noms sont identiques)
-    const OLD_TAGS = [
-      'Guerrier', 'Gardien', 'Revenant', 'Voleur', 'Rodeur', 'Ingénieur',
-      'Nécromant', 'Envouteur', 'Elementaliste', 'Général', 'Technique',
-      'Bug', 'Feature', 'Aide', 'Autre'
-    ];
-    const oldIdToNewId = {};
-    OLD_TAGS.forEach((name, i) => {
-      const oldId = i + 1;
-      const newTag = tags.value.find(t => t.name === name);
-      if (newTag) oldIdToNewId[oldId] = newTag.id;
+  const save = () => {
+    persistState({
+      tags: tags.value,
+      questions: questions.value,
+      answers: answers.value
     });
-
-    for (const q of localQuestions) {
-      try {
-        const { data: inserted, error } = await supabase
-          .from('questions')
-          .insert({
-            title: q.title,
-            content: q.content,
-            author: q.author || 'Anonyme',
-            status: q.status || 'pending',
-            created_at: q.created_at,
-            updated_at: q.updated_at
-          })
-          .select()
-          .single();
-        if (error) continue;
-
-        const tagIds = (q.tags || [])
-          .map(oldId => oldIdToNewId[oldId])
-          .filter(Boolean);
-
-        if (tagIds.length > 0) {
-          await supabase.from('question_tags').insert(
-            tagIds.map(tagId => ({ question_id: inserted.id, tag_id: tagId }))
-          );
-        }
-
-        // Migrer les réponses liées
-        const linkedAnswers = localAnswers.filter(a => a.question_id === q.id);
-        for (const a of linkedAnswers) {
-          await supabase.from('answers').insert({
-            question_id: inserted.id,
-            content: a.content,
-            author: a.author || 'Admin',
-            created_at: a.created_at,
-            updated_at: a.updated_at
-          });
-        }
-      } catch {
-        // continue avec les autres questions
-      }
-    }
-
-    localStorage.setItem(MIGRATION_DONE_KEY, '1');
   };
 
-  // Charger toutes les questions
+  const fetchTags = async () => {
+    if (tags.value.length === 0) {
+      hydrate();
+    }
+    return tags.value;
+  };
+
+  // Kept for compatibility with existing view flow.
+  const migrateFromLocalStorage = async () => {
+    if (tags.value.length === 0) {
+      hydrate();
+    }
+  };
+
   const fetchQuestions = async () => {
     loading.value = true;
     try {
-      const { data, error } = await supabase
-        .from('questions')
-        .select('*, question_tags(tag_id)')
-        .order('created_at', { ascending: false });
-      if (error) throw error;
-      questions.value = (data || []).map(normalizeQuestion);
-    } catch (error) {
-      console.error('Erreur lors du chargement des questions:', error);
+      hydrate();
+      questions.value = [...questions.value].sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
     } finally {
       loading.value = false;
     }
   };
 
-  // Charger une question par ID
   const fetchQuestionById = async (id) => {
-    const { data, error } = await supabase
-      .from('questions')
-      .select('*, question_tags(tag_id)')
-      .eq('id', id)
-      .single();
-    if (error) throw error;
-    return normalizeQuestion(data);
+    if (questions.value.length === 0) {
+      hydrate();
+    }
+    const question = questions.value.find((q) => Number(q.id) === Number(id));
+    if (!question) throw new Error('Question introuvable');
+    return question;
   };
 
-  // Créer une question avec ses tags
   const createQuestion = async (questionData) => {
-    const { data: question, error } = await supabase
-      .from('questions')
-      .insert({
-        title: questionData.title,
-        content: questionData.content,
-        author: questionData.author || 'Anonyme',
-        status: 'pending'
-      })
-      .select()
-      .single();
-    if (error) throw error;
-
-    if (questionData.tags && questionData.tags.length > 0) {
-      const tagInserts = questionData.tags.map(tagId => ({
-        question_id: question.id,
-        tag_id: tagId
-      }));
-      const { error: tagError } = await supabase
-        .from('question_tags')
-        .insert(tagInserts);
-      if (tagError) throw tagError;
+    if (tags.value.length === 0) {
+      hydrate();
     }
 
-    const newQuestion = { ...question, tags: questionData.tags || [] };
+    const timestamp = nowIso();
+    const newQuestion = {
+      id: nextId(questions.value),
+      title: questionData.title,
+      content: questionData.content,
+      author: questionData.author || 'Anonyme',
+      status: 'pending',
+      tags: questionData.tags || [],
+      created_at: timestamp,
+      updated_at: timestamp
+    };
+
     questions.value.unshift(newQuestion);
+    save();
     return newQuestion;
   };
 
-  // Ajouter une réponse
   const addAnswer = async (questionId, answerData) => {
-    const { data: answer, error } = await supabase
-      .from('answers')
-      .insert({
-        question_id: Number(questionId),
-        content: answerData.content,
-        author: answerData.author || 'Admin'
-      })
-      .select()
-      .single();
-    if (error) throw error;
+    const timestamp = nowIso();
+    const newAnswer = {
+      id: nextId(answers.value),
+      question_id: Number(questionId),
+      content: answerData.content,
+      author: answerData.author || 'Admin',
+      created_at: timestamp,
+      updated_at: timestamp
+    };
 
-    await supabase
-      .from('questions')
-      .update({ status: 'answered' })
-      .eq('id', Number(questionId));
+    answers.value.push(newAnswer);
 
-    const q = questions.value.find(q => q.id === Number(questionId));
-    if (q) q.status = 'answered';
+    const question = questions.value.find((q) => Number(q.id) === Number(questionId));
+    if (question) {
+      question.status = 'answered';
+      question.updated_at = timestamp;
+    }
 
-    return answer;
+    save();
+    return newAnswer;
   };
 
-  // Modifier une réponse
   const updateAnswer = async (answerId, answerData) => {
-    const { data: answer, error } = await supabase
-      .from('answers')
-      .update({
-        content: answerData.content,
-        author: answerData.author
-      })
-      .eq('id', Number(answerId))
-      .select()
-      .single();
-    if (error) throw error;
+    const answer = answers.value.find((a) => Number(a.id) === Number(answerId));
+    if (!answer) throw new Error('Reponse introuvable');
+
+    answer.content = answerData.content;
+    answer.author = answerData.author || 'Admin';
+    answer.updated_at = nowIso();
+    save();
+
     return answer;
   };
 
-  // Supprimer une question
   const deleteQuestion = async (questionId) => {
-    const { error } = await supabase
-      .from('questions')
-      .delete()
-      .eq('id', Number(questionId));
-    if (error) throw error;
-    questions.value = questions.value.filter(q => q.id !== Number(questionId));
+    questions.value = questions.value.filter((q) => Number(q.id) !== Number(questionId));
+    answers.value = answers.value.filter((a) => Number(a.question_id) !== Number(questionId));
+    save();
   };
 
-  // Supprimer une réponse
   const deleteAnswer = async (answerId) => {
-    const { data: answer } = await supabase
-      .from('answers')
-      .select('question_id')
-      .eq('id', Number(answerId))
-      .single();
-
-    const { error } = await supabase
-      .from('answers')
-      .delete()
-      .eq('id', Number(answerId));
-    if (error) throw error;
+    const answer = answers.value.find((a) => Number(a.id) === Number(answerId));
+    answers.value = answers.value.filter((a) => Number(a.id) !== Number(answerId));
 
     if (answer) {
-      const { data: remaining } = await supabase
-        .from('answers')
-        .select('id')
-        .eq('question_id', answer.question_id);
-      if (!remaining || remaining.length === 0) {
-        await supabase
-          .from('questions')
-          .update({ status: 'pending' })
-          .eq('id', answer.question_id);
-        const q = questions.value.find(q => q.id === answer.question_id);
-        if (q) q.status = 'pending';
+      const remaining = answers.value.filter(
+        (a) => Number(a.question_id) === Number(answer.question_id)
+      );
+      if (remaining.length === 0) {
+        const question = questions.value.find(
+          (q) => Number(q.id) === Number(answer.question_id)
+        );
+        if (question) {
+          question.status = 'pending';
+          question.updated_at = nowIso();
+        }
       }
     }
+
+    save();
   };
 
-  // Récupérer les réponses d'une question
   const getAnswersByQuestionId = async (questionId) => {
-    const { data, error } = await supabase
-      .from('answers')
-      .select('*')
-      .eq('question_id', Number(questionId))
-      .order('created_at', { ascending: true });
-    if (error) throw error;
-    return data || [];
+    if (answers.value.length === 0 && questions.value.length === 0) {
+      hydrate();
+    }
+
+    return answers.value
+      .filter((a) => Number(a.question_id) === Number(questionId))
+      .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
   };
 
   const filterByTags = (tagIds) => {
@@ -284,14 +225,14 @@ export const useFAQStore = defineStore('faq', () => {
     let result = [...questions.value];
 
     if (selectedTags.value.length > 0) {
-      result = result.filter(q =>
-        selectedTags.value.some(tagId => (q.tags || []).includes(tagId))
+      result = result.filter((q) =>
+        selectedTags.value.some((tagId) => (q.tags || []).includes(tagId))
       );
     }
 
     if (searchQuery.value.trim()) {
       const query = searchQuery.value.toLowerCase();
-      result = result.filter(q =>
+      result = result.filter((q) =>
         q.title.toLowerCase().includes(query) ||
         q.content.toLowerCase().includes(query)
       );
@@ -300,8 +241,10 @@ export const useFAQStore = defineStore('faq', () => {
     return result;
   });
 
-  const getTagById = (tagId) => tags.value.find(t => t.id === tagId);
-  const getTagByName = (name) => tags.value.find(t => t.name === name);
+  const getTagById = (tagId) => tags.value.find((t) => Number(t.id) === Number(tagId));
+  const getTagByName = (name) => tags.value.find((t) => t.name === name);
+
+  hydrate();
 
   return {
     questions,
@@ -326,4 +269,3 @@ export const useFAQStore = defineStore('faq', () => {
     migrateFromLocalStorage
   };
 });
-

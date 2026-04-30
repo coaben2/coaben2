@@ -57,6 +57,7 @@
 <script setup>
 import { onMounted, computed, ref } from 'vue';
 import { useFAQStore } from '@/stores/faqStore';
+import { syncPendingFaqQuestions } from '@/lib/faqMailSync';
 import QuestionCard from './components/QuestionCard.vue';
 import TagFilter from './components/TagFilter.vue';
 import SearchBar from './components/SearchBar.vue';
@@ -72,6 +73,7 @@ onMounted(async () => {
   try {
     await faqStore.fetchTags();
     await faqStore.migrateFromLocalStorage();
+    await syncPendingFaqQuestions();
   } catch (error) {
     errorMessage.value = error?.message || 'Erreur de chargement des tags FAQ.';
   } finally {

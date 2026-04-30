@@ -16,16 +16,17 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 npm install
 ```
 
-## Environment Variables
+## FAQ Mail Mode (Vercel)
 
-Create a `.env` file at the project root with:
+Configure these environment variables in Vercel:
 
 ```sh
-VITE_SUPABASE_URL=https://your-project-ref.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+SMTP_USER=coaben2@gmail.com
+SMTP_PASS=your-gmail-app-password
+FAQ_MAIL_TO=coaben2@gmail.com
 ```
 
-On Vercel, set the same 2 variables in the project settings, then redeploy.
+`SMTP_PASS` must be a Gmail App Password (not your account password).
 
 ### Compile and Hot-Reload for Development
 
