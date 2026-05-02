@@ -56,11 +56,16 @@ const links = [
     title: 'instagram',
     children: [],
   },
-  // {
-  //   to: 'FAQ',
-  //   title: 'Questions',
-  //   children: [],
-  // },
+  {
+    to: 'FAQ',
+    title: 'Questions',
+    children: [],
+  },
+  {
+    to: 'Login',
+    title: 'Admin',
+    children: [],
+  },
 ];
 
 const openModalMenu = () => {
