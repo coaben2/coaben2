@@ -129,20 +129,20 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useFAQStore } from '@/stores/faqStore';
+import { useAuthStore } from '@/stores/auth';
 import AnswerForm from './components/AnswerForm.vue';
 
 const route = useRoute();
 const router = useRouter();
 const faqStore = useFAQStore();
+const authStore = useAuthStore();
 
 const question = ref(null);
 const answers = ref([]);
 const loading = ref(true);
 const editingAnswer = ref(null);
 
-// Pour l'instant, on considère que l'utilisateur est admin
-// Vous pouvez ajouter une vérification d'authentification ici
-const isAdmin = computed(() => true);
+const isAdmin = computed(() => authStore.isAuthenticated);
 
 const statusText = computed(() => {
   if (!question.value) return '';

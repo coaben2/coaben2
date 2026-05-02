@@ -10,8 +10,7 @@
       </p>
     </div>
 
-    <!-- bouton caché temporairement -->
-    <div v-if="false" class="mb-6">
+    <div class="mb-6">
       <router-link to="/faq/ask" class="btn btn-primary btn-lg">
         <i class="fas fa-plus mr-2"></i>
         Poser une question

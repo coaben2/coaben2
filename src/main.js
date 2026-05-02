@@ -9,6 +9,7 @@ import { VueQueryPlugin } from '@tanstack/vue-query';
 import App from './App.vue';
 import router from './router';
 import { useUserStore } from '@/stores/user';
+import { useAuthStore } from '@/stores/auth';
 
 function globalErrorHandler(err, instance, info) {
     if (process.env.NODE_ENV === 'test') {
@@ -37,6 +38,8 @@ app.use(router);
 app.use(VueQueryPlugin);
 
 const userStore = useUserStore();
+const authStore = useAuthStore();
 userStore.initApiKey();
+authStore.initAuth();
 
 app.mount('#app');
