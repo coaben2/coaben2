@@ -5,35 +5,24 @@ import { useUserStore } from '@/stores/user';
 
 const loadingMessage = ref('Chargement des scores McM...');
 const progress = ref(0);
-const userWorld = ref(null);
-
-const customWorldNames = {
-  2002: "Bouche d'Abaddon",
-  2206: 'Pierre Arboréenne',
-  2205: "Clarté d'Aurore",
-  2003: 'Marée Noire',
-  2201: 'Désolation',
-  2102: 'Lac Drakkar',
-  2207: 'Lointaines Cimesfroides',
-  2203: 'Fort Ranik',
-  2204: 'Gandara',
-  2209: 'Refuge de Gunnar',
-  2202: 'Mer de Jade',
-  2101: 'Kodash',
-  2208: 'Son du Meunier',
-  2104: 'Place de Piken',
-  2004: 'Riveflot',
-  2011: 'Anneau de Feu',
-  2012: 'Ruines de Surmia',
-  2013: 'Repos du Marin',
-  2103: 'Outre-Monde',
-  2200: 'Place de Vizunah',
-  2014: 'Crête de Blancos',
-  2001: 'Roc d Augure',
-  2006: 'Baie de Baruch',
-  2105: 'Dzagonur',
-  2106: 'Retraite d Elona',
-  2010: 'Faille du Destin',
+const userWorldId = ref(null);
+const userWvwTeamId = ref(null);
+const userWorldError = ref('');
+const colorLabels = {
+  red: 'Rouge',
+  blue: 'Bleu',
+  green: 'Vert',
+};
+const tierLabels = {
+  1: 'Un',
+  2: 'Deux',
+  3: 'Trois',
+  4: 'Quatre',
+  5: 'Cinq',
+};
+const regionLabels = {
+  1: 'Amérique',
+  2: 'Europe',
 };
 
 const simulateProgress = () => {
@@ -68,6 +57,7 @@ const fetchWvWData = async () => {
       tier: match.id.split('-')[1],
       scores: match.scores || { red: 0, blue: 0, green: 0 },
       victoryPoints: match.victory_points || { red: 0, blue: 0, green: 0 },
+      allWorlds: match.all_worlds || { red: [], blue: [], green: [] },
     }));
   } catch (error) {
     console.error('Erreur:', error);
@@ -84,25 +74,70 @@ const { isLoading, data: matches } = useQuery({
 const usMatches = computed(() => matches.value?.filter((m) => m.id.startsWith('1-')) ?? []);
 const euMatches = computed(() => matches.value?.filter((m) => m.id.startsWith('2-')) ?? []);
 
+const userWvwPlacement = computed(() => {
+  const identifier = Number(userWvwTeamId.value || userWorldId.value || 0);
+
+  if (!identifier || !matches.value?.length) {
+    return null;
+  }
+
+  for (const match of matches.value) {
+    for (const color of ['red', 'blue', 'green']) {
+      const worldsInColor = (match.allWorlds?.[color] || []).map(Number);
+      if (worldsInColor.includes(identifier)) {
+        const regionCode = match.id.split('-')[0];
+        return {
+          tier: match.tier,
+          tierLabel: tierLabels[match.tier] || match.tier,
+          color,
+          colorLabel: colorLabels[color],
+          regionLabel: regionLabels[regionCode] || 'Inconnue',
+        };
+      }
+    }
+  }
+
+  return null;
+});
+
 const userStore = useUserStore();
 const apiKey = ref(userStore.apiKey);
 
 const fetchAccountWorld = async () => {
   if (!apiKey.value) {
-    userWorld.value = 'Clé API manquante';
+    userWorldError.value = 'Clé API manquante';
     return;
   }
 
   try {
-    const response = await fetch('https://api.guildwars2.com/v2/account', {
-      headers: { Authorization: `Bearer ${apiKey.value}` },
-    });
+    const accountUrl = new URL('https://api.guildwars2.com/v2/account');
+    accountUrl.searchParams.set('access_token', apiKey.value);
+    const accountWvwUrl = new URL('https://api.guildwars2.com/v2/account/wvw');
+    accountWvwUrl.searchParams.set('access_token', apiKey.value);
+
+    const [response, responseWvw] = await Promise.all([
+      fetch(accountUrl.toString()),
+      fetch(accountWvwUrl.toString()),
+    ]);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
     const data = await response.json();
-    const worldId = data.world;
-    userWorld.value = customWorldNames[worldId] || `Serveur inconnu (${worldId})`;
+    userWorldId.value = Number(data.world) || null;
+
+    if (responseWvw.ok) {
+      const wvwData = await responseWvw.json();
+      userWvwTeamId.value = Number(wvwData.team) || null;
+    } else {
+      userWvwTeamId.value = null;
+    }
+
+    userWorldError.value = '';
   } catch (error) {
     console.error('Erreur récupération du monde McM:', error);
-    userWorld.value = 'Erreur de récupération du serveur';
+    userWorldError.value = 'Erreur de récupération du serveur';
   }
 };
 
@@ -117,9 +152,12 @@ fetchAccountWorld();
 
     <div v-if="isLoading" class="loading">{{ loadingMessage }}</div>
 
-    <!--<h2 v-else-if="userWorld">
-      Tu représentes le serveur McM {{ userWorld }}
-    </h2>-->
+    <h2 v-if="userWvwPlacement" class="user-placement-title">Ton placement McM</h2>
+    <div v-if="userWvwPlacement" class="user-placement" :class="userWvwPlacement.color">
+      Zone {{ userWvwPlacement.regionLabel }} - Équipe {{ userWvwPlacement.colorLabel }} - Tier
+      {{ userWvwPlacement.tierLabel }}
+    </div>
+    <h2 v-else-if="userWorldError">{{ userWorldError }}</h2>
     <!-- Matches US -->
     <div v-if="usMatches.length" class="region-section">
       <h2>Amérique</h2>
@@ -376,6 +414,32 @@ fetchAccountWorld();
 h2 {
   margin-bottom: 1rem;
   text-align: center;
+}
+
+.user-placement-title {
+  margin-bottom: 0.4rem;
+}
+
+.user-placement {
+  margin: 0 auto 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  width: fit-content;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+}
+
+.user-placement.red {
+  background: rgba(200, 20, 20, 0.85);
+}
+
+.user-placement.blue {
+  background: rgba(24, 84, 201, 0.85);
+}
+
+.user-placement.green {
+  background: rgba(22, 134, 58, 0.9);
 }
 
 .loading-bar {
