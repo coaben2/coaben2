@@ -6,15 +6,20 @@
         Questions & Réponses
       </h1>
       <p class="text-gray-400">
-        Posez vos questions ou consultez les questions existantes
+        Consultez les questions existantes
       </p>
     </div>
 
-    <div class="mb-6">
-      <router-link to="/faq/ask" class="btn btn-primary btn-lg">
-        <i class="fas fa-plus mr-2"></i>
-        Poser une question
-      </router-link>
+    <div class="alert alert-info mb-6">
+      <i class="fas fa-envelope mr-2"></i>
+      <div>
+        <p class="font-semibold mb-2">Vous avez une question ?</p>
+        <p class="mb-3">Envoyez votre question par email à :</p>
+        <a href="mailto:coaben2@gmail.com?subject=Question%20FAQ" class="btn btn-sm btn-primary gap-2">
+          <i class="fas fa-envelope"></i>
+          coaben2@gmail.com
+        </a>
+      </div>
     </div>
 
     <SearchBar />
@@ -61,7 +66,6 @@ const searchQuery = computed(() => faqStore.searchQuery);
 const selectedTags = computed(() => faqStore.selectedTags);
 onMounted(async () => {
   await faqStore.fetchTags();
-  await faqStore.migrateFromLocalStorage();
   faqStore.fetchQuestions();
 });
 </script>

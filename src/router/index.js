@@ -127,14 +127,9 @@ const router = createRouter({
       component: () => import('../views/ContactView.vue'),
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: () => import('../views/LoginView.vue'),
-    },
-    {
       path: '/guildwars2/classes',
       name: 'Classes',
-      component: () => import('../views/classesView.vue'),
+      component: () => import('../views/ClassesView.vue'),
       children: [
         {
           path: 'Global',
