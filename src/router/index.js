@@ -129,7 +129,7 @@ const router = createRouter({
     {
       path: '/guildwars2/classes',
       name: 'Classes',
-      component: () => import('../views/ClassesView.vue'),
+      component: () => import('../views/classesView.vue'),
       children: [
         {
           path: 'Global',
