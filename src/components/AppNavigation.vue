@@ -1,10 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-import { ref, computed } from 'vue';
-import { useAuthStore } from '@/stores/auth';
-
-const authStore = useAuthStore();
-const isAdmin = computed(() => authStore.isAuthenticated);
+import { ref } from 'vue';
 
 const modalMenu = ref(null);
 
@@ -90,9 +86,6 @@ const openModalMenu = () => {
           </ul>
         </div>
       </div>
-      <RouterLink v-if="isAdmin" :to="{ name: 'Login' }" class="btn">
-        Admin
-      </RouterLink>
     </nav>
     <button class="btn btn-ghost m-4 block md:hidden" @click="openModalMenu">
       <svg
@@ -115,11 +108,6 @@ const openModalMenu = () => {
           <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form>
         <ul class="menu menu-lg mt-2">
-          <li v-if="isAdmin">
-            <RouterLink :to="{ name: 'Login' }" @click="modalMenu.close()">
-              Admin
-            </RouterLink>
-          </li>
           <li v-for="(link, k) in links" :key="k">
             <RouterLink
               v-if="!link.children.length"

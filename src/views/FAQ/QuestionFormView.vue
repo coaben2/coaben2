@@ -5,31 +5,27 @@
         <i class="fas fa-arrow-left mr-2"></i>
         Retour à la liste
       </router-link>
-      <h1 class="text-4xl font-bold">
-        <i class="fas fa-question-circle mr-3"></i>
-        Poser une question
-      </h1>
     </div>
 
-    <QuestionForm @submit="handleSubmit" @cancel="handleCancel" />
+    <div class="alert alert-info">
+      <i class="fas fa-info-circle mr-3 text-lg"></i>
+      <div>
+        <h2 class="font-bold text-lg mb-3">Comment soumettre une question ?</h2>
+        <p class="mb-4">
+          Les questions FAQ sont gérées manuellement par l'administrateur. Pour soumettre une question, veuillez l'envoyer par email à :
+        </p>
+        <a href="mailto:coaben2@gmail.com?subject=Question%20FAQ" class="btn btn-primary gap-2 mb-4">
+          <i class="fas fa-envelope"></i>
+          coaben2@gmail.com
+        </a>
+        <p class="text-sm text-gray-500">
+          Votre question sera examinée et une réponse sera publiée si elle est pertinente pour la communauté.
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import QuestionForm from './components/QuestionForm.vue';
-
-const router = useRouter();
-
-const handleSubmit = (question) => {
-  router.push({
-    path: '/faq',
-    query: { success: 'true' }
-  });
-};
-
-const handleCancel = () => {
-  router.push('/faq');
-};
 </script>
 

@@ -82,44 +82,9 @@
                   {{ formatDate(answer.created_at) }}
                 </span>
               </div>
-              <div v-if="isAdmin" class="flex gap-2">
-                <button
-                  class="btn btn-sm btn-ghost"
-                  @click="editAnswer(answer)"
-                >
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button
-                  class="btn btn-sm btn-ghost text-error"
-                  @click="deleteAnswer(answer.id)"
-                >
-                  <i class="fas fa-trash"></i>
-                </button>
-              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Formulaire de réponse (visible pour l'admin) -->
-      <div v-if="isAdmin">
-        <AnswerForm
-          v-if="!editingAnswer"
-          :question-id="question.id"
-          @submit="handleAnswerSubmit"
-        />
-        <AnswerForm
-          v-else
-          :question-id="question.id"
-          :existing-answer="editingAnswer"
-          @submit="handleAnswerSubmit"
-          @cancel="cancelEdit"
-        />
-      </div>
-
-      <div v-else class="alert alert-info">
-        <i class="fas fa-info-circle"></i>
-        <span>Seul l'administrateur peut répondre aux questions.</span>
       </div>
     </div>
   </div>
@@ -127,22 +92,15 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useFAQStore } from '@/stores/faqStore';
-import { useAuthStore } from '@/stores/auth';
-import AnswerForm from './components/AnswerForm.vue';
 
 const route = useRoute();
-const router = useRouter();
 const faqStore = useFAQStore();
-const authStore = useAuthStore();
 
 const question = ref(null);
 const answers = ref([]);
 const loading = ref(true);
-const editingAnswer = ref(null);
-
-const isAdmin = computed(() => authStore.isAuthenticated);
 
 const statusText = computed(() => {
   if (!question.value) return '';
@@ -206,26 +164,6 @@ const loadQuestion = async () => {
     question.value = null;
   }
   loading.value = false;
-};
-
-const handleAnswerSubmit = async (answer) => {
-  await loadQuestion();
-  editingAnswer.value = null;
-};
-
-const editAnswer = (answer) => {
-  editingAnswer.value = answer;
-};
-
-const cancelEdit = () => {
-  editingAnswer.value = null;
-};
-
-const deleteAnswer = async (answerId) => {
-  if (confirm('Êtes-vous sûr de vouloir supprimer cette réponse ?')) {
-    await faqStore.deleteAnswer(answerId);
-    await loadQuestion();
-  }
 };
 
 onMounted(async () => {

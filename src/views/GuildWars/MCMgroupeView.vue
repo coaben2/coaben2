@@ -3,9 +3,6 @@
 
   <!-- Sélecteur de mode -->
   <div class="mode-selector">
-    <button :class="{ active: currentMode === 'mcm' }" @click="switchMode('mcm')">
-      MCM (10 groupes de 5)
-    </button>
     <button :class="{ active: currentMode === 'pve' }" @click="switchMode('pve')">
       PVE (2 groupes de 5)
     </button>
@@ -60,20 +57,6 @@ import { ref, reactive, onMounted, computed } from 'vue';
 
 const API_URL = 'https://api.guildwars2.com/v2/specializations?lang=fr';
 
-// Buffs MCM
-const requiredBuffsMCM = [
-  'Pouvoir',
-  'Stabilité',
-  'Célérité',
-  'Alacrité',
-  'Résistance',
-  'Super vitesse',
-  'Régénération',
-  'Soin',
-  'Fureur',
-  'Protection',
-];
-
 // Buffs PVE
 const requiredBuffsPVE = [
   'Pouvoir',
@@ -86,61 +69,20 @@ const requiredBuffsPVE = [
   'Résistance',
 ];
 
-const currentMode = ref('mcm');
+const currentMode = ref('pve');
 const specializations = reactive({});
 const groups = ref([]);
 
 // Configuration des groupes selon le mode
 const groupConfig = {
-  mcm: { count: 10, size: 5 },
   pve: { count: 2, size: 5 },
   fractal: { count: 1, size: 5 },
 };
 
 // Buffs requis selon le mode actuel
 const currentRequiredBuffs = computed(() => {
-  return currentMode.value === 'mcm' ? requiredBuffsMCM : requiredBuffsPVE;
+  return requiredBuffsPVE;
 });
-
-// Données des buffs MCM
-const buffsDataMCM = {
-  Druide: ['Soin', 'Régénération', 'Protection'],
-  Fracasdeur: ['Pouvoir'],
-  Berserker: ['Pouvoir', 'Fureur'],
-  draconier: [],
-  Faucheur: ['Pouvoir', 'Résistance', 'Vulnérabilité'],
-  Chronomancien: ['Alacrité', 'Stabilité', 'Fureur', 'Célérité'],
-  Mécatronicien: ['Pouvoir', 'Protection'],
-  cataclyste: [],
-  Héraut: ['Pouvoir', 'Fureur', 'Protection'],
-  Animorph: ['Célérité', 'Fureur'],
-  TisseSort: ['Pouvoir', 'Fureur', 'Super vitesse'],
-  Holographiste: ['Pouvoir', 'Super vitesse'],
-  sniper: ['Pouvoir', 'Fureur'],
-  Mirage: ['Pouvoir'],
-  Fléau: ['Barrière', 'Résistance'],
-  Brisesort: ['Pouvoir', 'Stabilité', 'Protection'],
-  Incendiaire: ['Pouvoir', 'Résistance', 'Fureur', 'Stabilité'],
-  Renégat: ['Pouvoir', 'Alacrité', 'Fureur'],
-  Augure: ['Pouvoir', 'Fureur'],
-  subjugeur: [],
-  Virtuose: ['Pouvoir', 'Fureur'],
-  Catalyseur: ['Pouvoir', 'Fureur', 'Stabilité', 'Protection'],
-  jurelame: [],
-  justicier: [],
-  Méchamancien: ['Pouvoir', 'Protection', 'Stabilité'],
-  Spectre: ['Soin', 'Fureur', 'Barrière'],
-  Indomptable: ['Fureur', 'Pouvoir'],
-  Troubadour: ['Stabilité', 'Pouvoir', 'Fureur', 'Célérité', 'Alacrité'],
-  Parangon: ['Pouvoir', 'Stabilité', 'Fureur'],
-  Amalgame: [],
-  Ritualist: ['Barrière', 'Régénération', 'Protection'],
-  Antiquary: ['Fureur', 'Vulnérabilité'],
-  Ventireur: ['Fureur', 'Super vitesse'],
-  Conduit: ['Alacrité', 'Protection', 'Résistance'],
-  Évocateur: ['Pouvoir', 'Fureur', 'Régénération'],
-  Luminescence: ['Pouvoir', 'Protection', 'Stabilité', 'Régénération'],
-};
 
 // Données des buffs PVE
 const buffsDataPVE = {
@@ -186,8 +128,7 @@ function getBuffCount(group, buff) {
   let count = 0;
   group.forEach((member) => {
     if (member && specializations[member]) {
-      const buffsData = currentMode.value === 'mcm' ? buffsDataMCM : buffsDataPVE;
-      const memberBuffs = buffsData[member] || [];
+      const memberBuffs = buffsDataPVE[member] || [];
       memberBuffs.forEach((b) => {
         if (b === buff) count++;
       });
@@ -214,8 +155,8 @@ function switchMode(mode) {
 }
 
 onMounted(() => {
-  // Initialiser avec le mode MCM par défaut
-  switchMode('mcm');
+  // Initialiser avec le mode PVE par défaut
+  switchMode('pve');
 
   fetch(API_URL)
     .then((r) => r.json())
