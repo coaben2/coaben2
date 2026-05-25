@@ -1,0 +1,143 @@
+{
+  "19725": {
+    "itemName": "Ancient Wood Log",
+    "crafts": [
+      { "type": "recipe", "recipeId": 2 },
+      { "type": "recipe", "recipeId": 13738 }
+    ]
+  },
+  "19701": {
+    "itemName": "Orichalcum Ore",
+    "crafts": [
+      { "type": "recipe", "recipeId": 21 },
+      { "type": "recipe", "recipeId": 4300 },
+      { "type": "recipe", "recipeId": 4436 },
+      { "type": "recipe", "recipeId": 13238 },
+      { "type": "recipe", "recipeId": 13553 }
+    ]
+  },
+  "19748": {
+    "itemName": "Silk Scrap",
+    "crafts": [
+      { "type": "recipe", "recipeId": 8 },
+      { "type": "recipe", "recipeId": 15120 },
+      { "type": "recipe", "recipeId": 15131 }
+    ]
+  },
+  "19729": {
+    "itemName": "Thick Leather Section",
+    "crafts": [
+      { "type": "recipe", "recipeId": 27 },
+      { "type": "recipe", "recipeId": 4281 },
+      { "type": "recipe", "recipeId": 4293 },
+      { "type": "recipe", "recipeId": 15120 }
+    ]
+  },
+  "43773": {
+    "itemName": "Quartz Crystal",
+    "crafts": [
+      {
+        "type": "manual",
+        "label": "Charged Quartz Crystal",
+        "outputItemId": 43772,
+        "outputItemCount": 1,
+        "ingredients": [
+          { "itemId": 43773, "count": 25 }
+        ],
+        "vendorCost": 0
+      },
+      { "type": "recipe", "recipeId": 9664 },
+      { "type": "recipe", "recipeId": 9799 },
+      { "type": "recipe", "recipeId": 11097 },
+      { "type": "recipe", "recipeId": 11182 },
+      { "type": "recipe", "recipeId": 11878 },
+      { "type": "recipe", "recipeId": 12092 },
+      { "type": "recipe", "recipeId": 12135 },
+      { "type": "recipe", "recipeId": 12154 },
+      { "type": "recipe", "recipeId": 12179 },
+      { "type": "recipe", "recipeId": 12219 },
+      { "type": "recipe", "recipeId": 12250 },
+      { "type": "recipe", "recipeId": 12264 },
+      { "type": "recipe", "recipeId": 12270 }
+    ]
+  },
+  "19679": {
+    "itemName": "Bronze Ingot",
+    "crafts": [
+      {
+        "type": "manual",
+        "outputItemId": 19679,
+        "outputItemCount": 1,
+        "ingredients": [
+          { "itemId": 19697, "count": 10 },
+          { "itemId": 19704, "count": 1 }
+        ]
+      }
+    ]
+  },
+  "19680": {
+    "itemName": "Copper Ingot",
+    "crafts": [
+      {
+        "type": "manual",
+        "outputItemId": 19680,
+        "outputItemCount": 1,
+        "ingredients": [
+          { "itemId": 19697, "count": 2 }
+        ]
+      }
+    ]
+  },
+  "19710": {
+    "itemName": "Green Wood Plank",
+    "crafts": [
+      {
+        "type": "manual",
+        "outputItemId": 19710,
+        "outputItemCount": 1,
+        "ingredients": [
+          { "itemId": 19723, "count": 3 }
+        ]
+      }
+    ]
+  },
+  "19720": {
+    "itemName": "Bolt of Jute",
+    "crafts": [
+      {
+        "type": "manual",
+        "outputItemId": 19720,
+        "outputItemCount": 1,
+        "ingredients": [
+          { "itemId": 19718, "count": 2 }
+        ]
+      }
+    ]
+  },
+  "19738": {
+    "itemName": "Stretched Rawhide Leather Square",
+    "crafts": [
+      {
+        "type": "manual",
+        "outputItemId": 19738,
+        "outputItemCount": 1,
+        "ingredients": [
+          { "itemId": 19719, "count": 2 }
+        ]
+      }
+    ]
+  },
+  "19758": {
+    "itemName": "Green Wood Dowel",
+    "crafts": [
+      {
+        "type": "manual",
+        "outputItemId": 19758,
+        "outputItemCount": 1,
+        "ingredients": [
+          { "itemId": 19710, "count": 1 }
+        ]
+      }
+    ]
+  }
+}

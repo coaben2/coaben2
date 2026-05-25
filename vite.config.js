@@ -5,7 +5,8 @@ import vue from '@vitejs/plugin-vue';
 import { plugin as mdPlugin, Mode } from 'vite-plugin-markdown';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/coaben2/' : '/',
   plugins: [
     vue(),
     mdPlugin({ mode: [Mode.HTML, Mode.TOC, Mode.VUE] }),
@@ -15,5 +16,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-});
+}));
 
