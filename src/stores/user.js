@@ -34,9 +34,16 @@ export const useUserStore = defineStore('user', () => {
         apiCalls.value = [];
     };
 
+    const resetInventoryData = () => {
+        itemCounts.value = {};
+        partialStacks.value = {};
+        itemPlacements.value = {};
+    };
+
     const initializeAllData = async () => {
         resetApiProgress();
-        totalApiCalls.value = 7;
+        resetInventoryData();
+        totalApiCalls.value = 6;
 
         try {
             await Promise.all([
@@ -44,7 +51,6 @@ export const useUserStore = defineStore('user', () => {
                 getMaterials(),
                 getBank(),
                 getMoney(apiKey.value),
-                getItems(),
                 getCollectibles(),
                 getCurrencyNames()
             ]);
@@ -195,14 +201,24 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
-    const getItems = async () => {
+    const getItems = async (itemIds = []) => {
+        const ids = [...new Set(itemIds.map(id => Number(id)).filter(Boolean))];
+        if (ids.length === 0) {
+            return [];
+        }
+
         try {
-            updateApiProgress('Chargement des objets...');
-            const response = await axios.get(`${APIURL}/items?ids=all&access_token=${apiKey.value}`);
-            return response.data;
+            const itemChunks = chunkArray(ids, 200);
+            const responses = await Promise.all(
+                itemChunks.map((idsChunk) =>
+                    axios.get(`${APIURL}/items?ids=${idsChunk.join(',')}`)
+                )
+            );
+
+            return responses.flatMap((response) => response.data);
         } catch (error) {
             console.error('Error fetching items data:', error);
-            return null;
+            return [];
         }
     };
 
@@ -212,6 +228,33 @@ export const useUserStore = defineStore('user', () => {
             return response.data;
         } catch (error) {
             console.error('Error fetching recipes data:', error);
+            return null;
+        }
+    };
+
+    const getUnlockedRecipes = async () => {
+        try {
+            const recipeIds = [];
+            let currentPage = 0;
+            let totalPages = 1;
+
+            while (currentPage < totalPages) {
+                const response = await axios.get(
+                    `${APIURL}/account/recipes?access_token=${apiKey.value}&page=${currentPage}&page_size=200`
+                );
+
+                if (Array.isArray(response.data)) {
+                    recipeIds.push(...response.data);
+                }
+
+                const pageTotalHeader = response.headers['x-page-total'];
+                totalPages = Number(pageTotalHeader || 1);
+                currentPage += 1;
+            }
+
+            return [...new Set(recipeIds.map(id => Number(id)).filter(Boolean))];
+        } catch (error) {
+            console.error('Error fetching unlocked recipes data:', error);
             return null;
         }
     };
@@ -359,6 +402,7 @@ export const useUserStore = defineStore('user', () => {
         getMaterials,
         getItems,
         getRecipes,
+        getUnlockedRecipes,
         getSkins,
         getColors,
         getMoney,
@@ -371,6 +415,7 @@ export const useUserStore = defineStore('user', () => {
         partialStacks,
         itemPlacements,
         addItem,
+        resetInventoryData,
         getCurrencies,
         getAccount
     };
