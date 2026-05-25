@@ -23,7 +23,7 @@
     "vue-router": "^4.2.5"
   },
   "engines": {
-    "node": ">=20 <25"
+    "node": "24.x"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.16.1",

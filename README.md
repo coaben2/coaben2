@@ -16,19 +16,7 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 npm install
 ```
 
-## FAQ Mail Mode (Vercel)
-
-Configure these environment variables in Vercel:
-
-```sh
-SMTP_USER=coaben2@gmail.com
-SMTP_PASS=your-gmail-app-password
-FAQ_MAIL_TO=coaben2@gmail.com
-```
-
-`SMTP_PASS` must be a Gmail App Password (not your account password).
-
-### Compile and Hot-Reload for Development
+## Compile and Hot-Reload for Development
 
 ```sh
 npm run dev
@@ -38,16 +26,4 @@ npm run dev
 
 ```sh
 npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
 ```
