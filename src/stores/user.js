@@ -46,7 +46,7 @@ export const useUserStore = defineStore('user', () => {
         totalApiCalls.value = 6;
 
         try {
-            await Promise.all([
+            const results = await Promise.allSettled([
                 getCharacters(),
                 getMaterials(),
                 getBank(),
@@ -55,10 +55,15 @@ export const useUserStore = defineStore('user', () => {
                 getCurrencyNames()
             ]);
 
-            return true;
+            const hasInventoryData = Object.keys(itemCounts.value).length > 0;
+            if (results.some((result) => result.status === 'rejected')) {
+                console.warn('Certaines données API ont échoué pendant l\'initialisation, mais l\'inventaire peut quand même être exploité.');
+            }
+
+            return hasInventoryData;
         } catch (error) {
             console.error('Erreur lors de l\'initialisation des données:', error);
-            return false;
+            return Object.keys(itemCounts.value).length > 0;
         }
     };
 

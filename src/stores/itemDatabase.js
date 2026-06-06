@@ -572,7 +572,7 @@ export const useItemDatabaseStore = defineStore('itemDatabase', () => {
     return recipeIds.length > 0;
   };
 
-  // Fonction pour récupérer le nom officiel d'un item via l'API GW2
+  // Fonction pour récupérer le nom français d'un item via l'API GW2
   const getItemName = async (itemId) => {
     // Vérifier le cache d'abord
     if (itemNamesCache.has(itemId)) {
@@ -581,13 +581,17 @@ export const useItemDatabaseStore = defineStore('itemDatabase', () => {
 
     try {
       // Récupérer les informations de l'item via l'API GW2
-      const response = await fetch(`https://api.guildwars2.com/v2/items/${itemId}`);
+      const response = await fetch(`https://api.guildwars2.com/v2/items?ids=${itemId}&lang=fr`);
       if (!response.ok) {
         throw new Error(`Item ${itemId} non trouvé`);
       }
 
       const itemData = await response.json();
-      const itemName = itemData.name;
+      const itemName = itemData?.[0]?.name;
+
+      if (!itemName) {
+        throw new Error(`Nom FR introuvable pour l'item ${itemId}`);
+      }
 
       // Mettre en cache le nom
       itemNamesCache.set(itemId, itemName);
