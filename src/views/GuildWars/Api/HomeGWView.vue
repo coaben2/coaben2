@@ -122,6 +122,9 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
         <li>
           <RouterLink :to="{ name: 'MCM' }">MCM</RouterLink>
         </li>
+        <li>
+          <RouterLink :to="{ name: 'GuildWarsApiAccountProgress' }">Progression compte</RouterLink>
+        </li>
       </ul>
       <RouterView />
     </div>

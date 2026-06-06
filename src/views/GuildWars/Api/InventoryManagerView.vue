@@ -9,6 +9,22 @@
         <span class="loading-text">Chargement des noms des items...</span>
         <div class="loading-spinner"></div>
       </div>
+
+      <div v-if="isAnalyzing || loadingNames" class="loading-progress-panel" aria-live="polite">
+        <div
+          class="loading-progress-track"
+          role="progressbar"
+          :aria-valuenow="loadingProgress"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <div class="loading-progress-fill" :style="{ width: `${loadingProgress}%` }"></div>
+        </div>
+        <div class="loading-progress-meta">
+          <span class="loading-progress-label">Analyse de l'inventaire en cours</span>
+          <span class="loading-progress-value">{{ loadingProgress }}%</span>
+        </div>
+      </div>
     </div>
 
     <!-- Section des recommandations d'items -->
@@ -64,7 +80,16 @@
                 />
               </td>
               <td class="col-name">
-                <span class="item-name">{{ rec.itemName }}</span>
+                <a
+                  v-if="getWikiFrUrl(rec.itemId)"
+                  :href="getWikiFrUrl(rec.itemId)"
+                  class="item-name-link"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <span class="item-name">{{ rec.itemName }}</span>
+                </a>
+                <span v-else class="item-name">{{ rec.itemName }}</span>
               </td>
               <td class="col-count">
                 <span class="item-count">{{ rec.currentCount }}x</span>
@@ -140,7 +165,16 @@
                 <img :src="getItemIcon(stack.id)" :alt="stack.id" class="item-icon" />
               </td>
               <td class="col-name">
-                <span class="stack-name">{{ itemNamesCache.get(stack.id) || `Chargement...` }}</span>
+                <a
+                  v-if="getWikiFrUrl(stack.id)"
+                  :href="getWikiFrUrl(stack.id)"
+                  class="item-name-link"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <span class="stack-name">{{ getItemName(stack.id) }}</span>
+                </a>
+                <span v-else class="stack-name">{{ itemNamesCache.get(stack.id) || `Chargement...` }}</span>
               </td>
               <td class="col-total">
                 <span class="total-count">{{ stack.totalCount }}x</span>
@@ -212,7 +246,18 @@
                 <img :src="getItemIcon(craft.outputItemId)" :alt="craft.outputItemId" class="item-icon" />
               </td>
               <td class="col-best-craft">
-                <span class="best-craft-name">
+                <a
+                  v-if="getWikiFrUrl(craft.outputItemId)"
+                  :href="getWikiFrUrl(craft.outputItemId)"
+                  class="item-name-link"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <span class="best-craft-name">
+                    {{ getItemName(craft.outputItemId) }}
+                  </span>
+                </a>
+                <span v-else class="best-craft-name">
                   {{ itemNamesCache.get(craft.outputItemId) || `Chargement...` }}
                 </span>
               </td>
@@ -286,27 +331,47 @@
                 <img :src="getItemIcon(item.id)" :alt="item.name" class="item-icon" />
               </td>
               <td class="col-name">
-                <span class="craftable-name">{{ itemNamesCache.get(item.id) || `Chargement...` }}</span>
+                <a
+                  v-if="getWikiFrUrl(item.id)"
+                  :href="getWikiFrUrl(item.id)"
+                  class="item-name-link"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <span class="craftable-name">{{ getItemName(item.id) }}</span>
+                </a>
+                <span v-else class="craftable-name">{{ itemNamesCache.get(item.id) || `Chargement...` }}</span>
               </td>
               <td class="col-stacks">
                 <span class="stacks-count">{{ Math.floor(item.totalCount / 250) }}</span>
               </td>
               <td class="col-discipline">
                 <span class="discipline-name">
-                  {{ formatCraftDisciplines(craftResaleMap[item.id].disciplines) }}
+                  {{ formatCraftDisciplines(craftResaleMap[item.id]?.disciplines || []) }}
                 </span>
               </td>
               <td class="col-best-craft">
-                <span class="best-craft-name">
-                  {{ itemNamesCache.get(craftResaleMap[item.id].outputItemId) || `Chargement...` }}
+                <a
+                  v-if="getWikiFrUrl(craftResaleMap[item.id]?.outputItemId)"
+                  :href="getWikiFrUrl(craftResaleMap[item.id]?.outputItemId)"
+                  class="item-name-link"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <span class="best-craft-name">
+                    {{ getItemName(craftResaleMap[item.id]?.outputItemId) }}
+                  </span>
+                </a>
+                <span v-else class="best-craft-name">
+                  {{ itemNamesCache.get(craftResaleMap[item.id]?.outputItemId) || `Chargement...` }}
                 </span>
               </td>
               <td class="col-profit">
                 <span
                   class="profit-value"
-                  :class="craftResaleMap[item.id].totalProfit > 0 ? 'positive' : 'negative'"
+                  :class="(craftResaleMap[item.id]?.totalProfit || 0) > 0 ? 'positive' : 'negative'"
                 >
-                  {{ formatCoins(craftResaleMap[item.id].totalProfit) }}
+                  {{ formatCoins(craftResaleMap[item.id]?.totalProfit) }}
                 </span>
               </td>
             </tr>
@@ -337,13 +402,16 @@ const craftableItems = ref([])
 const craftResaleMap = ref({})
 const hasData = ref(false)
 const loadingNames = ref(false)
+const loadingProgress = ref(0)
 const itemNamesCache = new Map() // Cache pour les noms des items
-const itemIconsCache = new Map()
 const isAnalyzing = ref(false)
 const FALLBACK_ICON = 'https://render.guildwars2.com/file/1468C6A946BFF0A42CBD08A70E45F8F05851FED0/631480.png'
 let needsReanalyze = false
 let bootstrapAttempted = false
+let isBootstrapping = false
 let analyzeTimer = null
+let loadingProgressTimer = null
+let analysisGeneration = 0
 
 const recommendationFilters = ref({
   item: '',
@@ -563,7 +631,37 @@ const resetViewData = () => {
   craftResaleMap.value = {}
   hasData.value = false
   itemNamesCache.clear()
-  itemIconsCache.clear()
+}
+
+const stopLoadingProgress = (done = false) => {
+  if (loadingProgressTimer) {
+    clearInterval(loadingProgressTimer)
+    loadingProgressTimer = null
+  }
+
+  if (done) {
+    loadingProgress.value = 100
+    window.setTimeout(() => {
+      loadingProgress.value = 0
+    }, 250)
+    return
+  }
+
+  loadingProgress.value = 0
+}
+
+const startLoadingProgress = () => {
+  stopLoadingProgress(false)
+  loadingProgress.value = 12
+
+  loadingProgressTimer = window.setInterval(() => {
+    if (loadingProgress.value >= 90) {
+      return
+    }
+
+    const increment = loadingProgress.value < 35 ? 10 : loadingProgress.value < 65 ? 6 : 3
+    loadingProgress.value = Math.min(90, loadingProgress.value + increment)
+  }, 180)
 }
 
 const scheduleAnalyze = (delay = 150) => {
@@ -585,6 +683,26 @@ const formatCoins = (copperValue) => {
   const silver = Math.floor((absValue % 10000) / 100)
   const copper = absValue % 100
   return `${sign}${gold}g ${silver}s ${copper}c`
+}
+
+const normalizeItemId = (itemId) => {
+  const numericId = Number(itemId)
+  return Number.isFinite(numericId) ? numericId : itemId
+}
+
+const getItemName = (itemId) => {
+  return itemNamesCache.get(normalizeItemId(itemId)) || `Item ${itemId}`
+}
+
+const getWikiFrUrl = (itemId) => {
+  const itemName = getItemName(itemId)
+
+  if (!itemName || itemName.startsWith('Item ') || itemName === 'Chargement...') {
+    return null
+  }
+
+  const wikiTitle = itemName.trim().replace(/\s+/g, '_')
+  return `https://wiki-fr.guildwars2.com/wiki/${encodeURIComponent(wikiTitle)}`
 }
 
 const formatCraftDisciplines = (disciplines = []) => {
@@ -609,7 +727,7 @@ const formatCraftDisciplines = (disciplines = []) => {
 
 // Fonction pour obtenir l'icône d'un item via user.js
 const getItemIcon = (itemId) => {
-  return itemIconsCache.get(itemId) || FALLBACK_ICON
+  return userStore.getIconUrl(normalizeItemId(itemId)) || FALLBACK_ICON
 }
 
 // Fonction pour obtenir le label d'une action
@@ -639,11 +757,14 @@ const analyzeInventory = async () => {
     return
   }
 
+  const currentGeneration = ++analysisGeneration
   isAnalyzing.value = true
+  startLoadingProgress()
 
   // Vérifier que la clé API est disponible
   if (!userStore.apiKey || !userStore.haveApiKey) {
     resetViewData()
+    stopLoadingProgress(false)
     isAnalyzing.value = false
     return
   }
@@ -651,7 +772,9 @@ const analyzeInventory = async () => {
   // Si on arrive directement sur la page, tenter d'initialiser les données une fois.
   if (!bootstrapAttempted && Object.keys(userStore.itemCounts || {}).length === 0) {
     bootstrapAttempted = true
+    isBootstrapping = true
     await userStore.initializeAllData()
+    isBootstrapping = false
   }
   
   const itemCounts = userStore.itemCounts
@@ -664,11 +787,11 @@ const analyzeInventory = async () => {
   
   if (!itemCounts || Object.keys(itemCounts).length === 0) {
     resetViewData()
+    stopLoadingProgress(false)
     isAnalyzing.value = false
     return
   }
   
-  hasData.value = true
   loadingNames.value = true
   
   try {
@@ -719,13 +842,24 @@ const analyzeInventory = async () => {
     // Afficher uniquement les items avec un craft rentable a la revente
     craftableItems.value = craftableItems.value.filter(item => Boolean(craftResaleMap.value[item.id]))
     
-    // Précharger les noms et icônes des items
+    // Précharger les noms des items
     await preloadItemAssets()
     
   } catch (error) {
     console.error('Erreur lors de l\'analyse de l\'inventaire:', error)
   } finally {
+    if (currentGeneration !== analysisGeneration) {
+      return
+    }
+
+    hasData.value = Boolean(
+      recommendations.value.length
+      || partialStacks.value.length
+      || possibleCrafts.value.length
+      || craftableItems.value.length
+    )
     loadingNames.value = false
+    stopLoadingProgress(true)
     isAnalyzing.value = false
 
     if (needsReanalyze) {
@@ -742,40 +876,35 @@ const preloadItemAssets = async () => {
     const allItemIds = new Set()
     
     // IDs des recommandations
-    recommendations.value.forEach(rec => allItemIds.add(rec.itemId))
+    recommendations.value.forEach(rec => allItemIds.add(normalizeItemId(rec.itemId)))
     
     // IDs des piles partielles
-    partialStacks.value.forEach(stack => allItemIds.add(stack.id))
+    partialStacks.value.forEach(stack => allItemIds.add(normalizeItemId(stack.id)))
     
     // IDs des items à fabriquer
-    craftableItems.value.forEach(item => allItemIds.add(item.id))
+    craftableItems.value.forEach(item => allItemIds.add(normalizeItemId(item.id)))
 
     // IDs des meilleurs crafts de revente
     Object.values(craftResaleMap.value).forEach(craft => {
       if (craft?.outputItemId) {
-        allItemIds.add(craft.outputItemId)
+        allItemIds.add(normalizeItemId(craft.outputItemId))
       }
     })
 
     // IDs des crafts possibles et de leurs ingrédients
     possibleCrafts.value.forEach(craft => {
-      allItemIds.add(craft.outputItemId)
+      allItemIds.add(normalizeItemId(craft.outputItemId))
       craft.ingredients.forEach(ingredient => {
-        allItemIds.add(ingredient.item_id)
+        allItemIds.add(normalizeItemId(ingredient.item_id))
       })
     })
     
     // Récupérer tous les noms en lot
     const namesMap = await itemDatabaseStore.getItemNamesBatch([...allItemIds])
-    const iconsMap = await itemDatabaseStore.getItemIconsBatch([...allItemIds])
     
     // Mettre à jour le cache local
     namesMap.forEach((name, id) => {
-      itemNamesCache.set(id, name)
-    })
-
-    iconsMap.forEach((icon, id) => {
-      itemIconsCache.set(id, icon || FALLBACK_ICON)
+      itemNamesCache.set(normalizeItemId(id), name)
     })
     
   } catch (error) {
@@ -789,14 +918,18 @@ onMounted(async () => {
   scheduleAnalyze(0)
 
   userStore.$subscribe(() => {
-    scheduleAnalyze()
+    if (!isAnalyzing.value && !isBootstrapping) {
+      scheduleAnalyze()
+    }
   })
 })
 
 watch(
   () => [userStore.apiKey, userStore.haveApiKey],
   () => {
-    scheduleAnalyze(0)
+    if (!isAnalyzing.value && !isBootstrapping) {
+      scheduleAnalyze(0)
+    }
   },
 )
 
@@ -805,6 +938,8 @@ onUnmounted(() => {
     clearTimeout(analyzeTimer)
     analyzeTimer = null
   }
+
+  stopLoadingProgress(false)
 })
 </script>
 
@@ -866,6 +1001,47 @@ onUnmounted(() => {
   border-top: 2px solid #4a90e2;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+}
+
+.loading-progress-panel {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(74, 144, 226, 0.22);
+  border-radius: 12px;
+}
+
+.loading-progress-track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.loading-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #4a90e2 0%, #ffd700 100%);
+  transition: width 180ms ease;
+}
+
+.loading-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #cfd8e3;
+}
+
+.loading-progress-label {
+  font-weight: 600;
+}
+
+.loading-progress-value {
+  color: #ffd700;
+  font-variant-numeric: tabular-nums;
 }
 
 @keyframes spin {
@@ -1201,6 +1377,18 @@ onUnmounted(() => {
   color: #ff9800;
   font-weight: 600;
   font-size: 1rem;
+}
+
+.item-name-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.item-name-link:hover .item-name,
+.item-name-link:hover .stack-name,
+.item-name-link:hover .best-craft-name,
+.item-name-link:hover .craftable-name {
+  text-decoration: underline;
 }
 
 .col-total {

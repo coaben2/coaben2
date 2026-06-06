@@ -79,6 +79,11 @@ const router = createRouter({
           name: 'MCM',
           component: () => import('../views/GuildWars/Api/MCM.vue'),
         },
+        {
+          path: 'progression-compte',
+          name: 'GuildWarsApiAccountProgress',
+          component: () => import('../views/GuildWars/Api/AccountProgressView.vue'),
+        },
       ],
     },
     {
