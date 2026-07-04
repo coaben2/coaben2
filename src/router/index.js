@@ -84,6 +84,11 @@ const router = createRouter({
           name: 'GuildWarsApiAccountProgress',
           component: () => import('../views/GuildWars/Api/AccountProgressView.vue'),
         },
+        {
+          path: 'amulette-saison-des-dragons',
+          name: 'GuildWarsApiSeasonOfDragons',
+          component: () => import('../views/GuildWars/Api/SeasonOfDragonsView.vue'),
+        },
       ],
     },
     {
