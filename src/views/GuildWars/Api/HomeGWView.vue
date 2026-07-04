@@ -125,6 +125,11 @@ const placeholderText = 'Entrez une clé API avec toutes les permissions';
         <li>
           <RouterLink :to="{ name: 'GuildWarsApiAccountProgress' }">Progression compte</RouterLink>
         </li>
+        <li>
+          <RouterLink :to="{ name: 'GuildWarsApiSeasonOfDragons' }">
+            Amulette Saison des Dragons
+          </RouterLink>
+        </li>
       </ul>
       <RouterView />
     </div>

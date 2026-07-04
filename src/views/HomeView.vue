@@ -26,7 +26,7 @@ inject();
         <div class="w-full flex flex-col items-center text-center gap-4">
           <h4>API GW2</h4>
           <p class="flex-1">plusieur outils utilisant <strong>l'API de GW2.</strong></p>
-          <RouterLink :to="{ name: 'GuildWarsAPI' }" class="btn btn-sm btn-outline btn-primary"
+          <RouterLink :to="{ name: 'GuildWarsApiAbout' }" class="btn btn-sm btn-outline btn-primary"
             >Découvrir APi
           </RouterLink>
         </div>
