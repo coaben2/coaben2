@@ -145,26 +145,26 @@ const statusClass = (status) => {
 
 const getTutorialLink = (itemKey) => getLbmUnlockLink(itemKey);
 
-const hasMasteryByPattern = (masteryNames, pattern) =>
-  masteryNames.some((name) => pattern.test(name));
+const hasMasteryByPattern = (masteryTexts, pattern) =>
+  masteryTexts.some((text) => pattern.test(text));
 
 const hasMasteryId = (masteredTrackIds, id) => masteredTrackIds.has(id);
 const hasAnyMasteryId = (masteredTrackIds, ids) => ids.some((id) => masteredTrackIds.has(id));
 
-const getCycleStatuses = ({ access, masteryNames, masteredTrackIds, canReadProgression }) => {
+const getCycleStatuses = ({ access, masteryTexts, masteredTrackIds, canReadProgression }) => {
   const hasAccess = (value) => access.includes(value);
 
   const lwS3 = canReadProgression
     ? hasAnyMasteryId(masteredTrackIds, [13]) ||
-      hasMasteryByPattern(masteryNames, /(Ancient Magics|Oakheart|Counter Magic|Thermal Propulsion)/i)
+      hasMasteryByPattern(masteryTexts, /(Ancient Magics|Oakheart|Counter Magic|Thermal Propulsion)/i)
     : null;
   const lwS4 = canReadProgression
     ? hasAnyMasteryId(masteredTrackIds, [19, 20, 21]) ||
-      hasMasteryByPattern(masteryNames, /(Roller Beetle|Skyscale|Crystal Champion)/i)
+      hasMasteryByPattern(masteryTexts, /(Roller Beetle|Skyscale|Crystal Champion)/i)
     : null;
   const ibs = canReadProgression
     ? hasAnyMasteryId(masteredTrackIds, [22, 23, 24, 25, 26, 27]) ||
-      hasMasteryByPattern(masteryNames, /(Raven Attunement|United Legions Waystation|Essence Manipulation|Dragon Slayer)/i)
+      hasMasteryByPattern(masteryTexts, /(Raven Attunement|United Legions Waystation|Essence Manipulation|Dragon Slayer)/i)
     : null;
 
   return [
@@ -214,12 +214,12 @@ const getCycleStatuses = ({ access, masteryNames, masteredTrackIds, canReadProgr
 
 const buildRecommendationDefinitions = ({
   cycleStatusByKey,
-  masteryNames,
+  masteryTexts,
   masteredTrackIds,
   canReadProgression,
 }) => {
   const hasCycle = (cycleKey) => cycleStatusByKey.get(cycleKey) === 'unlocked';
-  const hasMastery = (pattern) => hasMasteryByPattern(masteryNames, pattern);
+  const hasMastery = (pattern) => hasMasteryByPattern(masteryTexts, pattern);
 
   const withUnknownIfNoProgression = (fn, cycleKey) => {
     if (!hasCycle(cycleKey)) return 'locked';
@@ -526,6 +526,44 @@ const buildRecommendationDefinitions = ({
 const flattenRecommendationItems = (recommendationData) =>
   recommendationData.flatMap((cycle) => cycle.groups.flatMap((group) => group.items));
 
+const buildMasteryTexts = (accountMasteries, masteryDefinitionsById) => {
+  const texts = [];
+
+  for (const entry of accountMasteries) {
+    const masteryId = Number(entry?.id);
+    if (!Number.isFinite(masteryId)) {
+      continue;
+    }
+
+    const level = Number(entry?.level);
+    if (!Number.isFinite(level) || level <= 0) {
+      continue;
+    }
+
+    const definition = masteryDefinitionsById.get(masteryId);
+    if (!definition) {
+      continue;
+    }
+
+    const trackTexts = [
+      definition.name,
+      definition.requirement,
+      definition.region,
+      ...(definition.levels || []).slice(0, level).flatMap((masteryLevel) => [
+        masteryLevel?.name,
+        masteryLevel?.description,
+        masteryLevel?.instruction,
+      ]),
+    ]
+      .filter((value) => typeof value === 'string' && value.trim())
+      .map((value) => value.trim());
+
+    texts.push(...trackTexts);
+  }
+
+  return texts;
+};
+
 const analyzeProgress = async () => {
   errorMessage.value = '';
   loading.value = true;
@@ -546,7 +584,7 @@ const analyzeProgress = async () => {
 
     accountName.value = accountResponse.data.name || '';
 
-    let masteryNames = [];
+    let masteryTexts = [];
     let masteredTrackIds = new Set();
 
     if (canReadProgression) {
@@ -564,14 +602,18 @@ const analyzeProgress = async () => {
       const masteryIds = [...masteredTrackIds].join(',');
 
       if (masteryIds) {
-        const masteryDetailsResponse = await axios.get(`${API_BASE}/masteries?ids=${masteryIds}`);
-        masteryNames = (masteryDetailsResponse.data || []).map((mastery) => mastery.name || '');
+        const masteryDetailsResponse = await axios.get(`${API_BASE}/masteries?ids=${masteryIds}&lang=en`);
+        const masteryDefinitions = masteryDetailsResponse.data || [];
+        const masteryDefinitionsById = new Map(
+          masteryDefinitions.map((mastery) => [Number(mastery.id), mastery]),
+        );
+        masteryTexts = buildMasteryTexts(accountMasteries, masteryDefinitionsById);
       }
     }
 
     cycleStatuses.value = getCycleStatuses({
       access: accountResponse.data.access || [],
-      masteryNames,
+      masteryTexts,
       masteredTrackIds,
       canReadProgression,
     });
@@ -579,7 +621,7 @@ const analyzeProgress = async () => {
     const cycleStatusByKey = new Map(cycleStatuses.value.map((cycle) => [cycle.key, cycle.status]));
     const recommendations = buildRecommendationDefinitions({
       cycleStatusByKey,
-      masteryNames,
+      masteryTexts,
       masteredTrackIds,
       canReadProgression,
     });
