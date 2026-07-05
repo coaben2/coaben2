@@ -34,6 +34,14 @@ export const lbmUnlockLinks = {
   'janthir-land-spear': 'https://www.lebusmagique.fr/blog/gw2/gw2-jw/preparez-vous-pour-la-beta-des-lances-terrestres.html',
   'janthir-regional-masteries': 'https://www.lebusmagique.fr/pages/extension/gw2-jw/maitrises-jw/',
   'janthir-exploration': 'https://www.lebusmagique.fr/pages/extension/gw2-jw/janthir/',
+
+  'sod-lw2': 'https://www.lebusmagique.fr/pages/extension/s2',
+  'sod-hot': 'https://www.lebusmagique.fr/pages/extension/gw2-hot',
+  'sod-lw3': 'https://www.lebusmagique.fr/pages/extension/s3',
+  'sod-pof': 'https://www.lebusmagique.fr/pages/extension/gw2-pof',
+  'sod-lw4': 'https://www.lebusmagique.fr/pages/extension/s4',
+  'sod-ibs': 'https://www.lebusmagique.fr/pages/extension/l-epopee-du-givre',
+  'sod-final': 'https://www.lebusmagique.fr/pages/extension/',
 };
 
 export const getLbmUnlockLink = (unlockKey) => lbmUnlockLinks[unlockKey] || null;
