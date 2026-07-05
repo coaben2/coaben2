@@ -67,6 +67,15 @@
             <div class="achievement-block">
               <h5>Succes d'etape</h5>
               <p class="achievement-name">{{ stage.achievement.name }}</p>
+              <a
+                v-if="getStageTutorialLink(stage.key)"
+                :href="getStageTutorialLink(stage.key)"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="tutorial-link"
+              >
+                Tuto LBM
+              </a>
               <p class="achievement-progress">
                 Progression : {{ stage.achievement.current }} / {{ stage.achievement.max }}
               </p>
@@ -110,6 +119,7 @@
 import axios from 'axios';
 import { computed, onMounted, ref, watch } from 'vue';
 import { useUserStore } from '@/stores/user';
+import { getLbmUnlockLink } from '@/data/lbmUnlockLinks';
 
 const API_BASE = 'https://api.guildwars2.com/v2';
 
@@ -167,8 +177,6 @@ const DRAGON_STAGES = [
 
 const DRAGON_ACHIEVEMENT_IDS = DRAGON_STAGES.map((stage) => stage.achievementId);
 const SOD_MASTER_ACHIEVEMENT_ID = 5790;
-const RETURN_CATEGORY_ID_MIN = 285;
-const RETURN_CATEGORY_ID_MAX = 310;
 const RETURN_META_STAGE_BY_ID = {
   5758: 'lw2',
   5773: 'lw2',
@@ -194,8 +202,23 @@ const RETURN_META_STAGE_BY_ID = {
   5926: 'ibs',
   5861: 'ibs',
 };
+const RETURN_META_ACHIEVEMENT_IDS = DRAGON_STAGES.flatMap((stage) =>
+  Object.entries(RETURN_META_STAGE_BY_ID)
+    .filter(([, stageKey]) => stageKey === stage.key)
+    .map(([achievementId]) => Number(achievementId)),
+);
 
 const userStore = useUserStore();
+
+const STAGE_TUTORIAL_KEY_BY_STAGE = {
+  lw2: 'sod-lw2',
+  hot: 'sod-hot',
+  lw3: 'sod-lw3',
+  pof: 'sod-pof',
+  lw4: 'sod-lw4',
+  ibs: 'sod-ibs',
+  'sod-final': 'sod-final',
+};
 
 const loading = ref(false);
 const errorMessage = ref('');
@@ -243,6 +266,11 @@ const statusClass = (status) => {
   return 'status-unknown';
 };
 
+const getStageTutorialLink = (stageKey) => {
+  const tutorialKey = STAGE_TUTORIAL_KEY_BY_STAGE[stageKey];
+  return tutorialKey ? getLbmUnlockLink(tutorialKey) : null;
+};
+
 const fetchStories = async () => {
   try {
     const response = await axios.get(`${API_BASE}/stories?ids=all&lang=fr`);
@@ -264,23 +292,6 @@ const fetchStories = async () => {
 
     return allStories;
   }
-};
-
-const chunkArray = (items, size = 160) => {
-  const chunks = [];
-  for (let i = 0; i < items.length; i += size) {
-    chunks.push(items.slice(i, i + size));
-  }
-  return chunks;
-};
-
-const fetchAchievementDefinitionsByIds = async ({ ids, lang = 'fr' }) => {
-  if (!ids.length) return [];
-  const chunks = chunkArray(ids, 140);
-  const responses = await Promise.all(
-    chunks.map((chunk) => axios.get(`${API_BASE}/achievements?ids=${chunk.join(',')}&lang=${lang}`)),
-  );
-  return responses.flatMap((response) => response.data || []);
 };
 
 const fetchAllAccountAchievements = async (apiKey) => {
@@ -305,50 +316,8 @@ const fetchAllAccountAchievements = async (apiKey) => {
   return allAchievements;
 };
 
-const fetchReturnMetaAchievementIds = async () => {
-  const categoryIdsResponse = await axios.get(`${API_BASE}/achievements/categories`);
-  const candidateIds = (categoryIdsResponse.data || []).filter(
-    (id) => id >= RETURN_CATEGORY_ID_MIN && id <= RETURN_CATEGORY_ID_MAX,
-  );
-
-  if (!candidateIds.length) return [];
-
-  const categoryResponse = await axios.get(
-    `${API_BASE}/achievements/categories?ids=${candidateIds.join(',')}&lang=en`,
-  );
-  const returnCategories = (categoryResponse.data || []).filter((category) =>
-    String(category?.name || '').startsWith('Return to '),
-  );
-
-  if (!returnCategories.length) return [];
-
-  const allAchievementIds = [...new Set(returnCategories.flatMap((category) => category.achievements || []))];
-  const definitionsEn = await fetchAchievementDefinitionsByIds({ ids: allAchievementIds, lang: 'en' });
-  const definitionById = new Map(definitionsEn.map((achievement) => [achievement.id, achievement]));
-
-  return returnCategories
-    .map((category) => {
-      const byRequirement = (category.achievements || []).find((achievementId) => {
-        const definition = definitionById.get(achievementId);
-        const requirement = String(definition?.requirement || '');
-        return String(definition?.name || '').startsWith('Return to ') && requirement.includes(category.name);
-      });
-
-      if (byRequirement) {
-        return byRequirement;
-      }
-
-      // Fallback if ArenaNet changes requirement text format.
-      return (category.achievements || []).find((achievementId) => {
-        const definition = definitionById.get(achievementId);
-        return String(definition?.name || '').startsWith('Return to ');
-      });
-    })
-    .filter(Boolean);
-};
-
 const fetchReturnMetaProgress = async (accountAchievementMap) => {
-  const returnMetaIds = await fetchReturnMetaAchievementIds();
+  const returnMetaIds = RETURN_META_ACHIEVEMENT_IDS;
   const allTrackedIds = [...new Set([...returnMetaIds, SOD_MASTER_ACHIEVEMENT_ID])];
 
   if (!allTrackedIds.length) {
@@ -440,6 +409,64 @@ const buildStoryStatusesFromAchievement = (stories, achievement) => {
       status: 'locked',
     };
   });
+};
+
+const buildStoryStatusesFromBits = ({ stories, accountAchievement, definition }) => {
+  if (!stories.length || !definition) {
+    return null;
+  }
+
+  if (accountAchievement?.done) {
+    return stories.map((story) => ({
+      ...story,
+      status: 'unlocked',
+    }));
+  }
+
+  const definitionBits = Array.isArray(definition.bits) ? definition.bits : [];
+  const objectiveBitIndexes = definitionBits
+    .map((bit, index) => ({ bit, index }))
+    .filter(({ bit }) => {
+      if (typeof bit === 'string') {
+        return true;
+      }
+
+      if (!bit || typeof bit !== 'object') {
+        return false;
+      }
+
+      return bit.type === 'Objective' || bit.type === 'Text';
+    })
+    .map(({ index }) => index);
+
+  if (!objectiveBitIndexes.length || objectiveBitIndexes.length !== stories.length) {
+    return null;
+  }
+
+  const completedBits = new Set(
+    (Array.isArray(accountAchievement?.bits) ? accountAchievement.bits : []).filter((bitIndex) =>
+      Number.isInteger(bitIndex),
+    ),
+  );
+
+  const mappedStories = stories.map((story, index) => ({
+    ...story,
+    status: completedBits.has(objectiveBitIndexes[index]) ? 'unlocked' : 'locked',
+  }));
+
+  if (mappedStories.every((story) => story.status === 'locked')) {
+    return mappedStories;
+  }
+
+  const firstLockedIndex = mappedStories.findIndex((story) => story.status === 'locked');
+  if (firstLockedIndex >= 0) {
+    mappedStories[firstLockedIndex] = {
+      ...mappedStories[firstLockedIndex],
+      status: 'in-progress',
+    };
+  }
+
+  return mappedStories;
 };
 
 const parseAchievementProgress = (accountAchievement, definition) => {
@@ -614,6 +641,11 @@ const analyzeProgress = async () => {
         accountAchievementMap.get(stage.achievementId),
         achievementDefinitionMap.get(stage.achievementId),
       );
+      const storiesFromBits = buildStoryStatusesFromBits({
+        stories: rawStories,
+        accountAchievement: accountAchievementMap.get(stage.achievementId),
+        definition: achievementDefinitionMap.get(stage.achievementId),
+      });
       const achievement =
         stage.key === 'sod-final'
           ? fallbackAchievement
@@ -623,7 +655,7 @@ const analyzeProgress = async () => {
               fallbackAchievement,
               masterAchievementStatus,
             });
-      const stories = buildStoryStatusesFromAchievement(rawStories, achievement);
+      const stories = storiesFromBits || buildStoryStatusesFromAchievement(rawStories, achievement);
 
       const stageStatus = mergeStageStatus({ stories, achievement });
       const progress = computeStageProgress({ stories, achievement });
@@ -818,6 +850,17 @@ watch(
 .achievement-progress,
 .achievement-name {
   margin: 0.2rem 0;
+}
+
+.tutorial-link {
+  width: fit-content;
+  font-size: 0.85rem;
+  color: #000;
+  text-decoration: none;
+}
+
+.tutorial-link:hover {
+  text-decoration: underline;
 }
 
 .story-block ul {
