@@ -19,6 +19,9 @@
       <article v-if="hasResults" class="panel score-panel">
         <h3>Progression {{ progressScore }} %</h3>
         <p class="score-level">Niveau du compte : {{ accountLevel }}</p>
+        <div class="score-track">
+          <div class="score-track-fill" :style="{ width: `${progressScore}%` }" />
+        </div>
         <ul class="score-details">
           <li>Extensions possedees : {{ scoreBreakdown.expansionPoints }} pts</li>
           <li>Saisons Living World possedees : {{ scoreBreakdown.seasonPoints }} pts</li>
@@ -31,24 +34,69 @@
     <p v-if="errorMessage" class="error-box">{{ errorMessage }}</p>
 
     <div v-if="hasResults" class="results-grid">
+      <article class="panel observatory-overview">
+        <div class="overview-top">
+          <h3>Vue observatoire</h3>
+          <label class="toggle">
+            <input v-model="hideUnlocked" type="checkbox" />
+            <span>Masquer les elements deja debloques</span>
+          </label>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <p class="kpi-label">Cycles debloques</p>
+            <p class="kpi-value">{{ cycleSummary.unlocked }} / {{ cycleSummary.total }}</p>
+          </div>
+          <div class="kpi-card">
+            <p class="kpi-label">Cycles a verifier</p>
+            <p class="kpi-value">{{ cycleSummary.unknown }}</p>
+          </div>
+          <div class="kpi-card">
+            <p class="kpi-label">Objectifs debloques</p>
+            <p class="kpi-value">{{ featureSummary.unlocked }} / {{ featureSummary.total }}</p>
+          </div>
+          <div class="kpi-card">
+            <p class="kpi-label">Objectifs restants</p>
+            <p class="kpi-value">{{ featureSummary.locked + featureSummary.unknown }}</p>
+          </div>
+        </div>
+
+        <div v-if="coverageNotes.length" class="coverage-notes">
+          <p class="coverage-title">Couverture des donnees</p>
+          <ul>
+            <li v-for="note in coverageNotes" :key="note">{{ note }}</li>
+          </ul>
+        </div>
+      </article>
+
       <article class="panel cycles-panel">
-        <h3>contenu avec statut</h3>
+        <h3>Contenu avec statut</h3>
         <p v-if="accountName" class="account-name">Compte : {{ accountName }}</p>
 
         <div class="cycle-accordion">
           <details
-            v-for="cycle in cycleCards"
+            v-for="cycle in filteredCycleCards"
             :key="cycle.key"
             :class="['cycle-item', `cycle-${cycle.key}`]"
           >
             <summary>
-              <span>{{ cycle.label }}</span>
+              <span>
+                {{ cycle.label }}
+                <small v-if="cycle.itemTotal > 0" class="summary-meta">
+                  {{ cycle.itemUnlocked }} / {{ cycle.itemTotal }}
+                </small>
+              </span>
               <span :class="statusClass(cycle.status)">{{ statusLabel(cycle.status) }}</span>
             </summary>
 
             <div class="cycle-body">
+              <div v-if="cycle.itemTotal > 0" class="cycle-progress">
+                <div class="cycle-progress-fill" :style="{ width: `${cycle.itemProgress}%` }" />
+              </div>
+
               <p v-if="cycle.groups.length === 0" class="empty-cycle">
-                Aucun contenu specifique configure pour ce cycle.
+                Aucun contenu a afficher avec les filtres actifs.
               </p>
 
               <div v-for="group in cycle.groups" :key="`${cycle.key}-${group.title}`" class="tier-block">
@@ -74,8 +122,16 @@
             </div>
           </details>
         </div>
-      </article>
 
+        <div v-if="nextSteps.length" class="next-steps">
+          <h4>Priorites suggerees</h4>
+          <ul>
+            <li v-for="step in nextSteps" :key="step.key">
+              <strong>{{ step.cycleLabel }}</strong> : {{ step.label }}
+            </li>
+          </ul>
+        </div>
+      </article>
     </div>
   </section>
 </template>
@@ -88,10 +144,17 @@ import { getLbmUnlockLink } from '@/data/lbmUnlockLinks';
 
 const API_BASE = 'https://api.guildwars2.com/v2';
 
+const FEATURE_ACHIEVEMENT_IDS = {
+  griffon: [3867],
+  rollerBeetle: [4205],
+  skyscale: [4693, 4709, 4714],
+};
+
 const userStore = useUserStore();
 
 const loading = ref(false);
 const errorMessage = ref('');
+const hideUnlocked = ref(false);
 
 const accountName = ref('');
 const cycleStatuses = ref([]);
@@ -112,10 +175,116 @@ const cycleCards = computed(() => {
     recommendationCycles.value.map((cycle) => [cycle.cycleKey, cycle]),
   );
 
-  return cycleStatuses.value.map((cycle) => ({
-    ...cycle,
-    groups: recommendationByCycleKey.get(cycle.key)?.groups || [],
-  }));
+  return cycleStatuses.value.map((cycle) => {
+    const groups = recommendationByCycleKey.get(cycle.key)?.groups || [];
+    const items = groups.flatMap((group) => group.items);
+    const itemTotal = items.length;
+    const itemUnlocked = items.filter((item) => item.status === 'unlocked').length;
+
+    return {
+      ...cycle,
+      groups,
+      itemTotal,
+      itemUnlocked,
+      itemProgress: itemTotal > 0 ? Math.round((itemUnlocked / itemTotal) * 100) : 0,
+    };
+  });
+});
+
+const filteredCycleCards = computed(() =>
+  cycleCards.value
+    .map((cycle) => {
+      if (!hideUnlocked.value) {
+        return cycle;
+      }
+
+      const groups = cycle.groups
+        .map((group) => ({
+          ...group,
+          items: group.items.filter((item) => item.status !== 'unlocked'),
+        }))
+        .filter((group) => group.items.length > 0);
+
+      return {
+        ...cycle,
+        groups,
+      };
+    })
+    .filter((cycle) => !hideUnlocked.value || cycle.status !== 'unlocked' || cycle.groups.length > 0),
+);
+
+const cycleSummary = computed(() => {
+  const unlocked = cycleStatuses.value.filter((cycle) => cycle.status === 'unlocked').length;
+  const locked = cycleStatuses.value.filter((cycle) => cycle.status === 'locked').length;
+  const unknown = cycleStatuses.value.filter((cycle) => cycle.status === 'unknown').length;
+
+  return {
+    unlocked,
+    locked,
+    unknown,
+    total: cycleStatuses.value.length,
+  };
+});
+
+const featureSummary = computed(() => {
+  const unlocked = majorFeatureStatuses.value.filter((feature) => feature.status === 'unlocked').length;
+  const locked = majorFeatureStatuses.value.filter((feature) => feature.status === 'locked').length;
+  const unknown = majorFeatureStatuses.value.filter((feature) => feature.status === 'unknown').length;
+
+  return {
+    unlocked,
+    locked,
+    unknown,
+    total: majorFeatureStatuses.value.length,
+  };
+});
+
+const coverageNotes = computed(() => {
+  const notes = [];
+
+  if (cycleSummary.value.unknown > 0 || featureSummary.value.unknown > 0) {
+    notes.push('Certains statuts restent "A verifier" quand la permission progression manque.');
+  }
+
+  if (cycleStatuses.value.some((cycle) => cycle.key === 'janthir' && cycle.status === 'unlocked')) {
+    notes.push('Janthir Wilds peut etre partiellement visible via les maitrises (limite connue de l API).');
+  }
+
+  if (!notes.length) {
+    notes.push('Couverture complete des donnees detectees pour les cycles suivis dans cette vue.');
+  }
+
+  return notes;
+});
+
+const nextSteps = computed(() => {
+  const steps = [];
+
+  for (const cycle of cycleCards.value) {
+    for (const group of cycle.groups) {
+      for (const item of group.items) {
+        if (item.status === 'unlocked') {
+          continue;
+        }
+
+        steps.push({
+          key: `${cycle.key}-${item.key}`,
+          cycleLabel: cycle.label,
+          label: item.label,
+          status: item.status,
+        });
+      }
+    }
+  }
+
+  return steps
+    .sort((a, b) => {
+      if (a.status === b.status) return 0;
+      if (a.status === 'locked') return -1;
+      if (b.status === 'locked') return 1;
+      return 0;
+    })
+    .slice(0, 6);
 });
 
 const progressScore = computed(() => {
@@ -150,6 +319,20 @@ const hasMasteryByPattern = (masteryTexts, pattern) =>
 
 const hasMasteryId = (masteredTrackIds, id) => masteredTrackIds.has(id);
 const hasAnyMasteryId = (masteredTrackIds, ids) => ids.some((id) => masteredTrackIds.has(id));
+const hasAnyAchievementId = (completedAchievementIds, ids) =>
+  ids.some((id) => completedAchievementIds.has(id));
+
+const fetchTrackedAccountAchievements = async (apiKey, ids) => {
+  if (!ids.length) {
+    return [];
+  }
+
+  const response = await axios.get(
+    `${API_BASE}/account/achievements?ids=${ids.join(',')}&access_token=${apiKey}`,
+  );
+
+  return response.data || [];
+};
 
 const getCycleStatuses = ({ access, masteryTexts, masteredTrackIds, canReadProgression }) => {
   const hasAccess = (value) => access.includes(value);
@@ -214,6 +397,7 @@ const getCycleStatuses = ({ access, masteryTexts, masteredTrackIds, canReadProgr
 
 const buildRecommendationDefinitions = ({
   cycleStatusByKey,
+  completedAchievementIds,
   masteryTexts,
   masteredTrackIds,
   canReadProgression,
@@ -225,6 +409,17 @@ const buildRecommendationDefinitions = ({
     if (!hasCycle(cycleKey)) return 'locked';
     if (!canReadProgression) return 'unknown';
     return fn() ? 'unlocked' : 'locked';
+  };
+
+  const withAchievementOrProgression = ({ cycleKey, achievementIds = [], progressionCheck }) => {
+    if (!hasCycle(cycleKey)) return 'locked';
+    if (achievementIds.length && hasAnyAchievementId(completedAchievementIds, achievementIds)) {
+      return 'unlocked';
+    }
+    if (!canReadProgression) {
+      return achievementIds.length ? 'locked' : 'unknown';
+    }
+    return progressionCheck() ? 'unlocked' : 'locked';
   };
 
   return [
@@ -355,17 +550,29 @@ const buildRecommendationDefinitions = ({
             {
               key: 'pof-griffon',
               label: 'Griffon',
-              status: withUnknownIfNoProgression(() => hasMasteryId(masteredTrackIds, 16), 'path-of-fire'),
+              status: withAchievementOrProgression({
+                cycleKey: 'path-of-fire',
+                achievementIds: FEATURE_ACHIEVEMENT_IDS.griffon,
+                progressionCheck: () => hasMasteryId(masteredTrackIds, 16),
+              }),
             },
             {
               key: 'pof-beetle',
               label: 'Roller Beetle',
-              status: withUnknownIfNoProgression(() => hasMasteryId(masteredTrackIds, 20), 'path-of-fire'),
+              status: withAchievementOrProgression({
+                cycleKey: 'path-of-fire',
+                achievementIds: FEATURE_ACHIEVEMENT_IDS.rollerBeetle,
+                progressionCheck: () => hasMasteryId(masteredTrackIds, 20),
+              }),
             },
             {
               key: 'pof-skyscale',
               label: 'Skyscale',
-              status: withUnknownIfNoProgression(() => hasMasteryId(masteredTrackIds, 21), 'path-of-fire'),
+              status: withAchievementOrProgression({
+                cycleKey: 'path-of-fire',
+                achievementIds: FEATURE_ACHIEVEMENT_IDS.skyscale,
+                progressionCheck: () => hasMasteryId(masteredTrackIds, 21),
+              }),
             },
           ],
         },
@@ -381,12 +588,20 @@ const buildRecommendationDefinitions = ({
             {
               key: 'lw4-beetle',
               label: 'Roller Beetle',
-              status: withUnknownIfNoProgression(() => hasMasteryId(masteredTrackIds, 20), 'lw-s4'),
+              status: withAchievementOrProgression({
+                cycleKey: 'lw-s4',
+                achievementIds: FEATURE_ACHIEVEMENT_IDS.rollerBeetle,
+                progressionCheck: () => hasMasteryId(masteredTrackIds, 20),
+              }),
             },
             {
               key: 'lw4-skyscale-prereq',
               label: 'Skyscale (pre-requis)',
-              status: withUnknownIfNoProgression(() => hasMasteryId(masteredTrackIds, 21), 'lw-s4'),
+              status: withAchievementOrProgression({
+                cycleKey: 'lw-s4',
+                achievementIds: FEATURE_ACHIEVEMENT_IDS.skyscale,
+                progressionCheck: () => hasMasteryId(masteredTrackIds, 21),
+              }),
             },
           ],
         },
@@ -581,11 +796,25 @@ const analyzeProgress = async () => {
 
     const permissions = tokenInfoResponse.data.permissions || [];
     const canReadProgression = permissions.includes('progression');
+    const trackedAchievementIds = [...new Set(Object.values(FEATURE_ACHIEVEMENT_IDS).flat())];
 
     accountName.value = accountResponse.data.name || '';
 
     let masteryTexts = [];
     let masteredTrackIds = new Set();
+    let completedAchievementIds = new Set();
+
+    try {
+      const accountAchievements = await fetchTrackedAccountAchievements(apiKey, trackedAchievementIds);
+      completedAchievementIds = new Set(
+        accountAchievements
+          .filter((achievement) => achievement?.done)
+          .map((achievement) => Number(achievement.id))
+          .filter(Number.isFinite),
+      );
+    } catch {
+      completedAchievementIds = new Set();
+    }
 
     if (canReadProgression) {
       const accountMasteriesResponse = await axios.get(
@@ -621,6 +850,7 @@ const analyzeProgress = async () => {
     const cycleStatusByKey = new Map(cycleStatuses.value.map((cycle) => [cycle.key, cycle.status]));
     const recommendations = buildRecommendationDefinitions({
       cycleStatusByKey,
+      completedAchievementIds,
       masteryTexts,
       masteredTrackIds,
       canReadProgression,
@@ -699,15 +929,6 @@ watch(
   color: #000;
 }
 
-.section-header h2 {
-  margin: 0;
-}
-
-.section-header p {
-  margin: 0.25rem 0 0;
-  color: #000;
-}
-
 .top-row {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
@@ -761,6 +982,73 @@ watch(
   gap: 1rem;
 }
 
+.observatory-overview {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.overview-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.overview-top h3 {
+  margin: 0;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 0.65rem;
+}
+
+.kpi-card {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #f8fafc;
+  padding: 0.6rem;
+}
+
+.kpi-label {
+  margin: 0;
+  font-size: 0.84rem;
+  color: #374151;
+}
+
+.kpi-value {
+  margin: 0.25rem 0 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.coverage-notes {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.65rem;
+  background: #f8fafc;
+}
+
+.coverage-title {
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+}
+
+.coverage-notes ul,
+.next-steps ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+
 .cycles-panel {
   display: grid;
   gap: 0.8rem;
@@ -780,18 +1068,6 @@ watch(
 .account-name {
   margin-top: 0;
   font-weight: 600;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  text-align: left;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 0.55rem 0.2rem;
 }
 
 .cycle-accordion {
@@ -820,9 +1096,30 @@ td {
   color: #000;
 }
 
+.summary-meta {
+  margin-left: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #374151;
+}
+
 .cycle-body {
   border-top: 1px solid #e5e7eb;
   padding: 0.55rem 0;
+}
+
+.cycle-progress {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+  margin-bottom: 0.6rem;
+}
+
+.cycle-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0d6efd, #16a34a);
 }
 
 .cycle-tyria-core {
@@ -879,6 +1176,19 @@ td {
   height: fit-content;
 }
 
+.score-track {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.score-track-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0d6efd, #22c55e);
+}
+
 .tier-block h5 {
   margin: 0.35rem 0;
 }
@@ -912,12 +1222,6 @@ td {
   text-decoration: underline;
 }
 
-.score-value {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0.2rem 0;
-}
-
 .score-level {
   margin-top: 0;
   color: #000;
@@ -927,6 +1231,15 @@ td {
 .score-details {
   margin: 0;
   padding-left: 1rem;
+}
+
+.next-steps {
+  border-top: 1px solid #d1d5db;
+  padding-top: 0.8rem;
+}
+
+.next-steps h4 {
+  margin: 0 0 0.45rem;
 }
 
 .status-ok {
@@ -947,6 +1260,10 @@ td {
 @media (max-width: 640px) {
   .top-row {
     grid-template-columns: 1fr;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
   }
 
   .results-grid {
