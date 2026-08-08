@@ -36,11 +36,6 @@
 
     <div v-if="hasResults" class="panel observatory-overview">
       <div class="overview-top">
-        <h3>Vue observatoire</h3>
-        <label class="toggle">
-          <input v-model="hideCompleted" type="checkbox" />
-          <span>Afficher uniquement les elements restants</span>
-        </label>
       </div>
 
       <div class="kpi-grid">
@@ -49,26 +44,9 @@
           <p class="kpi-value">{{ completedStages }} / {{ stagesProgress.length }}</p>
         </div>
         <div class="kpi-card">
-          <p class="kpi-label">Current Events finis</p>
-          <p class="kpi-value">{{ completedCurrentEventAchievements }} / {{ currentEventAchievementCount }}</p>
-        </div>
-        <div class="kpi-card">
           <p class="kpi-label">Meta retour termines</p>
           <p class="kpi-value">{{ returnMetaProgress.completed }} / {{ returnMetaProgress.total || 0 }}</p>
         </div>
-        <div class="kpi-card">
-          <p class="kpi-label">En cours</p>
-          <p class="kpi-value">{{ inProgressCount }}</p>
-        </div>
-      </div>
-
-      <div v-if="nextObjectives.length" class="next-steps">
-        <h4>Prochaines etapes conseillees</h4>
-        <ul>
-          <li v-for="objective in nextObjectives" :key="objective.key">
-            <strong>{{ objective.kind }}</strong> : {{ objective.label }}
-          </li>
-        </ul>
       </div>
     </div>
 
@@ -87,35 +65,7 @@
       </div>
     </article>
 
-    <article v-if="hasResults" class="panel">
-      <h3>Succes Current Events</h3>
-      <p class="story-summary">
-        {{ completedCurrentEventAchievements }} / {{ currentEventAchievementCount }} succes valides
-      </p>
-
-      <ul class="current-event-list">
-        <li
-          v-for="achievement in filteredCurrentEvents"
-          :key="achievement.id"
-          class="current-event-item"
-        >
-          <div class="current-event-main">
-            <p class="achievement-name">#{{ achievement.order }} - {{ achievement.name }}</p>
-            <p class="current-event-requirement">{{ achievement.requirement }}</p>
-            <div class="inline-progress">
-              <div class="inline-progress-fill" :style="{ width: `${achievementPercent(achievement)}%` }" />
-            </div>
-          </div>
-          <div class="current-event-side">
-            <span :class="statusClass(achievement.status)">{{ statusLabel(achievement.status) }}</span>
-            <span class="return-meta-progress">{{ achievement.current }} / {{ achievement.max }}</span>
-          </div>
-        </li>
-      </ul>
-      <p v-if="filteredCurrentEvents.length === 0" class="empty-text">
-        Tous les succes Current Events visibles sont deja termines.
-      </p>
-    </article>
+    
 
     <article v-if="hasResults" class="panel">
       <h3>Suivi ordonne de l'histoire et des succes</h3>
@@ -148,7 +98,18 @@
               </p>
               <ul v-if="stage.stories.length > 0">
                 <li v-for="story in stage.stories" :key="story.id">
-                  <span>{{ story.name }}</span>
+                  <span class="story-main">
+                    <span>{{ story.name }}</span>
+                    <a
+                      v-if="getStoryTutorialLink(story.id)"
+                      :href="getStoryTutorialLink(story.id)"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="tutorial-link"
+                    >
+                      lien LBM2
+                    </a>
+                  </span>
                   <span :class="statusClass(story.status)">{{ statusLabel(story.status) }}</span>
                 </li>
               </ul>
@@ -173,6 +134,46 @@
                 {{ statusLabel(stage.achievement.status) }}
               </p>
             </div>
+
+            <div
+              v-if="stage.returnMetas && stage.returnMetas.length > 0"
+              class="return-meta-stage-block"
+            >
+              <h5>Meta-succes de cette partie</h5>
+
+              <ul class="return-meta-list">
+                <li
+                  v-for="meta in stage.returnMetas"
+                  :key="meta.id"
+                  class="return-meta-item"
+                >
+                  <span class="return-meta-main">
+                    <span class="return-meta-name">
+                      {{ meta.name }} (#{{ meta.id }})
+                    </span>
+                    <a
+                      v-if="getReturnMetaTutorialLink(meta.id, stage.key)"
+                      :href="getReturnMetaTutorialLink(meta.id, stage.key)"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="tutorial-link"
+                    >
+                      lien LBM2
+                    </a>
+                  </span>
+
+                  <span class="return-meta-right">
+                    <span :class="statusClass(meta.status)">
+                      {{ statusLabel(meta.status) }}
+                    </span>
+
+                    <span class="return-meta-progress">
+                      {{ meta.current }} / {{ meta.max }}
+                    </span>
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
         </details>
       </div>
@@ -182,26 +183,6 @@
       </p>
     </article>
 
-    <article v-if="hasResults && returnMetaProgress.total > 0" class="panel">
-      <h3>24 meta-succes (retour + final)</h3>
-      <p :class="statusClass(returnMetaSummaryStatus)">
-        {{ returnMetaProgress.completed }} termines, {{ returnMetaProgress.inProgress }} en cours,
-        {{ returnMetaProgress.total - returnMetaProgress.completed - returnMetaProgress.inProgress }} non commences
-      </p>
-
-      <ul class="return-meta-list">
-        <li v-for="meta in filteredReturnMetas" :key="meta.id" class="return-meta-item">
-          <span class="return-meta-name">{{ meta.name }} (#{{ meta.id }})</span>
-          <span class="return-meta-right">
-            <span :class="statusClass(meta.status)">{{ statusLabel(meta.status) }}</span>
-            <span class="return-meta-progress">{{ meta.current }} / {{ meta.max }}</span>
-          </span>
-        </li>
-      </ul>
-      <p v-if="filteredReturnMetas.length === 0" class="empty-text">
-        Toutes les metas sont terminees avec le filtre actif.
-      </p>
-    </article>
   </section>
 </template>
 
@@ -220,6 +201,8 @@ const {
   currentEventAchievementCount,
   currentEventAchievements,
   errorMessage,
+  getReturnMetaTutorialLink,
+  getStoryTutorialLink,
   getStageTutorialLink,
   globalProgress,
   hasResults,
@@ -244,24 +227,6 @@ const filteredCurrentEvents = computed(() =>
     ? currentEventAchievements.value.filter((achievement) => achievement.status !== 'unlocked')
     : currentEventAchievements.value,
 );
-
-const filteredReturnMetas = computed(() => {
-  const allMetas = returnMetaProgress.value.achievements || [];
-  if (!hideCompleted.value) {
-    return allMetas;
-  }
-  return allMetas.filter((meta) => meta.status !== 'unlocked');
-});
-
-const returnMetaSummaryStatus = computed(() => {
-  const total = returnMetaProgress.value.total || 0;
-  const completed = returnMetaProgress.value.completed || 0;
-  const inProgress = returnMetaProgress.value.inProgress || 0;
-
-  if (total > 0 && completed === total) return 'unlocked';
-  if (inProgress > 0 || completed > 0) return 'in-progress';
-  return 'locked';
-});
 
 const inProgressCount = computed(() => {
   const stageInProgress = stagesProgress.value.filter((stage) => stage.status === 'in-progress').length;
@@ -646,6 +611,11 @@ const achievementPercent = (achievement) => {
   border-bottom: 1px dashed #d1d5db;
 }
 
+.return-meta-main {
+  display: grid;
+  gap: 0.15rem;
+}
+
 .return-meta-name {
   font-weight: 600;
 }
@@ -658,6 +628,11 @@ const achievementPercent = (achievement) => {
 
 .return-meta-progress {
   font-weight: 600;
+}
+
+.story-main {
+  display: grid;
+  gap: 0.15rem;
 }
 
 .story-block li {
