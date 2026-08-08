@@ -14,25 +14,11 @@ const DRAGON_STAGES = [
     achievementId: 7909,
   },
   {
-    key: 'hot',
-    order: 2,
-    label: 'Heart of Thorns',
-    seasonId: 'B8901E58-DC9D-4525-ADB2-79C93593291E',
-    achievementId: 7856,
-  },
-  {
     key: 'lw3',
     order: 3,
     label: 'Living World Saison 3',
     seasonId: '09766A86-D88D-4DF2-9385-259E9A8CA583',
     achievementId: 8140,
-  },
-  {
-    key: 'pof',
-    order: 4,
-    label: 'Path of Fire',
-    seasonId: 'EAB597C0-C484-4FD3-9430-31433BAC81B6',
-    achievementId: 8421,
   },
   {
     key: 'lw4',
@@ -139,12 +125,68 @@ const RETURN_META_ACHIEVEMENT_IDS = DRAGON_STAGES.flatMap((stage) =>
 
 const STAGE_TUTORIAL_KEY_BY_STAGE = {
   lw2: 'sod-lw2',
-  hot: 'sod-hot',
   lw3: 'sod-lw3',
   pof: 'sod-pof',
   lw4: 'sod-lw4',
   ibs: 'sod-ibs',
   'sod-final': 'sod-final',
+};
+
+const STORY_TUTORIAL_KEY_BY_ID = {
+  11: 'sod-story-11',
+  12: 'sod-story-12',
+  13: 'sod-story-13',
+  14: 'sod-story-14',
+  15: 'sod-story-15',
+  16: 'sod-story-16',
+  17: 'sod-story-17',
+  18: 'sod-story-18',
+  46: 'sod-story-46',
+  56: 'sod-story-56',
+  63: 'sod-story-63',
+  64: 'sod-story-64',
+  65: 'sod-story-65',
+  66: 'sod-story-66',
+  85: 'sod-story-85',
+  86: 'sod-story-86',
+  87: 'sod-story-87',
+  88: 'sod-story-88',
+  89: 'sod-story-89',
+  90: 'sod-story-90',
+  91: 'sod-story-91',
+  93: 'sod-story-93',
+  94: 'sod-story-94',
+  95: 'sod-story-95',
+  96: 'sod-story-96',
+  97: 'sod-story-97',
+  98: 'sod-story-98',
+};
+
+const RETURN_META_TUTORIAL_KEY_BY_ID = {
+  5758: 'sod-return-5758',
+  5773: 'sod-return-5773',
+  5804: 'sod-return-5804',
+  5748: 'sod-return-5748',
+  5829: 'sod-return-5829',
+  5742: 'sod-return-5742',
+  5751: 'sod-return-5751',
+  5756: 'sod-return-5756',
+  5779: 'sod-return-5779',
+  5743: 'sod-return-5743',
+  5948: 'sod-return-5948',
+  5884: 'sod-return-5884',
+  6005: 'sod-return-6005',
+  5901: 'sod-return-5901',
+  6023: 'sod-return-6023',
+  5995: 'sod-return-5995',
+  5888: 'sod-return-5888',
+  5991: 'sod-return-5991',
+  6024: 'sod-return-6024',
+  5886: 'sod-return-5886',
+  5869: 'sod-return-5869',
+  5926: 'sod-return-5926',
+  5861: 'sod-return-5861',
+  5790: 'sod-return-5790',
 };
 
 const statusLabel = (status) => {
@@ -164,6 +206,20 @@ const statusClass = (status) => {
 const getStageTutorialLink = (stageKey) => {
   const tutorialKey = STAGE_TUTORIAL_KEY_BY_STAGE[stageKey];
   return tutorialKey ? getLbmUnlockLink(tutorialKey) : null;
+};
+
+const getStoryTutorialLink = (storyId) => {
+  const tutorialKey = STORY_TUTORIAL_KEY_BY_ID[storyId];
+  return tutorialKey ? getLbmUnlockLink(tutorialKey) : null;
+};
+
+const getReturnMetaTutorialLink = (achievementId, stageKey) => {
+  const tutorialKey = RETURN_META_TUTORIAL_KEY_BY_ID[achievementId];
+  if (tutorialKey) {
+    return getLbmUnlockLink(tutorialKey);
+  }
+
+  return getStageTutorialLink(stageKey);
 };
 
 const fetchStories = async () => {
@@ -595,6 +651,16 @@ export const useSeasonOfDragonsTracker = () => {
                 masterAchievementStatus,
               });
         const stories = storiesFromBits || buildStoryStatusesFromAchievement(rawStories, achievement);
+        const returnMetas = [
+          ...returnProgress.achievements.filter(
+            (meta) => RETURN_META_STAGE_BY_ID[meta.id] === stage.key,
+          ),
+          ...(stage.key === 'sod-final'
+            ? returnProgress.achievements.filter(
+                (meta) => meta.id === SOD_MASTER_ACHIEVEMENT_ID,
+              )
+            : []),
+        ];
 
         const stageStatus = mergeStageStatus({ stories, achievement });
         const progress = computeStageProgress({ stories, achievement });
@@ -604,6 +670,7 @@ export const useSeasonOfDragonsTracker = () => {
           stories,
           storyCompleted: stories.filter((story) => story.status === 'unlocked').length,
           achievement,
+          returnMetas,
           status: stageStatus,
           progress,
         };
@@ -666,6 +733,8 @@ export const useSeasonOfDragonsTracker = () => {
     currentEventAchievementCount,
     currentEventAchievements,
     errorMessage,
+    getReturnMetaTutorialLink,
+    getStoryTutorialLink,
     getStageTutorialLink,
     globalProgress,
     hasResults,
