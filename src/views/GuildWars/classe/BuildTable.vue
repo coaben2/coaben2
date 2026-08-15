@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import gw2Builds from '@/data/gw2Builds.json';
 
-defineProps({
+const props = defineProps({
   builds: {
     type: Array,
     required: true,
@@ -23,6 +23,9 @@ const isEnriching = ref(false);
 const enrichStatus = ref('');
 const isDev = import.meta.env.DEV;
 const isAddingBuild = ref(false);
+const isEditMode = ref(false);
+const selectedExistingBuildId = ref('');
+const autoRecalculateIcons = ref(true);
 const newBuild = ref({
   id: '',
   name: '',
@@ -59,9 +62,216 @@ const professionMapping = {
   'Faucheur': 'necromant', 'Fléau': 'necromant', 'Augure': 'necromant', 'necromant': 'necromant'
 };
 
-const sources = ['Snowcrows', 'Discretize', 'GuildJen', 'Metabattle', 'GW2Mists'];
+const sources = ['Snowcrows', 'Discretize', 'GuildJen', 'Metabattle', 'GW2Mists' , 'perso'];
+
+const mainWeaponOptions = [
+  'Hache',
+  'Épée',
+  'Dague',
+  'Masse',
+  'Pistolet',
+  'Sceptre',
+  'Espadon',
+  'Bâton',
+  'Arc long',
+  'Arc court',
+  'Marteau',
+  'Fusil',
+  'Lance',
+];
+
+const offHandWeaponOptions = [
+  'Hache',
+  'Épée',
+  'Dague',
+  'Masse',
+  'Pistolet',
+  'Focus',
+  'Bouclier',
+  'Torche',
+  'Cor de guerre',
+];
+
+const twoHandedWeapons = new Set(['Espadon', 'Bâton', 'Arc long', 'Arc court', 'Marteau', 'Fusil', 'Lance']);
+
+const weaponSets = ref([
+  { main: '', off: '' },
+  { main: '', off: '' },
+]);
+
+const isTwoHandedWeapon = (weaponName) => twoHandedWeapons.has(weaponName);
+
+const syncWeaponsString = () => {
+  weaponSets.value.forEach((set) => {
+    if (!set.main || isTwoHandedWeapon(set.main)) {
+      set.off = '';
+    }
+  });
+
+  const serializedSets = weaponSets.value
+    .map((set) => {
+      if (!set.main) return '';
+      return set.off ? `${set.main} / ${set.off}` : set.main;
+    })
+    .filter(Boolean);
+
+  newBuild.value.details.weapons = serializedSets.join(' + ');
+};
+
+const handleMainWeaponChange = () => {
+  syncWeaponsString();
+};
+
+const handleOffHandWeaponChange = () => {
+  syncWeaponsString();
+};
+
+const parseWeaponsToSets = (weaponsString) => {
+  const nextSets = [
+    { main: '', off: '' },
+    { main: '', off: '' },
+  ];
+
+  if (typeof weaponsString !== 'string' || !weaponsString.trim()) {
+    weaponSets.value = nextSets;
+    syncWeaponsString();
+    return;
+  }
+
+  const serializedSets = weaponsString
+    .split('+')
+    .map((entry) => entry.trim())
+    .filter(Boolean)
+    .slice(0, 2);
+
+  serializedSets.forEach((entry, index) => {
+    const parts = entry.split('/').map((part) => part.trim()).filter(Boolean);
+    const main = parts[0] || '';
+    const off = parts[1] || '';
+
+    if (mainWeaponOptions.includes(main)) {
+      nextSets[index].main = main;
+    }
+
+    if (off && !isTwoHandedWeapon(main) && offHandWeaponOptions.includes(off)) {
+      nextSets[index].off = off;
+    }
+  });
+
+  weaponSets.value = nextSets;
+  syncWeaponsString();
+};
+
+const loadSelectedBuildForEdit = () => {
+  if (!selectedExistingBuildId.value) return;
+  const existingBuild = (props.builds || []).find((entry) => entry?.id === selectedExistingBuildId.value);
+  if (!existingBuild) {
+    enrichStatus.value = 'Erreur: build introuvable dans la liste affichée.';
+    return;
+  }
+
+  newBuild.value = {
+    id: existingBuild.id || '',
+    name: existingBuild.name || '',
+    specialization: existingBuild.specialization || '',
+    mode: existingBuild.mode || 'PvE',
+    source: existingBuild.source || 'perso',
+    chatCode: existingBuild.chatCode || '',
+    details: {
+      weapons: existingBuild.details?.weapons || '',
+      stats: existingBuild.details?.stats || '',
+      runes: existingBuild.details?.runes || '',
+      sigils: existingBuild.details?.sigils || '',
+    },
+  };
+
+  parseWeaponsToSets(newBuild.value.details.weapons);
+  isEditMode.value = true;
+  enrichStatus.value = 'Build chargé en mode modification.';
+};
+
+const resetBuildForm = () => {
+  newBuild.value = {
+    id: '',
+    name: '',
+    specialization: '',
+    mode: 'PvE',
+    source: 'Snowcrows',
+    chatCode: '',
+    details: {
+      weapons: '',
+      stats: '',
+      runes: '',
+      sigils: ''
+    }
+  };
+
+  weaponSets.value = [
+    { main: '', off: '' },
+    { main: '', off: '' },
+  ];
+  selectedExistingBuildId.value = '';
+  isEditMode.value = false;
+};
+
+const updateVisibleBuilds = (profession, build) => {
+  if (!Array.isArray(props.builds) || !build?.id) return;
+
+  const normalizedBuild = {
+    ...build,
+    profession,
+    details: build.details || { weapons: '', stats: '', runes: '', sigils: '' },
+  };
+
+  const existingIndex = props.builds.findIndex((entry) => entry?.id === normalizedBuild.id);
+  if (existingIndex >= 0) {
+    props.builds.splice(existingIndex, 1, normalizedBuild);
+    return;
+  }
+
+  props.builds.unshift(normalizedBuild);
+};
+
+const parseApiResponse = async (response) => {
+  const contentType = response.headers.get('content-type') || '';
+  const rawBody = await response.text();
+
+  if (!rawBody || !rawBody.trim()) {
+    return {
+      body: null,
+      empty: true,
+      isJson: false,
+      contentType,
+      parseError: null,
+      rawBody,
+    };
+  }
+
+  try {
+    return {
+      body: JSON.parse(rawBody),
+      empty: false,
+      isJson: true,
+      contentType,
+      parseError: null,
+      rawBody,
+    };
+  } catch (parseError) {
+    return {
+      body: null,
+      empty: false,
+      isJson: false,
+      contentType,
+      parseError,
+      rawBody,
+    };
+  }
+};
 
 const saveBuild = async () => {
+  syncWeaponsString();
+  const wasExistingBuild = (props.builds || []).some((entry) => entry?.id === newBuild.value.id);
+
   const profKey = professionMapping[newBuild.value.specialization];
   if (!profKey) {
     enrichStatus.value = "Erreur: Spécialisation inconnue pour le mapping de profession.";
@@ -77,15 +287,43 @@ const saveBuild = async () => {
         profession: profKey
       })
     });
-    const data = await response.json();
-    if (data.success) {
-      enrichStatus.value = 'Build ajouté !';
+
+    const { body: data, empty, isJson, contentType, rawBody } = await parseApiResponse(response);
+
+    if (!response.ok) {
+      const apiError = isJson && data?.error ? data.error : `HTTP ${response.status}`;
+      throw new Error(apiError);
+    }
+
+    // Some dev APIs can return 204 or empty JSON body after write operations.
+    if (empty) {
+      updateVisibleBuilds(profKey, { ...newBuild.value });
+      const saveMessage = wasExistingBuild ? 'Build mis à jour !' : 'Build ajouté !';
+      enrichStatus.value = saveMessage;
+      if (autoRecalculateIcons.value) {
+        await enrichData();
+      }
       isAddingBuild.value = false;
-      // Reset form
-      newBuild.value = {
-        id: '', name: '', specialization: '', mode: 'PvE', source: 'Snowcrows', chatCode: '',
-        details: { weapons: '', stats: '', runes: '', sigils: '' }
-      };
+      resetBuildForm();
+      return;
+    }
+
+    if (!isJson) {
+      if (contentType.includes('text/html')) {
+        throw new Error('Endpoint /api/add-build indisponible en mode dev (réponse HTML). Lance un backend API local ou configure un proxy Vite.');
+      }
+      throw new Error(`Réponse non-JSON reçue (${contentType || 'type inconnu'}): ${rawBody.slice(0, 120)}`);
+    }
+
+    if (data.success) {
+      updateVisibleBuilds(profKey, { ...newBuild.value });
+      const saveMessage = wasExistingBuild || data.updated ? 'Build mis à jour !' : 'Build ajouté !';
+      enrichStatus.value = saveMessage;
+      if (autoRecalculateIcons.value) {
+        await enrichData();
+      }
+      isAddingBuild.value = false;
+      resetBuildForm();
     } else {
       enrichStatus.value = `Erreur: ${data.error}`;
     }
@@ -99,7 +337,26 @@ const enrichData = async () => {
   enrichStatus.value = 'Calcul en cours...';
   try {
     const response = await fetch('/api/enrich', { method: 'POST' });
-    const data = await response.json();
+
+    const { body: data, empty, isJson, contentType, rawBody } = await parseApiResponse(response);
+
+    if (!response.ok) {
+      const apiError = isJson && data?.error ? data.error : `HTTP ${response.status}`;
+      throw new Error(apiError);
+    }
+
+    if (empty) {
+      enrichStatus.value = 'Enrichissement terminé !';
+      return;
+    }
+
+    if (!isJson) {
+      if (contentType.includes('text/html')) {
+        throw new Error('Endpoint /api/enrich indisponible en mode dev (réponse HTML). Lance un backend API local ou configure un proxy Vite.');
+      }
+      throw new Error(`Réponse non-JSON reçue (${contentType || 'type inconnu'}): ${rawBody.slice(0, 120)}`);
+    }
+
     if (data.success) {
       enrichStatus.value = 'Enrichissement terminé ! (Vite peut redémarrer)';
     } else {
@@ -201,7 +458,31 @@ const getRoleStyle = (mode) => {
 
     <!-- Add Build Form (Dev Mode) -->
     <div v-if="isAddingBuild && isDev" class="p-6 bg-white/[0.02] border-b border-white/5">
-      <h3 class="text-sm font-black uppercase text-blue-400 mb-4 tracking-widest">Nouveau Build</h3>
+      <h3 class="text-sm font-black uppercase text-blue-400 mb-4 tracking-widest">{{ isEditMode ? 'Modifier un Build' : 'Nouveau Build' }}</h3>
+      <div class="mb-4 p-3 rounded border border-white/10 bg-black/30">
+        <div class="text-[9px] font-bold text-gray-500 uppercase mb-2">Mettre à jour un build existant</div>
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-2">
+          <select
+            v-model="selectedExistingBuildId"
+            class="w-full bg-black/40 border border-white/10 rounded px-3 py-1.5 text-xs text-white focus:border-blue-500 outline-none"
+          >
+            <option value="">Choisir un build affiché...</option>
+            <option v-for="existing in builds" :key="existing.id" :value="existing.id">{{ existing.name }} ({{ existing.id }})</option>
+          </select>
+          <button
+            @click="loadSelectedBuildForEdit"
+            class="px-3 py-1.5 bg-amber-600 hover:bg-amber-500 text-white rounded text-[10px] font-black uppercase tracking-wide"
+          >
+            Charger
+          </button>
+          <button
+            @click="resetBuildForm"
+            class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white rounded text-[10px] font-black uppercase tracking-wide"
+          >
+            Nouveau
+          </button>
+        </div>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div class="space-y-1">
           <label class="text-[9px] font-bold text-gray-500 uppercase">ID</label>
@@ -231,26 +512,65 @@ const getRoleStyle = (mode) => {
           <label class="text-[9px] font-bold text-gray-500 uppercase">Code Chat</label>
           <input v-model="newBuild.chatCode" type="text" placeholder="[&...]" class="w-full bg-black/40 border border-white/10 rounded px-3 py-1.5 text-xs text-white focus:border-blue-500 outline-none" />
         </div>
-        <div class="space-y-1">
-          <label class="text-[9px] font-bold text-gray-500 uppercase">Armes</label>
-          <input v-model="newBuild.details.weapons" type="text" placeholder="Bâton / Bâton" class="w-full bg-black/40 border border-white/10 rounded px-3 py-1.5 text-xs text-white focus:border-blue-500 outline-none" />
+        <div class="space-y-2 lg:col-span-3">
+          <label class="text-[9px] font-bold text-gray-500 uppercase">Armes (slots guidés)</label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div v-for="(set, idx) in weaponSets" :key="idx" class="p-3 rounded border border-white/10 bg-black/30">
+              <div class="text-[9px] text-gray-400 font-bold uppercase mb-2">Set {{ idx + 1 }}</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label class="text-[9px] text-gray-500 uppercase block mb-1">Slot principal</label>
+                  <select
+                    v-model="set.main"
+                    @change="handleMainWeaponChange"
+                    class="w-full bg-black/40 border border-white/10 rounded px-2 py-1.5 text-xs text-white focus:border-blue-500 outline-none"
+                  >
+                    <option value="">Aucune</option>
+                    <option v-for="weapon in mainWeaponOptions" :key="`main-${idx}-${weapon}`" :value="weapon">{{ weapon }}</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-[9px] text-gray-500 uppercase block mb-1">Slot secondaire</label>
+                  <select
+                    v-model="set.off"
+                    @change="handleOffHandWeaponChange"
+                    :disabled="!set.main || isTwoHandedWeapon(set.main)"
+                    class="w-full bg-black/40 border border-white/10 rounded px-2 py-1.5 text-xs text-white focus:border-blue-500 outline-none disabled:opacity-40"
+                  >
+                    <option value="">Aucune</option>
+                    <option v-for="weapon in offHandWeaponOptions" :key="`off-${idx}-${weapon}`" :value="weapon">{{ weapon }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-[9px] text-gray-500">
+            Format généré: <span class="text-gray-300 font-bold">{{ newBuild.details.weapons || 'Aucune arme sélectionnée' }}</span>
+          </div>
+          <div class="text-[9px] text-gray-600">
+            Règle: <span class="text-gray-400">/</span> sépare les 2 slots d'un même set, <span class="text-gray-400">+</span> sépare Set 1 et Set 2. Une arme 2 mains bloque le slot secondaire du set.
+          </div>
         </div>
         <div class="space-y-1">
           <label class="text-[9px] font-bold text-gray-500 uppercase">Stats</label>
           <input v-model="newBuild.details.stats" type="text" placeholder="14 Vipérin" class="w-full bg-black/40 border border-white/10 rounded px-3 py-1.5 text-xs text-white focus:border-blue-500 outline-none" />
         </div>
         <div class="space-y-1">
-          <label class="text-[9px] font-bold text-gray-500 uppercase">Rune</label>
-          <input v-model="newBuild.details.runes" type="text" placeholder="Aventurier" class="w-full bg-black/40 border border-white/10 rounded px-3 py-1.5 text-xs text-white focus:border-blue-500 outline-none" />
+          <label class="text-[9px] font-bold text-gray-500 uppercase">Relique</label>
+          <input v-model="newBuild.details.runes" type="text" placeholder="Relique de l'aventurier" class="w-full bg-black/40 border border-white/10 rounded px-3 py-1.5 text-xs text-white focus:border-blue-500 outline-none" />
         </div>
         <div class="space-y-1 lg:col-span-3">
           <label class="text-[9px] font-bold text-gray-500 uppercase">Cachets</label>
           <input v-model="newBuild.details.sigils" type="text" placeholder="Énergie, Destinée, Malice, Tourmente" class="w-full bg-black/40 border border-white/10 rounded px-3 py-1.5 text-xs text-white focus:border-blue-500 outline-none" />
         </div>
       </div>
+      <div class="mt-4 flex items-center gap-2 text-[10px] text-gray-300">
+        <input id="autoRecalcIcons" v-model="autoRecalculateIcons" type="checkbox" class="accent-emerald-500" />
+        <label for="autoRecalcIcons" class="uppercase tracking-wide">Relancer automatiquement le calcul des icônes après sauvegarde</label>
+      </div>
       <div class="mt-6 flex justify-end">
         <button @click="saveBuild" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-black uppercase tracking-widest shadow-xl transition-all">
-          Enregistrer le Build
+          {{ isEditMode ? 'Mettre à jour le Build' : 'Enregistrer le Build' }}
         </button>
       </div>
     </div>

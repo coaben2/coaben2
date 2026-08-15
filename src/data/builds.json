@@ -87,7 +87,7 @@
       "source": "GuildJen",
       "chatCode": "[&DQEqOhA2DSomDwMBeAEAAAQBAABHAQAANwEAAAAAAAAAAAAAAAAAAAAAAAADVgAxADIAAA==]",
       "details": {
-        "weapons": "Espadon / sceptre + focus",
+        "weapons": "Espadon + sceptre / focus",
         "stats": "14 Dragon + 1 Maraudeur",
         "runes": "Scholar",
         "sigils": "hydromancy,rage,cleansing,energy"
@@ -111,7 +111,36 @@
     }
   ],
   "voleur": [],
-  "rodeur": [],
+  "rodeur": [
+    {
+      "id": "druide-heal-cleans",
+      "name": "druide-heal-cleans",
+      "specialization": "Druide",
+      "mode": "MCM",
+      "source": "GuildJen",
+      "chatCode": "[&DQQeFhk/BSUJE3kA5hK7ALsAqwHCALgAtBLtAEIFKhUAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Bâton + Masse / Cor de guerre",
+        "stats": "15 ménéstrel",
+        "runes": "Relique de Karakosa",
+        "sigils": "Renouveau,Transfer,énergie,vie"
+      }
+    },
+    {
+      "id": "Ventireur-power",
+      "name": "Ventireur-power",
+      "specialization": "rodeur",
+      "mode": "MCM",
+      "source": "GuildJen",
+      "chatCode": "[&DQQIJR46ThlUHQAAdR0AAJoAAAC4AAAAWx0AAEJEAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Arc long + Masse / Hache",
+        "stats": "9 Berserker + 7 Dragon",
+        "runes": "Relique de l'Étranger des Brumes",
+        "sigils": "exactitude,Force,feu,soif de sang"
+      }
+    }
+  ],
   "ingenieur": [
     {
       "id": "eng-support-scrapper-wvw",

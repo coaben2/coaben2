@@ -217,12 +217,24 @@ async function fetchJson(url, ignoreErrors = false) {
   const fullUrl = `${url}${separator}${schemaVer}`;
   try {
     const res = await fetch(fullUrl);
+    const text = await res.text();
+
     if (!res.ok) {
-        const text = await res.text();
         if (ignoreErrors) return null;
         throw new Error(`API Error ${res.status}: ${fullUrl}\nResponse: ${text.slice(0, 200)}`);
     }
-    return res.json();
+
+    if (!text || !text.trim()) {
+      if (ignoreErrors) return null;
+      throw new Error(`Empty JSON response from API: ${fullUrl}`);
+    }
+
+    try {
+      return JSON.parse(text);
+    } catch (parseError) {
+      if (ignoreErrors) return null;
+      throw new Error(`Invalid JSON response from API: ${fullUrl}\nResponse: ${text.slice(0, 200)}\nParse error: ${parseError.message}`);
+    }
   } catch (e) {
     if (ignoreErrors) return null;
     throw e;

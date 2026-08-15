@@ -540,10 +540,10 @@
             "slot": "Weapon_3"
           },
           {
-            "id": 14497,
-            "name": "Botte fatale",
-            "icon": "https://render.guildwars2.com/file/71EB0DF5243A382A100E5ACB0870994D59BC47B7/103005.png",
-            "description": "Vous assenez un puissant coup fatal à votre ennemi qui inflige Saignement et des dégâts supplémentaires aux ennemis se trouvant en dessous d'un certain seuil de santé.",
+            "id": 80247,
+            "name": "Déchirure",
+            "icon": "https://render.guildwars2.com/file/959E954064FEA5F0E8753D43D50BB67D0CBD3FA7/3790493.png",
+            "description": "Vous mutilez votre cible à l'aide d'une frappe immobilisatrice, puis exécutez un coup dévastateur qui inflige un important Saignement.",
             "slot": "Weapon_3"
           },
           {
@@ -946,7 +946,7 @@
             "id": 9143,
             "name": "Symbole de rapidité",
             "icon": "https://render.guildwars2.com/file/E315FF56624F5B2BB8BF51D00FA716FA4936F037/103268.png",
-            "description": "Symbole. Vous tracez sur la zone ciblée un symbole mystique qui inflige des dégâts aux ennemis et confère Rapidité aux alliés.",
+            "description": "Symbole. Vous tracez sur la zone ciblée un symbole mystique qui inflige des dégâts aux ennemis et confère Rapidité aux alliés. Les alliés dans la zone reçoivent une explosion de vitesse lors de la création du symbole.",
             "slot": "Weapon_3"
           },
           {
@@ -1003,7 +1003,7 @@
       "source": "GuildJen",
       "chatCode": "[&DQEqOhA2DSomDwMBeAEAAAQBAABHAQAANwEAAAAAAAAAAAAAAAAAAAAAAAADVgAxADIAAA==]",
       "details": {
-        "weapons": "Espadon / sceptre + focus",
+        "weapons": "Espadon + sceptre / focus",
         "stats": "14 Dragon + 1 Maraudeur",
         "runes": "Scholar",
         "sigils": "hydromancy,rage,cleansing,energy"
@@ -1156,8 +1156,8 @@
         ],
         "pets": [],
         "weapons": [
-          "Espadon / sceptre",
-          "focus"
+          "Espadon",
+          "sceptre / focus"
         ],
         "sigils": [],
         "rune": null,
@@ -1351,7 +1351,514 @@
     }
   ],
   "voleur": [],
-  "rodeur": [],
+  "rodeur": [
+    {
+      "id": "druide-heal-cleans",
+      "name": "druide-heal-cleans",
+      "specialization": "Druide",
+      "mode": "MCM",
+      "source": "GuildJen",
+      "chatCode": "[&DQQeFhk/BSUJE3kA5hK7ALsAqwHCALgAtBLtAEIFKhUAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Bâton + Masse / Cor de guerre",
+        "stats": "15 ménéstrel",
+        "runes": "Relique de Karakosa",
+        "sigils": "Renouveau,Transfer,énergie,vie"
+      },
+      "enriched": {
+        "name": "druide-heal-cleans",
+        "profession": "rodeur",
+        "professionIcon": "https://render.guildwars2.com/file/49B10316B424F4E20139EB5E51ADCF24A8724E9B/156640.png",
+        "specs": [
+          {
+            "id": 30,
+            "name": "Escarmouche",
+            "icon": "https://render.guildwars2.com/file/A026F49FF905C0F8AFAC6EDFDE281AABE1912459/1012016.png"
+          },
+          {
+            "id": 25,
+            "name": "Magie de la nature",
+            "icon": "https://render.guildwars2.com/file/DC7A387D9AB3EACCDA35AEA872E4EA1007139612/1012015.png"
+          },
+          {
+            "id": 5,
+            "name": "Druide",
+            "icon": "https://render.guildwars2.com/file/BE10CB10D8446208729934F3F1BD3A54BEED9AD6/1012013.png"
+          }
+        ],
+        "traits": [
+          {
+            "id": 1067,
+            "name": "Réflexes instinctifs",
+            "icon": "https://render.guildwars2.com/file/D644F0905F7DA21C5FBA0110AD9BF4D290A70405/1012643.png",
+            "description": "Vous bénéficiez de Vigueur quand vous esquivez une attaque avec succès."
+          },
+          {
+            "id": 1016,
+            "name": "Griffe et croc",
+            "icon": "https://render.guildwars2.com/file/F56EB274FA516609317A6540ABC20B6116C8051D/3613096.png",
+            "description": "Les familiers félins, aviaires et drakes reçoivent un bonus de Précision et de Férocité. Les compétences de <c=@abilitytype>bête</c> confèrent Fureur aux alliés à proximité du rôdeur."
+          },
+          {
+            "id": 1064,
+            "name": "Visée rapide",
+            "icon": "https://render.guildwars2.com/file/CBCB2EC86BC85CC02DA7AAB25CBFB226B8956D1E/1012648.png",
+            "description": "Quand vous changez d'armes, vous recevez Célérité. Votre prochaine compétence d'arme de rôdeur se recharge plus vite."
+          },
+          {
+            "id": 1060,
+            "name": "Aide alliée",
+            "icon": "https://render.guildwars2.com/file/6F2F55CAEDEC8046D5EBE8A84FCB6A734F0835B9/1012632.png",
+            "description": "Vous lancez \"Recherche et sauvetage !\" lorsque vous commencez à ranimer un allié. Les familiers moas confèrent Barrière aux alliés à proximité grâce à leur compétence de <c=@abilitytype>bête</c>."
+          },
+          {
+            "id": 964,
+            "name": "Musique des vents",
+            "icon": "https://render.guildwars2.com/file/E4A570C5B180415A581007A004037FEBFC99CE4B/1012635.png",
+            "description": "Vous conférez Régénération aux alliés à proximité lorsque vous utilisez une compétence de cor de guerre. Vous soignez les alliés lorsque vous leur conférez Régénération."
+          },
+          {
+            "id": 1697,
+            "name": "Lien revigorant",
+            "icon": "https://render.guildwars2.com/file/625D22F52902A007CA6A037D0149251A2943C56E/1012638.png",
+            "description": "Les compétences de <c=@abilitytype>bête</c> soignent les alliés autour du rôdeur."
+          },
+          {
+            "id": 1868,
+            "name": "Lucidité druidique",
+            "icon": "https://render.guildwars2.com/file/5851BCCB60F70B42FEC1FF4E05F8C90722C2DB90/1128530.png",
+            "description": "La transformation en avatar céleste dissipe les altérations dont vous et vos alliés à proximité êtes victimes."
+          },
+          {
+            "id": 2053,
+            "name": "Ombre céleste",
+            "icon": "https://render.guildwars2.com/file/93010741F5F7F22A0F20EB4EBA14F9D3B1321059/1128533.png",
+            "description": "Vous conférez Super vitesse et Furtivité aux alliés à proximité quand vous mettez fin à la transformation en avatar céleste."
+          },
+          {
+            "id": 2058,
+            "name": "Lumière persistante",
+            "icon": "https://render.guildwars2.com/file/01BBD8CADBC6E9BBED46A2D9026976316CA8EAD9/1128537.png",
+            "description": "Lorsque vous utilisez la forme de l'avatar céleste, les soins que vous conférez aux alliés sont grandement augmentés. Le fait de soigner un autre joueur avec une compétence d'avatar céleste réduit le temps de recharge d'Avatar céleste.<br><c=@reminder>Le temps de recharge ne peut être réduit qu'une fois par soin dispensé et il est réduit même si le joueur affecté dispose de tous ses points de santé.</c>"
+          }
+        ],
+        "skills": [
+          {
+            "id": 31407,
+            "name": "Glyphe de rajeunissement",
+            "icon": "https://render.guildwars2.com/file/0A3119FC4F62C31A0646B0FF901E701D74BD3EEA/1128605.png",
+            "description": "Glyphe. Vous soignez largement votre familier et vous-même, et vous conférez des soins mineurs à vos alliés."
+          },
+          {
+            "id": 31746,
+            "name": "Glyphe d'égalité",
+            "icon": "https://render.guildwars2.com/file/2BBD3BC59BF33E0A9B3F4A7DFB9B7EFF3FCA2D9A/1128637.png",
+            "description": "Glyphe. Vous infligez Stupeur aux ennemis ou dissipez Étourdissement pour les alliés."
+          },
+          {
+            "id": 12631,
+            "name": "\"Protège-moi !\"",
+            "icon": "https://render.guildwars2.com/file/41121EEEF99A6F50130E323EA107024C53A809BD/104023.png",
+            "description": "Commande. Vous bénéficiez de Protection et de Barrière, et vous dissipez Étourdissement pour vos alliés."
+          },
+          {
+            "id": 12502,
+            "name": "Signe de Renouveau",
+            "icon": "https://render.guildwars2.com/file/B83DDE1DD9F3DC65590D7EA207F0604F26B1BCA7/103590.png",
+            "description": "Signe passif : votre familier et vous récupérez de la santé.\nSigne actif : confère Résistance et Résolution à votre familier. Il attire les altérations des alliés à proximité sur lui-même."
+          },
+          {
+            "id": 31677,
+            "name": "Glyphe des étoiles",
+            "icon": "https://render.guildwars2.com/file/E04535E0710904BE9841BAC49922200E39B9B413/1128636.png",
+            "description": "Glyphe. Vous invoquez la puissance des étoiles pour protéger vos alliés."
+          }
+        ],
+        "weaponSkills": [
+          {
+            "id": 31710,
+            "name": "Rayon solaire",
+            "icon": "https://render.guildwars2.com/file/945C70A3D52FE991935FECF0219BF814526F0C03/1128621.png",
+            "description": "Vous tirez sur l'adversaire ou l'allié ciblé un faisceau de lumière qui inflige des dégâts aux ennemis et soigne les alliés qui sont touchés par lui.",
+            "slot": "Weapon_1"
+          },
+          {
+            "id": 72088,
+            "name": "Germination",
+            "icon": "https://render.guildwars2.com/file/A0B8C463DCB432B6FC5BDC3031A3F8B10C9B14B9/3256381.png",
+            "description": "Chaîne. Vous assénez un coup de masse.",
+            "slot": "Weapon_1"
+          },
+          {
+            "id": 31889,
+            "name": "Follet astral",
+            "icon": "https://render.guildwars2.com/file/A0E6130606B5D4F690355F9455E00F4BF89D550E/1128622.png",
+            "description": "Vous envoyez un follet sur la zone ciblée. Il explosera en atteignant sa destination, s'attachant alors aux alliés. Les alliés ainsi affectés par un follet guérissent progressivement.",
+            "slot": "Weapon_2"
+          },
+          {
+            "id": 71999,
+            "name": "Prospérité",
+            "icon": "https://render.guildwars2.com/file/A3CAFE3F4F60F5BA30DBF3511AEF2EB03D75673E/3256384.png",
+            "description": "Vous frappez la terre, infligeant des dégâts aux ennemis à proximité et soignant les alliés à proximité. Le coup fait fleurir le sol, qui reproduit les effets avec plus de puissance au bout d'un certain temps. Vous obtenez Puissance naturelle si la frappe initiale touche un ennemi.",
+            "slot": "Weapon_2"
+          },
+          {
+            "id": 31535,
+            "name": "Grâce ancestrale",
+            "icon": "https://render.guildwars2.com/file/DF1223B769A504A6CC381A4A281C0130C9BF67A0/1128624.png",
+            "description": "Vous vous transformez en follet d'énergie naturelle pour atteindre l'emplacement ciblé. Une fois sur place, vous soignez les alliés proches et conférez Protection à votre familier. Le temps de recharge est réduit si vous soignez un autre allié.",
+            "slot": "Weapon_3"
+          },
+          {
+            "id": 71963,
+            "name": "Matraque en chêne",
+            "icon": "https://render.guildwars2.com/file/AF04C49117A8634CDDAA1AB3B35B25111B394FEC/3256385.png",
+            "description": "Vous imprégnez votre masse d'énergie verdoyante, puis bondissez sur votre cible. Vous infligez Étourdissement aux ennemis, conférez Protection aux alliés à proximité et soignez votre familier. Vous obtenez Puissance naturelle si vous touchez un ennemi.",
+            "slot": "Weapon_3"
+          },
+          {
+            "id": 31700,
+            "name": "Vague de lianes",
+            "icon": "https://render.guildwars2.com/file/DD0ECCBB503C3FA6527DE6049AD63AC6027CA9DB/1128628.png",
+            "description": "Vous libérez des lianes qui infligent Immobilisation aux ennemis et dissipent les altérations des alliés.",
+            "slot": "Weapon_4"
+          },
+          {
+            "id": 71903,
+            "name": "Garde-chardon",
+            "icon": "https://render.guildwars2.com/file/D246F868FF56A5DA990D4C0593BC6FD4082456DD/3256386.png",
+            "description": "Vous vous enveloppez d'épines, frappez les ennemis à proximité et obtenez Stabilité pendant une courte durée. Vous obtenez des bonus supplémentaires et Puissance naturelle si vous frappez un ennemi.",
+            "slot": "Weapon_4"
+          },
+          {
+            "id": 12620,
+            "name": "Appel de chasseur",
+            "icon": "https://render.guildwars2.com/file/6A6673BC6B33212978F2CC2D04BD1AE8C5ECB593/103076.png",
+            "description": "Vous faites appel aux faucons pour qu'ils se jettent en masse sur l'ennemi.",
+            "slot": "Weapon_4"
+          },
+          {
+            "id": 31496,
+            "name": "Conversion sublime",
+            "icon": "https://render.guildwars2.com/file/CB54A104F1B64FD26D24F3F55C05DDD2631619D5/1128627.png",
+            "description": "Vous invoquez une barrière d'énergie qui transforme les dégâts des projectiles ennemis en soins à l'impact. Les alliés qui traversent le mur bénéficient d'avantages.",
+            "slot": "Weapon_5"
+          },
+          {
+            "id": 71841,
+            "name": "Frappes sauvages",
+            "icon": "https://render.guildwars2.com/file/4063516E170663BE3C0B07A744F2A4A142E90FC3/3256387.png",
+            "description": "Vous frappez le sol de manière répétée, infligeant des dégâts aux ennemis à proximité. La frappe finale inflige des dégâts accrus et Stupeur aux ennemis, et vous confère Puissance naturelle.",
+            "slot": "Weapon_5"
+          },
+          {
+            "id": 12621,
+            "name": "Appel de la nature",
+            "icon": "https://render.guildwars2.com/file/2BBB18C54A01FF1D5FF9473EB1059AE491AA98FF/103310.png",
+            "description": "Vous infligez Stupeur et Faiblesse aux ennemis à proximité. Vous conférez Fureur, Pouvoir et Rapidité à vous-même et aux alliés à proximité.",
+            "slot": "Weapon_5"
+          }
+        ],
+        "pets": [
+          {
+            "id": 66,
+            "name": "Jeune tortue de siège",
+            "icon": "https://render.guildwars2.com/file/090DAF0BC96523FF613BB30FF36F4A23EBFB49CD/2604598.png"
+          },
+          {
+            "id": 5,
+            "name": "Jeune ours brun",
+            "icon": "https://render.guildwars2.com/file/1B51DCA656B8ED7A2C1C48AC03A4BCD6EDA66901/52543.png"
+          }
+        ],
+        "weapons": [
+          "Bâton",
+          "Masse / Cor de guerre"
+        ],
+        "sigils": [
+          {
+            "id": 24833,
+            "name": "Rune de bagarreur supérieure",
+            "icon": "https://render.guildwars2.com/file/65A51C02312B93452A6EA9F0BF6BB5240894500D/220735.png"
+          },
+          {
+            "id": 24607,
+            "name": "Cachet d'énergie supérieur",
+            "icon": "https://render.guildwars2.com/file/3A064B97AB7D0E1F1250EFB5F06798A8FE623708/220688.png"
+          }
+        ],
+        "rune": null,
+        "relic": null
+      }
+    },
+    {
+      "id": "Ventireur-power",
+      "name": "Ventireur-power",
+      "specialization": "rodeur",
+      "mode": "MCM",
+      "source": "GuildJen",
+      "chatCode": "[&DQQIJR46ThlUHQAAdR0AAJoAAAC4AAAAWx0AAEJEAAAAAAAAAAAAAAAAAAA=]",
+      "details": {
+        "weapons": "Arc long + Masse / Hache",
+        "stats": "9 Berserker + 7 Dragon",
+        "runes": "Relique de l'Étranger des Brumes",
+        "sigils": "exactitude,Force,feu,soif de sang"
+      },
+      "enriched": {
+        "name": "Ventireur-power",
+        "profession": "rodeur",
+        "professionIcon": "https://render.guildwars2.com/file/49B10316B424F4E20139EB5E51ADCF24A8724E9B/156640.png",
+        "specs": [
+          {
+            "id": 8,
+            "name": "Adresse au tir",
+            "icon": "https://render.guildwars2.com/file/80FEB75663DAE60BAC59495671261C206C0BAFC3/1012014.png"
+          },
+          {
+            "id": 30,
+            "name": "Escarmouche",
+            "icon": "https://render.guildwars2.com/file/A026F49FF905C0F8AFAC6EDFDE281AABE1912459/1012016.png"
+          },
+          {
+            "id": 78,
+            "name": "Ventireur",
+            "icon": "https://render.guildwars2.com/file/1E0DE9DF219380B3DD15AD35466461C935930515/3679901.png"
+          }
+        ],
+        "traits": [
+          {
+            "id": 1021,
+            "name": "Forme de pierre",
+            "icon": "https://render.guildwars2.com/file/205F4491B806F7ECF6BE0B9F18C266FDAAE4635A/1769987.png",
+            "description": "Vous utilisez Signe de pierre mineur lorsque vous utilisez une compétence d'élite. Lorsque vous activez un <c=@abilitytype>signe</c>, vous bénéficiez de Pouvoir et Fureur."
+          },
+          {
+            "id": 1001,
+            "name": "Chant du loup",
+            "icon": "https://render.guildwars2.com/file/55D102432B71E1E26280DF6118AE5663650FEAA3/3613094.png",
+            "description": "Les compétences de <c=@abilitytype>bête</c> canine infligent Vulnérabilité et révèlent les ennemis à proximité. Vous infligez davantage de dégâts de frappe aux ennemis souffrant de Vulnérabilité."
+          },
+          {
+            "id": 1015,
+            "name": "Sans remords",
+            "icon": "https://render.guildwars2.com/file/1744A5411A5DED5AF343B4F4B7490A7677FE18EA/1012625.png",
+            "description": "Vous avez de nouveau accès à Première frappe lorsque vous bénéficiez de Fureur. Première frappe inflige davantage de dégâts."
+          },
+          {
+            "id": 1067,
+            "name": "Réflexes instinctifs",
+            "icon": "https://render.guildwars2.com/file/D644F0905F7DA21C5FBA0110AD9BF4D290A70405/1012643.png",
+            "description": "Vous bénéficiez de Vigueur quand vous esquivez une attaque avec succès."
+          },
+          {
+            "id": 1700,
+            "name": "Force de randonneur",
+            "icon": "https://render.guildwars2.com/file/E0FC234BC4FF7C9AEB39DF2C9B9E57CA01D81C25/1012646.png",
+            "description": "Votre familier et vous gagnez de la Puissance. Vous gagnez davantage de Puissance en maniant une épée. Le fait d'esquiver une attaque vous confère Pouvoir."
+          },
+          {
+            "id": 1888,
+            "name": "Proie sournoise",
+            "icon": "https://render.guildwars2.com/file/CC4B0609160EC9B92A96CAF81023AD0C5E18B65A/1012650.png",
+            "description": "Fureur confère Férocité et augmente les chances d'infliger un coup critique. Vous bénéficiez de Fureur lorsque vous êtes frappé et que vous êtes en dessous d'un certain seuil de santé."
+          },
+          {
+            "id": 2402,
+            "name": "À tout vent",
+            "icon": "https://render.guildwars2.com/file/ECC60120623FF8F60DBA76069F140C1F2B389DD1/3679991.png",
+            "description": "Les <c=@abilitytype>bourrasques</c> dissipent les altérations de mouvement ainsi qu'une altération de dégâts."
+          },
+          {
+            "id": 2413,
+            "name": "Cieux périlleux",
+            "icon": "https://render.guildwars2.com/file/E9167E11087E64EB021B0F257C393305A5CD757F/3679995.png",
+            "description": "Péril de la proie est remplacée par Bombardement."
+          },
+          {
+            "id": 2425,
+            "name": "Nuée explosive",
+            "icon": "https://render.guildwars2.com/file/CD50C06E229B696D4EFE21DCC9ABA4F9335738E2/3679997.png",
+            "description": "Péril de la proie et Flèche supersonique réinitialisent le temps de recharge de Trombe. Quand vous utilisez Trombe ou Œil-de-faucon, vous conférez des avantages aux alliés à proximité."
+          }
+        ],
+        "skills": [
+          {
+            "id": 77271,
+            "name": "Brise apaisante",
+            "icon": "https://render.guildwars2.com/file/43A933E17C3A2B99E0DE675817E73B94B10E29CF/3680185.png",
+            "description": "Bourrasque. Vous conjurez un vent paisible qui soigne et confère Super vitesse à vous et votre familier."
+          },
+          {
+            "id": 76619,
+            "name": "Tourbillon",
+            "icon": "https://render.guildwars2.com/file/9A085835726C0C164AFE00FB6D73EE08AC3F031E/3680196.png",
+            "description": "Bourrasque. Vous vous lancez en avant à l'aide de puissantes rafales de vent."
+          },
+          {
+            "id": 12542,
+            "name": "Signe de la Chasse",
+            "icon": "https://render.guildwars2.com/file/4008F219B5DA1B0BF059EA7CF6CD3157C8ED76F8/104005.png",
+            "description": "Signe passif : votre vitesse de déplacement et celle de votre familier augmentent de 25%.\nSigne actif : vos attaques et celles de votre familier ne peuvent pas être bloquées, et vous obtenez tous les deux Super vitesse."
+          },
+          {
+            "id": 12494,
+            "name": "Réflexes éclair",
+            "icon": "https://render.guildwars2.com/file/4B15F4122401A902F35C42655E0A5E6D6253DED7/102784.png",
+            "description": "Survie. Vous vous dérobez dans un crépitement d'éclairs meurtriers et obtenez Vigueur."
+          },
+          {
+            "id": 76979,
+            "name": "Tempête parfaite",
+            "icon": "https://render.guildwars2.com/file/77FF6D547ED0B09DACB8F5CDDA9424980D4045AD/3680184.png",
+            "description": "Bourrasque. Vous libérez une gigantesque tornade qui projette vos ennemis qu'elle frappe sur son passage. Quand la tornade atteint sa destination, elle y reste pendant un instant en infligeant des dégâts aux ennemis à l'intérieur."
+          }
+        ],
+        "weaponSkills": [
+          {
+            "id": 12510,
+            "name": "Tir à longue portée",
+            "icon": "https://render.guildwars2.com/file/2A4CFDE1D6FC1B04D864E32190E7A6521C000104/102827.png",
+            "description": "Vous tirez à distance sur l'ennemi. Plus la flèche part loin, plus elle inflige de dégâts.",
+            "slot": "Weapon_1"
+          },
+          {
+            "id": 72088,
+            "name": "Germination",
+            "icon": "https://render.guildwars2.com/file/A0B8C463DCB432B6FC5BDC3031A3F8B10C9B14B9/3256381.png",
+            "description": "Chaîne. Vous assénez un coup de masse.",
+            "slot": "Weapon_1"
+          },
+          {
+            "id": 12466,
+            "name": "Ricochet",
+            "icon": "https://render.guildwars2.com/file/C3C004026BC93EEF532665099638063E541995A4/103288.png",
+            "description": "Vous lancez votre hache de façon à ce qu'elle rebondisse sur plusieurs ennemis et vous confère Pouvoir à chaque ennemi touché.",
+            "slot": "Weapon_1"
+          },
+          {
+            "id": 12509,
+            "name": "Tir rapide",
+            "icon": "https://render.guildwars2.com/file/F74408EC9F2354940976E1E80D46E29C7C693C62/102828.png",
+            "description": "Vous décochez plusieurs flèches sur votre ennemi.",
+            "slot": "Weapon_2"
+          },
+          {
+            "id": 71999,
+            "name": "Prospérité",
+            "icon": "https://render.guildwars2.com/file/A3CAFE3F4F60F5BA30DBF3511AEF2EB03D75673E/3256384.png",
+            "description": "Vous frappez la terre, infligeant des dégâts aux ennemis à proximité et soignant les alliés à proximité. Le coup fait fleurir le sol, qui reproduit les effets avec plus de puissance au bout d'un certain temps. Vous obtenez Puissance naturelle si la frappe initiale touche un ennemi.",
+            "slot": "Weapon_2"
+          },
+          {
+            "id": 12480,
+            "name": "Lames multiples",
+            "icon": "https://render.guildwars2.com/file/9D661C490109C13717F95520EF6ED7BB16BE99E3/103986.png",
+            "description": "Vous lancez 5 haches tournoyantes en éventail qui infligent Saignement aux ennemis.",
+            "slot": "Weapon_2"
+          },
+          {
+            "id": 12573,
+            "name": "Tir de chasseur",
+            "icon": "https://render.guildwars2.com/file/04C30811DB264CFE9049BF480CC4D34D7BF353AA/104012.png",
+            "description": "Vous tirez une flèche qui vous confère Furtivité lorsqu'elle touche l'ennemi. Votre familier bénéficie de Rapidité.",
+            "slot": "Weapon_3"
+          },
+          {
+            "id": 71963,
+            "name": "Matraque en chêne",
+            "icon": "https://render.guildwars2.com/file/AF04C49117A8634CDDAA1AB3B35B25111B394FEC/3256385.png",
+            "description": "Vous imprégnez votre masse d'énergie verdoyante, puis bondissez sur votre cible. Vous infligez Étourdissement aux ennemis, conférez Protection aux alliés à proximité et soignez votre familier. Vous obtenez Puissance naturelle si vous touchez un ennemi.",
+            "slot": "Weapon_3"
+          },
+          {
+            "id": 12490,
+            "name": "Morsure de l'hiver",
+            "icon": "https://render.guildwars2.com/file/1D6462C04F2B4EB601C8EAF8B80C23046E544AEB/103992.png",
+            "description": "Vous lancez une hache qui inflige Givre autour de l'ennemi. La prochaine attaque de votre familier inflige Faiblesse.",
+            "slot": "Weapon_3"
+          },
+          {
+            "id": 12511,
+            "name": "Tir à bout portant",
+            "icon": "https://render.guildwars2.com/file/0C976CDCD10C3A7F4E54CABDC09ABEB6C1CB230D/103251.png",
+            "description": "Vous tirez à bout portant qui repousse l'ennemi. Plus celui-ci est proche, plus loin il est repoussé.",
+            "slot": "Weapon_4"
+          },
+          {
+            "id": 71903,
+            "name": "Garde-chardon",
+            "icon": "https://render.guildwars2.com/file/D246F868FF56A5DA990D4C0593BC6FD4082456DD/3256386.png",
+            "description": "Vous vous enveloppez d'épines, frappez les ennemis à proximité et obtenez Stabilité pendant une courte durée. Vous obtenez des bonus supplémentaires et Puissance naturelle si vous frappez un ennemi.",
+            "slot": "Weapon_4"
+          },
+          {
+            "id": 12638,
+            "name": "Voie des cicatrices",
+            "icon": "https://render.guildwars2.com/file/B5B27723701C39327D2145DEE76579FB007F9344/103903.png",
+            "description": "Vous lancez votre hache qui revient comme un boomerang, frappant les ennemis au passage.",
+            "slot": "Weapon_4"
+          },
+          {
+            "id": 12469,
+            "name": "Barrage",
+            "icon": "https://render.guildwars2.com/file/0A4C91B8E60CC4F23BE64DA0AA6C56BF3E330C3B/103042.png",
+            "description": "Un barrage de flèches s'abat sur la zone ciblée et inflige Infirmité.",
+            "slot": "Weapon_5"
+          },
+          {
+            "id": 71841,
+            "name": "Frappes sauvages",
+            "icon": "https://render.guildwars2.com/file/4063516E170663BE3C0B07A744F2A4A142E90FC3/3256387.png",
+            "description": "Vous frappez le sol de manière répétée, infligeant des dégâts aux ennemis à proximité. La frappe finale inflige des dégâts accrus et Stupeur aux ennemis, et vous confère Puissance naturelle.",
+            "slot": "Weapon_5"
+          },
+          {
+            "id": 12639,
+            "name": "Tourbillon défensif",
+            "icon": "https://render.guildwars2.com/file/3D24774AAFBEFF40016ED8B451A245D95A2D08E3/103147.png",
+            "description": "Tourbillonnement avec vos haches pour attaquer les ennemis à proximité.",
+            "slot": "Weapon_5"
+          }
+        ],
+        "pets": [
+          {
+            "id": 66,
+            "name": "Jeune tortue de siège",
+            "icon": "https://render.guildwars2.com/file/090DAF0BC96523FF613BB30FF36F4A23EBFB49CD/2604598.png"
+          },
+          {
+            "id": 68,
+            "name": "Jeune chak céleste belligérant",
+            "icon": "https://render.guildwars2.com/file/16B2200803B76ABEDEA8DB1A40E04D14FE7D99DC/3256314.png"
+          }
+        ],
+        "weapons": [
+          "Arc long",
+          "Masse / Hache"
+        ],
+        "sigils": [
+          {
+            "id": 24615,
+            "name": "Cachet de fermeté supérieur",
+            "icon": "https://render.guildwars2.com/file/D7420E430D002E07382035EF0D0F77370C4EE6B8/220662.png"
+          },
+          {
+            "id": 24548,
+            "name": "Cachet de feu supérieur",
+            "icon": "https://render.guildwars2.com/file/AFFE7977FCE450E8105EBADA7436050CB7011BDB/220678.png"
+          },
+          {
+            "id": 24562,
+            "name": "Cachet de force supérieur",
+            "icon": "https://render.guildwars2.com/file/71C00204BDD7FC11AAE1906FC2EF7D37A35DF82E/220682.png"
+          }
+        ],
+        "rune": null,
+        "relic": null
+      }
+    }
+  ],
   "ingenieur": [
     {
       "id": "eng-support-scrapper-wvw",
@@ -1778,7 +2285,7 @@
             "id": 2194,
             "name": "Hâte meurtrière",
             "icon": "https://render.guildwars2.com/file/7CC30E093EDFC0A3A4F32198B53E729842779AF6/2479345.png",
-            "description": "Lorsque Linceul de l'augure est actif, vous bénéficiez d'une aura qui confère des avantages à vous et à vos alliés proches à chaque intervalle de pulsation."
+            "description": "Vous conférez des avantages aux alliés à proximité lorsque vous revêtez le Linceul du présage et quand vous utilisez Barrage noir."
           }
         ],
         "skills": [
@@ -2065,7 +2572,7 @@
             "id": 914,
             "name": "Talisman maléfique",
             "icon": "https://render.guildwars2.com/file/4FDFAB1B3BFF06F6044A491B04967C5D03526B0B/1012594.png",
-            "description": "Vous infligez des dégâts de frappe supplémentaires aux ennemis ne bénéficiant d'aucun avantage. Les compétences de focus et de hache se rechargent plus vite."
+            "description": "Vos dégâts de frappe infligés sont augmentés. Ces dégâts sont encore plus élevés face aux ennemis ne bénéficiant d'aucun avantage."
           },
           {
             "id": 829,
@@ -2566,7 +3073,7 @@
             "id": 2202,
             "name": "Esprit irrégulier",
             "icon": "https://render.guildwars2.com/file/F3757C0FFD6F0912C2FD017E0E28E76137FA5F71/2479327.png",
-            "description": "Les attaques à l'<c=@abilitytype>épée</c> infligent Saignement lors d'un coup critique. Un pourcentage de vos dégâts par altération vous soigne."
+            "description": "Les attaques de <c=@abilitytype>lame</c> infligent Saignement lors d'un coup critique. Un pourcentage de vos dégâts par altération vous soigne."
           },
           {
             "id": 2205,
@@ -2916,14 +3423,14 @@
             "id": 44550,
             "name": "Lahar",
             "icon": "https://render.guildwars2.com/file/063CA2E1A6EEA00EB1AADE09C80C77D5D8222EBA/1770350.png",
-            "description": "Attaque double. Vous créez une zone infligeant des dégâts et Infirmité à vos ennemis.",
+            "description": "Attaque double. Vous créez une zone infligeant des dégâts et Infirmité à vos ennemis. La première pulsation de cette compétence inflige Immobilisation aux ennemis.",
             "slot": "Weapon_3"
           },
           {
             "id": 41184,
             "name": "Mousson",
             "icon": "https://render.guildwars2.com/file/053E0AC705DE1718FF519DD6BE7A6B9FD9D8B53B/1770354.png",
-            "description": "Attaque double. Vous lancez dans une direction un ouragan, qui soigne vos alliés et inflige des dégâts à vos ennemis.",
+            "description": "Attaque double. Vous lancez dans une direction un ouragan, qui inflige Repoussement et Vulnérabilité à vos ennemis.",
             "slot": "Weapon_3"
           },
           {
@@ -2944,7 +3451,7 @@
             "id": 40332,
             "name": "Explosion de pression",
             "icon": "https://render.guildwars2.com/file/29744450A3E3DE28A142356DCF0B2BE805F2254D/1770353.png",
-            "description": "Attaque double. Vous lancez un projectile vaporeux, qui soigne vos alliés en les traversant. S'il touche le sol ou un ennemi, ce projectile explose violemment, en soignant vos alliés et en infligeant des dégâts aux ennemis dans la zone.",
+            "description": "Attaque double. Vous lancez un projectile vaporeux qui explose violemment s'il touche le sol ou un ennemi. Cela soigne vos alliés et inflige des dégâts aux ennemis dans la zone. Vous vous soignez si le projectile frappe un ennemi.",
             "slot": "Weapon_3"
           },
           {
@@ -3247,7 +3754,7 @@
             "id": 46014,
             "name": "Marée de pierre",
             "icon": "https://render.guildwars2.com/file/44DA33C8D9B5A021615870B8E1E6FE02447E2D0A/1770344.png",
-            "description": "Attaque double. Vous infligez Saignement à votre ennemi avec de la glace et des pierres tranchantes.",
+            "description": "Attaque double. Vous infligez Saignement à votre ennemi avec de la glace et des pierres tranchantes. La première pulsation de cette compétence inflige Infirmité aux ennemis.",
             "slot": "Weapon_3"
           },
           {
@@ -3275,7 +3782,7 @@
             "id": 42181,
             "name": "Givre brûlant",
             "icon": "https://render.guildwars2.com/file/6DBA0EA2450E7930C4FDE4712ADD917D3B0414CF/1770347.png",
-            "description": "Attaque double. Vous lancez un trait de feu et de glace tout en esquivant.",
+            "description": "Attaque double. Vous lancez un trait de feu et de glace tout en esquivant et en dissipant vos altérations de mouvement.",
             "slot": "Weapon_3"
           },
           {
@@ -3562,7 +4069,7 @@
             "id": 46014,
             "name": "Marée de pierre",
             "icon": "https://render.guildwars2.com/file/44DA33C8D9B5A021615870B8E1E6FE02447E2D0A/1770344.png",
-            "description": "Attaque double. Vous infligez Saignement à votre ennemi avec de la glace et des pierres tranchantes.",
+            "description": "Attaque double. Vous infligez Saignement à votre ennemi avec de la glace et des pierres tranchantes. La première pulsation de cette compétence inflige Infirmité aux ennemis.",
             "slot": "Weapon_3"
           },
           {
@@ -3590,7 +4097,7 @@
             "id": 42181,
             "name": "Givre brûlant",
             "icon": "https://render.guildwars2.com/file/6DBA0EA2450E7930C4FDE4712ADD917D3B0414CF/1770347.png",
-            "description": "Attaque double. Vous lancez un trait de feu et de glace tout en esquivant.",
+            "description": "Attaque double. Vous lancez un trait de feu et de glace tout en esquivant et en dissipant vos altérations de mouvement.",
             "slot": "Weapon_3"
           },
           {
@@ -3887,14 +4394,14 @@
             "id": 44550,
             "name": "Lahar",
             "icon": "https://render.guildwars2.com/file/063CA2E1A6EEA00EB1AADE09C80C77D5D8222EBA/1770350.png",
-            "description": "Attaque double. Vous créez une zone infligeant des dégâts et Infirmité à vos ennemis.",
+            "description": "Attaque double. Vous créez une zone infligeant des dégâts et Infirmité à vos ennemis. La première pulsation de cette compétence inflige Immobilisation aux ennemis.",
             "slot": "Weapon_3"
           },
           {
             "id": 41184,
             "name": "Mousson",
             "icon": "https://render.guildwars2.com/file/053E0AC705DE1718FF519DD6BE7A6B9FD9D8B53B/1770354.png",
-            "description": "Attaque double. Vous lancez dans une direction un ouragan, qui soigne vos alliés et inflige des dégâts à vos ennemis.",
+            "description": "Attaque double. Vous lancez dans une direction un ouragan, qui inflige Repoussement et Vulnérabilité à vos ennemis.",
             "slot": "Weapon_3"
           },
           {
@@ -3915,7 +4422,7 @@
             "id": 40332,
             "name": "Explosion de pression",
             "icon": "https://render.guildwars2.com/file/29744450A3E3DE28A142356DCF0B2BE805F2254D/1770353.png",
-            "description": "Attaque double. Vous lancez un projectile vaporeux, qui soigne vos alliés en les traversant. S'il touche le sol ou un ennemi, ce projectile explose violemment, en soignant vos alliés et en infligeant des dégâts aux ennemis dans la zone.",
+            "description": "Attaque double. Vous lancez un projectile vaporeux qui explose violemment s'il touche le sol ou un ennemi. Cela soigne vos alliés et inflige des dégâts aux ennemis dans la zone. Vous vous soignez si le projectile frappe un ennemi.",
             "slot": "Weapon_3"
           },
           {
