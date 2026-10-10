@@ -101,8 +101,8 @@ const selectedPieces = ref([]);
 const craftingMaterials = ref({
   // commun
   memories_of_battle: { id: 71581, name: 'Souvenir de bataille', required: 750, have: 0, tradable: true, price: 0 },
-  wvw_tickets: { id: 71581, name: 'Tickets d\'escarmouche', required: 1445, have: 0, tradable: false },
-  Testimony_of_Jade_Heroics:{ id: 97457, name:'Témoignage de Jade Heroics',required:250,have: 0, tradable: false},
+  wvw_tickets: { id: 66352, name: "Tickets d'escarmouche", required: 1445, have: 0, tradable: false },
+  Testimony_of_Jade_Heroics:{ id: 105428, name: "Témoignage d'actes héroïques de Castora", required: 250, have: 0, tradable: false },
   gift_of_battle: { id: 19678, name: 'Don de bataille', required: 1, have: 0, tradable: false },
   mystic_clovers: { id: 19975, name: 'trèfles mystiques', required: 15, have: 0, tradable: false },
   
